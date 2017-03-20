@@ -10,55 +10,7 @@
         <div id="home" tabindex="-1">
             <div class="row">				
                 <div class="col-lg-12">
-					<div style="height:550px; padding-top:150px">
-						<!--<img src="http://ptrnov.net/img/pp.jpg"  class="img-circle" alt="Cinque Terre" width="150" height="150">!-->
-						<div class="intro-text">
-							<h1 class="name">Why Use CC</h1>
-							<hr class="star-light">
-							<span class="skills">Mobile Cashier - Data Control - Monitor Dashboard </span>
-						</div>
-						  <div class="col-lg-12 text-center">
-							
-							 <div class="col-lg-4"></div>
-							 <div class="col-lg-4 col-lg-offset-0">
-									<table>
-									  <tr>
-										<th style="width:25px;">
-											<span class="fa-stack fa-2x">
-											<i class="fa fa-circle fa-stack-2x " style="color:<?=$rangeColorIcon?>"></i>
-											<i class="fa fa-mobile fa-stack-1x" style="color:#fbfbfb"></i>
-											</span> <br>
-										</th>
-										<th>
-											Mobile Cashier</br>
-											sdasdasasd  asd asd asd as d a sdasdsad ewrewr sdfs as sad   asd   asd as d as asd </br>	
-										</th> 
-									  </tr>
-									  <tr>
-										<th style="width:25px;">
-											<span class="fa-stack fa-2x">
-											<i class="fa fa-circle fa-stack-2x " style="color:#f2b715"></i>
-											<i class="fa fa-dashboard fa-stack-1x" style="color:#fbfbfb"></i>
-											</span> <br>
-										</th>
-										<th>
-											Web Dashboard</br>
-											sdasdas</br>
-										</th> 
-									  </tr>
-									  
-									</table>	
-								
-							
-							
-							
-						
-						
-							</div>
-							</div>
-						</div>
-					
-						
+					<?=$this->render('_home')?>						
                 </div>
             </div>
 			
@@ -67,220 +19,20 @@
 
     <!-- service Grid Section -->
     <section id="service">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2>service</h2>
-                    <hr class="star-primary">
-                </div>
-            </div>
-			<div class="gradient-pattern">
-				<div style="color:black"><p>adsdas</p></div>
-			</div>
-            <div class="row">
-			<div class="box-value">
-				<div style="padding-top:10px">
-					<!--<i class="fa fa-car"></i>
-					<i class="fa fa-car" style="font-size:60px;color:red;"></i>!-->
-					<i class="fa fa-car" style="font-size:48px;color:red;"></i>					
-				</div>
-				<div>ACCOUNTING</div>
-				
-				<div>asdasd asdas dasdas dsadsa</div>
-				<div class="box-button" style="margin-top: 130px; text-align:center">Details</div>
-			</div>
-			
-                <div class="col-sm-4 service-item">
-                    <a href="#serviceModal1" class="service-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="/template/freelancer/img/service/cabin.png" class="img-responsive" alt="Cabin">
-                    </a>
-                </div>
-                <div class="col-sm-4 service-item">
-                    <a href="#serviceModal2" class="service-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="/template/freelancer/img/service/cake.png" class="img-responsive" alt="Slice of cake">
-                    </a>
-                </div>
-                <div class="col-sm-4 service-item">
-                    <a href="#serviceModal3" class="service-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="/template/freelancer/img/service/circus.png" class="img-responsive" alt="Circus tent">
-                    </a>
-                </div>
-                <div class="col-sm-4 service-item">
-                    <a href="#serviceModal4" class="service-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="/template/freelancer/img/service/game.png" class="img-responsive" alt="Game controller">
-                    </a>
-                </div>
-                <div class="col-sm-4 service-item">
-                    <a href="#serviceModal5" class="service-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="/template/freelancer/img/service/safe.png" class="img-responsive" alt="Safe">
-                    </a>
-                </div>
-                <div class="col-sm-4 service-item">
-                    <a href="#serviceModal6" class="service-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="/template/freelancer/img/service/submarine.png" class="img-responsive" alt="Submarine">
-                    </a>
-                </div>
-            </div>
-        </div>
+       <?=$this->render('_service')?>
     </section>
 
     <!-- help Section -->
     <section class="success" id="help">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2>help</h2>
-                    <hr class="star-light">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-lg-offset-2">
-                    <p>Freelancer is a free bootstrap theme created by Start Bootstrap. The download includes the complete source files including HTML, CSS, and JavaScript as well as optional LESS stylesheets for easy customization.</p>
-                </div>
-                <div class="col-lg-4">
-                    <p>Whether you're a student looking to showcase your work, a professional looking to attract clients, or a graphic artist looking to share your projects, this template is the perfect starting point!</p>
-                </div>
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <a href="#" class="btn btn-lg btn-outline">
-                        <i class="fa fa-download"></i> Download Theme
-                    </a>
-                </div>
-            </div>
-        </div>
+        <?=$this->render('_help')?>
     </section>
 
     <!-- Contact Section -->
     <section id="contact">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2>Contact Me</h2>
-                    <hr class="star-primary">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2">
-                    <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
-                    <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
-                    <form name="sentMessage" id="contactForm" novalidate>
-                        <div class="row control-group">
-                            <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label for="name">Name</label>
-                                <input type="text" class="form-control" placeholder="Name" id="name" required data-validation-required-message="Please enter your name.">
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                        <div class="row control-group">
-                            <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label for="email">Email Address</label>
-                                <input type="email" class="form-control" placeholder="Email Address" id="email" required data-validation-required-message="Please enter your email address.">
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                        <div class="row control-group">
-                            <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label for="phone">Phone Number</label>
-                                <input type="tel" class="form-control" placeholder="Phone Number" id="phone" required data-validation-required-message="Please enter your phone number.">
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                        <div class="row control-group">
-                            <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label for="message">Message</label>
-                                <textarea rows="5" class="form-control" placeholder="Message" id="message" required data-validation-required-message="Please enter a message."></textarea>
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                        <br>
-                        <div id="success"></div>
-                        <div class="row">
-                            <div class="form-group col-xs-12">
-                                <button type="submit" class="btn btn-success btn-lg">Send</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+        <?=$this->render('_contact')?>
     </section>
 
-    <!-- Footer -->
-    <footer class="text-center">
-        <div class="footer-above">
-            <div class="container">
-                <div class="row">
-                    <div class="footer-col col-md-4">
-                        <h3>Location</h3>
-                        <p>3481 Melrose Place
-                            <br>Beverly Hills, CA 90210</p>
-                    </div>
-                    <div class="footer-col col-md-4">
-                        <h3>Around the Web</h3>
-                        <ul class="list-inline">
-                            <li>
-                                <a href="#" class="btn-social btn-outline"><span class="sr-only">Facebook</span><i class="fa fa-fw fa-facebook"></i></a>
-                            </li>
-                            <li>
-                                <a href="#" class="btn-social btn-outline"><span class="sr-only">Google Plus</span><i class="fa fa-fw fa-google-plus"></i></a>
-                            </li>
-                            <li>
-                                <a href="#" class="btn-social btn-outline"><span class="sr-only">Twitter</span><i class="fa fa-fw fa-twitter"></i></a>
-                            </li>
-                            <li>
-                                <a href="#" class="btn-social btn-outline"><span class="sr-only">Linked In</span><i class="fa fa-fw fa-linkedin"></i></a>
-                            </li>
-                            <li>
-                                <a href="#" class="btn-social btn-outline"><span class="sr-only">Dribble</span><i class="fa fa-fw fa-dribbble"></i></a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="footer-col col-md-4">
-                        <h3>help Freelancer</h3>
-                        <p>Freelance is a free to use, open source Bootstrap theme created by <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="footer-below">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        Copyright &copy; Your Website 2016
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+    
 
     <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
     <div class="scroll-top page-scroll hidden-sm hidden-xs hidden-lg hidden-md">
