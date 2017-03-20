@@ -15,7 +15,7 @@ AppAssetFreelancer::register($this);
 		// ',
         'brandLabel' =>'
 			 <div class="navbar-header page-scroll">                
-                <a class="navbar-brand" href="#page-top">Control Cepat</a>
+                <a class="navbar-brand" href="#page-top">Kontrol Gampang</a>
             </div>
 		',
 		'brandUrl' => Yii::$app->homeUrl,
