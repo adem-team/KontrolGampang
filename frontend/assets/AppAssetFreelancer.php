@@ -13,15 +13,15 @@ class AppAssetFreelancer extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
 		//'template/freelancer/vendor/bootstrap/css/bootstrap.min.css',
-		'template/freelancer/css/freelancer.css',
-		'template/freelancer/css/ptrboxtext.css',
-        'template/freelancer/vendor/font-awesome/css/font-awesome.css',
+		'template/ptr_front_smoth/css/front_smoth.css',
+		'template/ptr_front_smoth/css/ptr_box1.css',
+        'template/ptr_front_smoth/font-awesome/css/font-awesome.css',
 
     ];
     public $js = [
 		
-		'template/freelancer/js/jquery.easing.min.js',
-		'template/freelancer/js/freelancer.js',	//modify source freelancer.js, Note requrement jquery.min.js
+		'template/ptr_front_smoth/js/jquery.easing.min.js',
+		'template/ptr_front_smoth/js/front_smoth.js',	//modify source front_smoth.js, Note requrement jquery.min.js
 			
     ];
     public $depends = [

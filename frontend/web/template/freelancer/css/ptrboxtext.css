@@ -1,9 +1,7 @@
 .box-value {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
-  box-sizing: content-box;
-  width: 200px;
-  height: 300px;
+  box-sizing: content-box; 
   border: none;
   -webkit-border-radius: 0 20px;
   border-radius: 0 20px;
@@ -14,6 +12,7 @@
   text-overflow: ellipsis;
   -webkit-box-shadow: 2px 2px 1px 2px rgba(0,0,0,0.5) ;
   box-shadow: 2px 2px 1px 2px rgba(0,0,0,0.5) ;
+  margin-bottom:10px;
 }
 
 .box-value:hover {
@@ -46,7 +45,7 @@
   background-size: 100% 1.2em;
 }
 
-.box-button {
+.box-value  .box-button {
   display: inline-block;
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
@@ -65,7 +64,7 @@
   background: rgb(255, 174, 0); 
 }
 
-.box-button:hover {
+.box-value .box-button:hover {
   color: rgb(255, 174, 0);
   background: rgb(255, 255, 255);
 }
