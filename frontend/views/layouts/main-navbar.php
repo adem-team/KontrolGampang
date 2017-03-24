@@ -35,19 +35,16 @@ AppAssetFreelancer::register($this);
         // ['label' => 'About', 'url' => ['/site/#about']],
         // ['label' => 'Contact', 'url' => ['/site/#contact']],
     // ]
-	$menuItems[] = '<li class="hidden"> <a href="#page-top"></a>
-				</li>';
-	$menuItems[] = '<li class="page-scroll"> <a href="#home" id="home-controller">Home</a>
-				</li>';
-	$menuItems[] = '<li class="page-scroll"> <a href="#service" id="service-controller">Service</a>
-				</li>';
-	$menuItems[] = '<li class="page-scroll"> <a href="#help" id="help-controller">Help</a>
-			</li>';
-	$menuItems[] = '<li class="page-scroll">  <a href="#contact" id="contact-contact">contact</a>
-	</li>';
-					
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
+	
+		$menuItems[] = '<li class="hidden"> <a href="#page-top"></a></li>';
+		$menuItems[] = '<li class="page-scroll"> <a href="#home" id="home-controller">Home</a></li>';
+		$menuItems[] = '<li class="page-scroll"> <a href="#service" id="service-controller">Service</a></li>';
+		$menuItems[] = '<li class="page-scroll"> <a href="#help" id="help-controller">Help</a></li>';
+		$menuItems[] = '<li class="page-scroll"> <a href="#contact" id="contact-controller">Contact</a></li>';  
+	 if (Yii::$app->user->isGuest) {
+       //$menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
+        $menuItems[] = '<li class="page-scroll">  <a href="#signup-select" id="signup-controller">Signup</a></li>';
+	
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
         $menuItems[] = '<li>'
@@ -73,8 +70,8 @@ AppAssetFreelancer::register($this);
     NavBar::end();
     ?>
 	
-<?php
-$this->registerJs("
-	$('body').scrollspy({ target: '.navbar-fixed-top' })
-",$this::POS_READY);
-?>
+	<?php
+	$this->registerJs("
+		//$('body').scrollspy({ target: '.navbar-fixed-top' })
+	",$this::POS_READY);
+	?>

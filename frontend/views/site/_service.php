@@ -13,81 +13,60 @@
 			<hr class="star-primary">
 		</div>
 	</div>
-	<div class="gradient-pattern">
-		<div style="color:black"><p>adsdas</p></div>
-	</div>
 	<div class="row">
-	<div class="box-value">
-		<div style="padding-top:10px">
-			<!--<i class="fa fa-car"></i>
-			<i class="fa fa-car" style="font-size:60px;color:red;"></i>!-->
-			<i class="fa fa-car" style="font-size:48px;color:red;"></i>					
+		<div class="col-lg-3 col-lg-offset-1">
+			<div class="box1" style="height:80%">
+				<div style="padding-top:10px">
+					<i class="fa fa-car" style="font-size:40px;color:red;"></i>
+				</div>
+				<div style="padding-top:10px">ACCOUNTING</div>		
+					<div class="text-tengah" style="padding-top:10px">
+						<ul class="kotak">
+							<li>
+								asdasd asdasasddasdas dasdas dsadsa asdas as das d as das d as   asd as d as 
+							</li>							
+							<li>sdasd asdasasddasdas dasdas dsadsa</li>
+						</ul>
+						<ul class="bulat">
+							<li>asdasd asdasasddasdas dasdas dsadsa</li>							
+							<li>sdasd asdasasddasdas dasdas dsadsa</li>
+						</ul>
+						<ul class="roman-up">
+							<li>asdasd asdasasddasdas dasdas dsadsa</li>							
+							<li>sdasd asdasasddasdas dasdas dsadsa</li>
+						</ul>
+						<ul class="roman-low">
+							<li>asdasd asdasasddasdas dasdas dsadsa</li>							
+							<li>sdasd asdasasddasdas dasdas dsadsa</li>
+						</ul>
+					</div>
+				<div class="button" style="margin-top: 20px; text-align:center">Details</div>
+			</div>			
 		</div>
-		<div>ACCOUNTING</div>
+		<div class="col-lg-3 col-lg-offset-1">
+			<div class="box1">
+				<div style="padding-top:10px">
+					<i class="fa fa-car" style="font-size:40px;color:red;"></i>
+				</div>
+				<div>ACCOUNTING</div>		
+				<div style="padding-top:10px">
+					asdasd asdas dasdas dsadsa
+				</div>
+				<div class="button" style="margin-top: 130px; text-align:center">Details</div>
+			</div>			
+		</div>
+		<div class="col-lg-3 col-lg-offset-1">
+			<div class="box1">
+				<div style="padding-top:10px">
+					<i class="fa fa-car" style="font-size:40px;color:red;"></i>
+				</div>
+				<div>ACCOUNTING</div>		
+				<div style="padding-top:10px">
+					asdasd asdas dasdas dsadsa
+				</div>
+				<div class="button" style="margin-top: 130px; text-align:center">Details</div>
+			</div>			
+		</div>
 		
-		<div>asdasd asdas dasdas dsadsa</div>
-		<div class="box-button" style="margin-top: 130px; text-align:center">Details</div>
-	</div>
-	
-		<div class="col-sm-4 service-item">
-			<a href="#serviceModal1" class="service-link" data-toggle="modal">
-				<div class="caption">
-					<div class="caption-content">
-						<i class="fa fa-search-plus fa-3x"></i>
-					</div>
-				</div>
-				<img src="/template/freelancer/img/service/cabin.png" class="img-responsive" alt="Cabin">
-			</a>
-		</div>
-		<div class="col-sm-4 service-item">
-			<a href="#serviceModal2" class="service-link" data-toggle="modal">
-				<div class="caption">
-					<div class="caption-content">
-						<i class="fa fa-search-plus fa-3x"></i>
-					</div>
-				</div>
-				<img src="/template/freelancer/img/service/cake.png" class="img-responsive" alt="Slice of cake">
-			</a>
-		</div>
-		<div class="col-sm-4 service-item">
-			<a href="#serviceModal3" class="service-link" data-toggle="modal">
-				<div class="caption">
-					<div class="caption-content">
-						<i class="fa fa-search-plus fa-3x"></i>
-					</div>
-				</div>
-				<img src="/template/freelancer/img/service/circus.png" class="img-responsive" alt="Circus tent">
-			</a>
-		</div>
-		<div class="col-sm-4 service-item">
-			<a href="#serviceModal4" class="service-link" data-toggle="modal">
-				<div class="caption">
-					<div class="caption-content">
-						<i class="fa fa-search-plus fa-3x"></i>
-					</div>
-				</div>
-				<img src="/template/freelancer/img/service/game.png" class="img-responsive" alt="Game controller">
-			</a>
-		</div>
-		<div class="col-sm-4 service-item">
-			<a href="#serviceModal5" class="service-link" data-toggle="modal">
-				<div class="caption">
-					<div class="caption-content">
-						<i class="fa fa-search-plus fa-3x"></i>
-					</div>
-				</div>
-				<img src="/template/freelancer/img/service/safe.png" class="img-responsive" alt="Safe">
-			</a>
-		</div>
-		<div class="col-sm-4 service-item">
-			<a href="#serviceModal6" class="service-link" data-toggle="modal">
-				<div class="caption">
-					<div class="caption-content">
-						<i class="fa fa-search-plus fa-3x"></i>
-					</div>
-				</div>
-				<img src="/template/freelancer/img/service/submarine.png" class="img-responsive" alt="Submarine">
-			</a>
-		</div>
 	</div>
 </div>

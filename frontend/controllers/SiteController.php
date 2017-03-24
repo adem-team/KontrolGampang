@@ -72,6 +72,11 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+		Yii::$app->mailer->compose()
+		 ->setFrom('postman@lukison.com')
+		 ->setTo('piter@lukison.com')
+		 ->setSubject('Email sent from Yii2-Swiftmailer')
+		 ->send();
         return $this->render('index');
     }
 
@@ -160,8 +165,41 @@ class SiteController extends Controller
         return $this->render('signup', [
             'model' => $model,
         ]);
+		
     }
 
+	/**
+     * Ajax
+     * Signs user up.
+     * @return mixed
+     */
+    public function actionSignupFront()
+    {
+        $model = new SignupForm();
+        if ($model->load(Yii::$app->request->post())) {
+            if ($user = $model->signup()) {
+                if (Yii::$app->getUser()->login($user)) {
+                    return $this->goHome();
+                }
+            }
+        }
+
+        return $this->renderAjax('signup', [
+            'model' => $model,
+        ]);
+	}
+    /**
+     * Ajax
+     * Signs user up.
+     * @return mixed
+     */
+    public function actionHomeFront()
+    {
+        return $this->renderAjax('home');
+    }
+	
+	
+	
     /**
      * Requests password reset.
      *
