@@ -18,7 +18,7 @@ use frontend\models\ContactForm;
  */
 class SiteController extends Controller
 {
-    /**
+     /**
      * @inheritdoc
      */
     public function behaviors()
@@ -26,15 +26,14 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
                 'rules' => [
                     [
-                        'actions' => ['signup'],
+                        // Author: -ptr.nov- : Permission Allow No Login |index|error|login 
+                        'actions' => ['index', 'error','login','validasi'],
                         'allow' => true,
-                        'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'index'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -72,14 +71,46 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-		Yii::$app->mailer->compose()
+		/* Yii::$app->mailer->compose()
 		 ->setFrom('postman@lukison.com')
 		 ->setTo('piter@lukison.com')
-		 ->setSubject('Email sent from Yii2-Swiftmailer')
-		 ->send();
-        return $this->render('index');
+		 ->setSubject('Minggu - Email sent from Yii2-Swiftmailer')
+		 ->send(); */
+		if (\Yii::$app->user->isGuest) {
+            $model = new LoginForm();
+            return $this->render('indexNoLogin', [
+                'model' => $model,
+            ]);
+        } else {
+			return $this->render('index');
+		}
     }
 
+	public function beforeAction($action)
+	{
+
+		// if (!parent::beforeAction($action)) {
+			// return false;
+		// } 
+		
+		if ( !Yii::$app->user->isGuest)  {
+			if (Yii::$app->session['userSessionTimeout'] < time()) {
+				Yii::$app->user->logout();
+				$model = new LoginForm();
+				 return $this->render('indexNoLogin', [
+					'model' => $model,
+				]);
+				//$this->redirect(array('/site/login'));
+				//$this->redirect(['/site/ubah-password']);
+			} else {
+				Yii::$app->session->set('userSessionTimeout', time() + Yii::$app->params['sessionTimeoutSeconds']);				
+				return true; // benar maka login
+			}
+		} else {
+			return true;
+		}
+	} 
+	
     /**
      * Logs in a user.
      *
@@ -87,20 +118,30 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+		//Session Penting.
+		Yii::$app->session->set('userSessionTimeout', time() + Yii::$app->params['sessionTimeoutSeconds']);		
+		
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+          return $this->goHome();
+		   // return $this->render('index');
         }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
+			
         } else {
-            return $this->render('login', [
+			
+            return $this->render('index', [
                 'model' => $model,
             ]);
         }
     }
 
+	protected  function afterLogin(){
+		Yii::$app->session->set('userSessionTimeout', time() + Yii::$app->params['sessionTimeoutSeconds']);
+	} 
+	
     /**
      * Logs out the current user.
      *
@@ -129,7 +170,7 @@ class SiteController extends Controller
             }
 
             return $this->refresh();
-        } else {
+        }else {
             return $this->render('contact', [
                 'model' => $model,
             ]);
@@ -188,6 +229,7 @@ class SiteController extends Controller
             'model' => $model,
         ]);
 	}
+	
     /**
      * Ajax
      * Signs user up.
