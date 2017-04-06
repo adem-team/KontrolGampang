@@ -87,21 +87,11 @@ class SiteController extends Controller
     }
 
 	public function beforeAction($action)
-	{
-
-		// if (!parent::beforeAction($action)) {
-			// return false;
-		// } 
-		
+	{		
 		if ( !Yii::$app->user->isGuest)  {
 			if (Yii::$app->session['userSessionTimeout'] < time()) {
 				Yii::$app->user->logout();
-				$model = new LoginForm();
-				 return $this->render('indexNoLogin', [
-					'model' => $model,
-				]);
-				//$this->redirect(array('/site/login'));
-				//$this->redirect(['/site/ubah-password']);
+				return $this->goHome(); 
 			} else {
 				Yii::$app->session->set('userSessionTimeout', time() + Yii::$app->params['sessionTimeoutSeconds']);				
 				return true; // benar maka login
@@ -122,7 +112,7 @@ class SiteController extends Controller
 		Yii::$app->session->set('userSessionTimeout', time() + Yii::$app->params['sessionTimeoutSeconds']);		
 		
         if (!Yii::$app->user->isGuest) {
-          return $this->goHome();
+			return $this->goHome();
 		   // return $this->render('index');
         }
 
@@ -132,15 +122,27 @@ class SiteController extends Controller
 			
         } else {
 			
-            return $this->render('index', [
-                'model' => $model,
-            ]);
+            // return $this->render('index', [
+                // 'model' => $model,
+            // ]);
+			 return $this->goHome();
         }
     }
 
 	protected  function afterLogin(){
 		Yii::$app->session->set('userSessionTimeout', time() + Yii::$app->params['sessionTimeoutSeconds']);
 	} 
+	
+	public function actionAlert(){
+        if (\Yii::$app->user->isGuest) {
+            return $this->goHome();
+        } else {
+			$js='$("#confirm-permission-alert").modal("show")';
+			$this->getView()->registerJs($js);
+            return $this->render('index');
+        }
+
+    }
 	
     /**
      * Logs out the current user.

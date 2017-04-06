@@ -27,7 +27,7 @@ dmstr\web\AdminLteAsset::register($this);
 				</div>
 			', */
 			'brandLabel' => '<!-- Sidebar toggle button-->
-				<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+				<a id="kg" href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
 					<span class="sr-only">Toggle Navigation</span>
 				</a>'
 			,

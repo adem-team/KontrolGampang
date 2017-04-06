@@ -20,24 +20,22 @@ class DefaultController extends Controller
      */
 	public function beforeAction($action){
 		if (Yii::$app->user->isGuest)  {
-			 Yii::$app->user->logout();
-			   $this->redirect(array('/site/login'));  //
+			Yii::$app->user->logout();
+			return $this->goHome();
 		}
 		// Check only when the user is logged in
 		if (!Yii::$app->user->isGuest)  {
 		   if (Yii::$app->session['userSessionTimeout']< time() ) {
 			   // timeout
-			   Yii::$app->user->logout();
-			   $this->redirect(array('/site/login'));  //
+				Yii::$app->user->logout();
+				return $this->goHome();
 		   } else {
-			   //Yii::$app->user->setState('userSessionTimeout', time() + Yii::app()->params['sessionTimeoutSeconds']) ;
-			   Yii::$app->session->set('userSessionTimeout', time() + Yii::$app->params['sessionTimeoutSeconds']);
-			   //Modul permission URL, author -ptr.nov@gail.com-
-			  // if(self::getPermission()->BTN_CREATE OR self::getPermission()->BTN_VIEW){
-					//return true;
-			  // }else{
-				  $this->redirect(array('/site/validasi'));
-			  // }
+			   if(Yii::$app->getUserOpt->UserMenuPermission(2)['STATUS']==0){
+					//Yii::$app->session->set('userSessionTimeout', time() + Yii::$app->params['sessionTimeoutSeconds']);
+					$this->redirect(array('/site/alert'));
+			   }else{
+				   return $this->goHome();
+			   }
 		   }
 		} else {
 			return true;
