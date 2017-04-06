@@ -50,7 +50,7 @@ dmstr\web\AdminLteAsset::register($this);
 						<?=$this->render('main-navbar')?>
 						<!-- LEFT MENU !-->
 						<aside class="main-sidebar " style="min-height:680px">						
-						<?=$this->render('mainleft'); ?>
+						<?=$this->render('mainLeft'); ?>
 						</aside>
 						<!-- BODY CONTAINER !-->	
 						<?=$this->render('mainContent',['content'=>$content]); ?>	
