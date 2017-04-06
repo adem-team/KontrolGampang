@@ -54,6 +54,7 @@ class ArrayBantuan extends Component{
 	 * Find content on Column.
 	 * Author	: ptr.nov@gmail.com.
 	 * Update	: 15/02/2017.
+	 *  Yii::$app->arrayBantuan->array_find($arr, $key,$value)
 	*/
 	function array_find($array, $keys, $searchContent)
 	{
