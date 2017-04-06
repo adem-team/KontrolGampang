@@ -7,21 +7,20 @@ use yii\web\AssetBundle;
 /**
  * Main frontend application asset bundle.
  */
-class AppAssetFreelancer extends AssetBundle
+class AppAssetSmoth extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-		//'template/freelancer/vendor/bootstrap/css/bootstrap.min.css',
+		//freelancer modify,
 		'template/ptr_front_smoth/css/front_smoth.css',
-		'template/ptr_front_smoth/css/ptr_box1.css',
-        'template/ptr_front_smoth/font-awesome/css/font-awesome.css',
-
+		'template/ptr_front_smoth/css/ptr_box1.css',	
+        'template/ptr_front_smoth/font-awesome/css/font-awesome.css'
     ];
     public $js = [
-		
+		//freelancer modify,
 		'template/ptr_front_smoth/js/jquery.easing.min.js',
-		'template/ptr_front_smoth/js/front_smoth.js',	//modify source front_smoth.js, Note requrement jquery.min.js
+		'template/ptr_front_smoth/js/front_smoth.js',			//modify source front_smoth.js, Note requrement jquery.min.js
 			
     ];
     public $depends = [
