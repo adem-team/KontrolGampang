@@ -6,12 +6,14 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\Store;
+use common\models\user;
 
 /**
  * StoreSearch represents the model behind the search form about `lukisongroup\efenbi\rasasayang\models\Store`.
  */
 class StoreSearch extends Store
 {
+		
 	public function attributes()
 	{
 		//Author -ptr.nov- add related fields to searchable attributes 
@@ -24,20 +26,11 @@ class StoreSearch extends Store
     {
         return [
             [['ID', 'STATUS','LOCATE_SUB', 'LOCATE'], 'integer'],
-            [['CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT','OUTLET_BARCODE', 'OUTLET_NM', 'ALAMAT', 'PIC', 'TLP','LocatesubNm','LocateNm'], 'safe'],
+            [['ACCESS_UNIX','CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT','OUTLET_BARCODE', 'OUTLET_NM', 'ALAMAT', 'PIC', 'TLP','LocatesubNm','LocateNm'], 'safe'],
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function scenarios()
-    {
-        // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
-    }
-
-    /**
+     /**
      * Creates data provider instance with search query applied
      *
      * @param array $params
@@ -93,4 +86,27 @@ class StoreSearch extends Store
 
         return $dataProvider;
     }
+	
+	public function searchUserStore($params)
+    {
+		$query = Store::find()->JoinWith('locateTbl',true,'LEFT JOIN')->JoinWith('locatesubTbl',true,'LEFT JOIN');
+	
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+		
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        } 
+		
+		//$query->Where('FIND_IN_SET("20170404081601", ACCESS_UNIX)');
+		$query->Where('FIND_IN_SET("'.$this->ACCESS_UNIX.'", ACCESS_UNIX)');
+		$query->asArray();
+		
+        return $dataProvider;
+	}
 }

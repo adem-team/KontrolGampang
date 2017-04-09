@@ -3,7 +3,6 @@ use yii\helpers\Html;
 use common\models\User;
 use common\models\UserloginSearch;
 
-$userData=User::find()->where(['id' =>Yii::$app->user->id])->one();
 
 ?>
 
@@ -12,10 +11,10 @@ $userData=User::find()->where(['id' =>Yii::$app->user->id])->one();
 		<!-- User Login -->
 			<div class="user-panel">
 				<div class="pull-left" style="text-align: left">
-					<img src="<?='data:image/jpg;charset=utf-8;base64,'.$userData['Noimage']?>" class="img-circle" alt="Cinque Terre" width="80" height="80"/>
+					<img src="<?='data:image/jpg;charset=utf-8;base64,'.Yii::$app->getUserOpt->user()['IMG64']?>" class="img-circle" alt="Cinque Terre" width="80" height="80"/>
 				</div>
 				<div class="pull-left info" style="margin-left: 40px" >
-					<p><?=Yii::$app->getUserOpt->user()['username']?></p>
+					<p><?=Yii::$app->getUserOpt->user()['PROFILE_NM']?></p>
 				
 					<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 				</div>
@@ -23,13 +22,7 @@ $userData=User::find()->where(['id' =>Yii::$app->user->id])->one();
 		<div class="user-panel" style="margin-top:20px;background-color:rgba(19, 105, 144, 1)">
 			<!-- /.Company Select Dashboard -->
 			 <p style="color:white">
-				<?php
-					// if ($this->sideCorp != '') {
-						// echo $this->sideCorp;
-					// }else{
-						 echo 'PT. Lukison Group';
-					// };
-				?>
+				<?=Yii::$app->getUserOpt->user()['CORP_NM']?>
 			 </p>
 		</div>
 		   

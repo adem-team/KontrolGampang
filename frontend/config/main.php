@@ -24,11 +24,18 @@ return [
                 'forceTranslation' => true
             ],
         ],
+		'treemanager' =>  [
+			'class' => '\kartik\tree\Module',
+			// other module settings, refer detailed documentation
+		],
 		'dashboard' => [
             'class' => 'frontend\backend\dashboard\Modul',
         ],
 		'sistem' => [
             'class' => 'frontend\backend\sistem\Modul',
+        ],
+		'master' => [
+            'class' => 'frontend\backend\master\Modul',
         ],
 	],
     'components' => [

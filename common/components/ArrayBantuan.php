@@ -57,7 +57,8 @@ class ArrayBantuan extends Component{
 	 *  Yii::$app->arrayBantuan->array_find($arr, $key,$value)
 	*/
 	function array_find($array, $keys, $searchContent)
-	{
+	{	
+		$rslt=[];
 		foreach($array as $key => $value) {
 			if(trim($value[$keys])===trim($searchContent)){
 				$rslt[]=$value;

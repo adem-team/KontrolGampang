@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models;;
+namespace common\models;
 
 use Yii;
 
@@ -45,7 +45,7 @@ class Store extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['CREATE_AT', 'UPDATE_AT'], 'safe'],
+            [['CREATE_AT', 'UPDATE_AT','ACCESS_UNIX'], 'safe'],
             [['STATUS','LOCATE_SUB', 'LOCATE'], 'integer'],
             [['ALAMAT'], 'string'],
             [['CREATE_BY', 'UPDATE_BY', 'OUTLET_BARCODE', 'TLP'], 'string', 'max' => 50],
@@ -66,6 +66,7 @@ class Store extends \yii\db\ActiveRecord
             'UPDATE_BY' => Yii::t('app', 'UPDATE BY'),
             'UPDATE_AT' => Yii::t('app', 'UPDATE AT'),
             'STATUS' => Yii::t('app', 'STATUS'),
+            'ACCESS_UNIX' => Yii::t('app', 'ACCESS_UNIX'),
             'LOCATE' => Yii::t('app', 'CABANG'),
             'LOCATE_SUB' => Yii::t('app', 'SUB.CABANG '),
             'LocateNm' => Yii::t('app', 'CABANG'),

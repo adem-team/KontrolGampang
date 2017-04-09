@@ -14,10 +14,8 @@ use yii\helpers\Json;
 use yii\web\Response;
 use yii\widgets\Pjax;
 use yii\web\View;
-use kartik\tree\TreeView;
-use kartik\tree\TreeViewInput;
+
 use common\models\Locate;
-use common\models\Product;
 
 $this->title = Yii::t('app', 'ESM - Marketing Dashboard');      /* title pada header page */
 $this->params['breadcrumbs'][] = $this->title;  
@@ -309,28 +307,10 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="row">
 			<?=$gvStore?>
 			</br>
-			<?php
-				print_r(Yii::$app->getUserOpt->UserStore())
-			?>
-			
-			</br>
-			<?php
-				/* echo TreeViewInput::widget([
-					// single query fetch to render the tree
-					// use the Product model you have in the previous step
-					'query' => Product::find()->addOrderBy('root, lft'), 
-					'headingOptions'=>['label'=>'Categories'],
-					'name' => 'kv-product', // input name
-					'value' => '1,2,3',     // values selected (comma separated for multiple select)
-					'asDropdown' => true,   // will render the tree input widget as a dropdown.
-					'multiple' => true,     // set to false if you do not need multiple selection
-					'fontAwesome' => true,  // render font awesome icons
-					'rootOptions' => [
-						'label'=>'<i class="fa fa-tree"></i>',  // custom root label
-						'class'=>'text-success'
-					], 
-					//'options'=>['disabled' => true],
-				]); */
+			<?=Yii::$app->getUserOpt->UserMenuPermission(3)['BTN_SIGN1']
+				//$permissionMenu=Yii::$app->getUserOpt->UserMenuPermission(3);
+				//print_r(Yii::$app->getUserOpt->UserMenuPermission(3)['BTN_SIGN1']);
+				//print_r($permissionMenu);
 			?>
 		</div>
 	</div>

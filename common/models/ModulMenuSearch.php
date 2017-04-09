@@ -41,6 +41,9 @@ class ModulMenuSearch extends ModulMenu
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+			'pagination'=>[
+				'pageSize'=>100,
+			]   
         ]);
 
         $this->load($params);
@@ -52,18 +55,9 @@ class ModulMenuSearch extends ModulMenu
         }
 
 		$query->andFilterWhere([ 
-			'USER_UNIX' =>$this->UserUnix,			//ModulMenuPermissoion	- User Unix -> Dirict App Access.
-			'MODUL_STS' =>1							//ModulMenu 			- PAKAGE HANDLING (Discontinous)
+			'USER_UNIX' =>$this->UserUnix,			
 		]);
 		
-		/* ACCESS_GROUP Check. HANDLING ADMINISTRATOR/OWNER/FLOWER.
-		 * Adminstrator -> Admin system.
-		 * Owner -> pemilik registrasi all pakage [home/standart edition/propotional].
-		 * Flowr -> Kasir,inventory,accounting.
-		*/		
-		// $query->andFilterWhere([ 
-			// 'STATUS'=>$this->status,			//ModulMenuPermissoion
-		// ]);
 		
 			
 		$query->asArray();       
