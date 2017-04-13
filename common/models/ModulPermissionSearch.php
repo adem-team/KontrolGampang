@@ -8,9 +8,9 @@ use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 
 /**
- * MdlpermissionSearch represents the model behind the search form about `lukisongroup\sistem\models\erpmodul\Mdlpermission`.
+ * ModulPermissionSearch represents the model behind the search form about `lukisongroup\sistem\models\erpmodul\ModulPermission`.
  */
-class ModulPermissionSearch extends Mdlpermission
+class ModulPermissionSearch extends ModulPermission
 {
     /**
      * @inheritdoc
@@ -45,7 +45,7 @@ class ModulPermissionSearch extends Mdlpermission
      */
     public function search($params)
     {
-        $query = Mdlpermission::find();
+        $query = ModulPermission::find();
 
         $dataProvider = new ActiveDataProvider([
 			 'query' => $query,

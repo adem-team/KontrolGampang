@@ -25,7 +25,9 @@
         "kartik-v/yii2-grid": "@dev",
         "kartik-v/yii2-krajee-base": "dev-master",
         "kartik-v/yii2-widgets": "*",
-        "kartik-v/yii2-tree-manager": "@dev"
+        "kartik-v/yii2-tree-manager": "@dev",
+        "lesha724/yii2-bootstrap-tree": "*",
+        "kartik-v/yii2-editable": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

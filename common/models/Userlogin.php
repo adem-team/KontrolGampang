@@ -116,7 +116,11 @@ class Userlogin extends \yii\db\ActiveRecord
 			'CORP_NM'=>function(){
 				//return $this->corpTbl!=''?$this->corpTbl->CORP_NM:'Nama Perusahaan';
 				return $this->corpTbl!=''?$this->corpTbl->CORP_NM:'Nama Perusahaan';
-			}		
+			},	
+			// 'CORP_IMG64'=>function(){
+				//return $this->corpTbl!=''?$this->corpTbl->CORP_NM:'Nama Perusahaan';
+				// return $this->corpTbl!=''?$this->corpTbl->CORP_IMG64:$this->noimage;
+			// }	 	
 		];
 	}
   

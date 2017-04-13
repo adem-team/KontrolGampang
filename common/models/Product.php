@@ -46,18 +46,54 @@ class Product extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'tbl_product';
+        return 'user';
     }
     
+	public function getActive(){
+		return true;
+	}
+	public function getSelected(){
+		return true;
+	}
+	public function getCollapsed(){
+		return true;
+	}
+	public function getVisible(){
+		return true;
+	}
+	public function getReadonly(){
+		return true;
+	}
+	public function getDisabled(){
+		return true;
+	}
+	public function getRemovable(){
+		return true;
+	}
+	public function getRemovable_all(){
+		return true;
+	}
+	public function getMovable_u(){
+		return true;
+	}
+	public function getMovable_d(){
+		return true;
+	}
+	public function getMovable_l(){
+		return true;
+	}
+	public function getMovable_r(){
+		return true;
+	}
     /**
      * Note overriding isDisabled method is slightly different when
      * using the trait. It uses the alias.
      */
-    public function isDisabled()
-    {
-        if (Yii::$app->user->username !== 'admin') {
-            return true;
-        }
-        return $this->parentIsDisabled();
-    }
+    // public function isDisabled()
+    // {
+        // if (Yii::$app->user->username !== 'admin') {
+            // return true;
+        // }
+        // return $this->parentIsDisabled();
+    // }
 }

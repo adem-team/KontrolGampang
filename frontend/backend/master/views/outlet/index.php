@@ -306,12 +306,6 @@ $this->params['breadcrumbs'][] = $this->title;
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;">
 		<div class="row">
 			<?=$gvStore?>
-			</br>
-			<?=Yii::$app->getUserOpt->UserMenuPermission(3)['BTN_SIGN1']
-				//$permissionMenu=Yii::$app->getUserOpt->UserMenuPermission(3);
-				//print_r(Yii::$app->getUserOpt->UserMenuPermission(3)['BTN_SIGN1']);
-				//print_r($permissionMenu);
-			?>
 		</div>
 	</div>
 </div>
