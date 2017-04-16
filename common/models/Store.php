@@ -45,7 +45,7 @@ class Store extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['CREATE_AT', 'UPDATE_AT','ACCESS_UNIX'], 'safe'],
+            [['CREATE_AT', 'UPDATE_AT','ACCESS_UNIX','expired'], 'safe'],
             [['STATUS','LOCATE_PROVINCE', 'LOCATE_CITY'], 'integer'],
             [['ALAMAT'], 'string'],
             [['CREATE_BY', 'UPDATE_BY', 'OUTLET_CODE', 'TLP'], 'string', 'max' => 50],
@@ -96,6 +96,10 @@ class Store extends \yii\db\ActiveRecord
 	{
 		return $this->kotaTbl!=''?$this->kotaTbl->CITY_NAME:'none';
 	}
+	public function getExpired()
+	{
+		return '30';
+	}
 	
 	public function fields()
 	{
@@ -143,6 +147,9 @@ class Store extends \yii\db\ActiveRecord
 			},		
 			'FAX'=>function($model){
 				return $model->FAX;
+			},	
+			'EXPIRED'=>function($model){
+				return $this->expired;
 			}		
 		];
 	}

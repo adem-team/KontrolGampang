@@ -32,8 +32,8 @@ $this->registerCss("
  
 $this->title = Yii::t('app', 'ESM - Marketing Dashboard');      /* title pada header page */
 $this->params['breadcrumbs'][] = $this->title;  
-// $this->registerJs($this->render('modal_store.js'),View::POS_READY);
-// echo $this->render('modal_store'); //echo difinition
+$this->registerJs($this->render('modal_store.js'),View::POS_READY);
+echo $this->render('modal_store'); //echo difinition
 
 	$aryStt= [
 		  ['STATUS' => 0, 'STT_NM' => 'DISABLE'],		  
@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'contentOptions'=>['class'=>'kartik-sheet-style'],
 			'width'=>'10px',
 			'header'=>'No',
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','30px',$bColor),
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','30px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('center','30px',''),
 		],
 		//KD_BARCODE
@@ -163,6 +163,23 @@ $this->params['breadcrumbs'][] = $this->title;
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','250px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','250px',''),
 			
+		],		
+		//EXPIRED.
+		[
+			'attribute'=>'EXPIRED',
+			'label'=>'EXPIRED',
+			'filterType'=>true,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			'value'=>function($model){
+				return $model->EXPIRED . ' days';
+			},
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor,'#ffffff'),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('right','50px',''),
+			
 		],			
 		//CREATE_AT
 		/* [
@@ -252,17 +269,17 @@ $this->params['breadcrumbs'][] = $this->title;
 			'contentOptions'=>Yii::$app->gv->gvContainBody('center','50','')			
 		],
 		//ACTION
-		/* [
+		[
 			'class' => 'kartik\grid\ActionColumn',
 			'template' => '{view}{edit}{reminder}{deny}',
-			'header'=>'Action',
+			'header'=>'ACTION',
 			'dropdown' => true,
 			'dropdownOptions'=>[
 				'class'=>'pull-right dropdown',
 				'style'=>'width:60px;background-color:#E6E6FA'				
 			],
 			'dropdownButton'=>[
-				'label'=>'Action',
+				'label'=>'ACTION',
 				'class'=>'btn btn-default btn-xs',
 				'style'=>'width:100%;'		
 			],
@@ -280,9 +297,9 @@ $this->params['breadcrumbs'][] = $this->title;
 				}
 
 			],
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColor),
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('center','10px',''),
-		] */
+		]
 	];
 
 	$gvStore=GridView::widget([
@@ -308,15 +325,17 @@ $this->params['breadcrumbs'][] = $this->title;
 		'toolbar' => [
 			''
 		],
+		'summary'=>false,
 		'panel' => [
 			//'heading'=>false,
 			'heading'=>'
 				<span class="fa-stack fa-sm">
 				  <i class="fa fa-circle-thin fa-stack-2x" style="color:#25ca4f"></i>
-				  <i class="fa fa-cubes fa-stack-1x"></i>
-				</span> CABANG - OUTLET',  
+				  <i class="fa fa-television fa-stack-1x"></i>
+				</span> List Outlet'.'   <div style="float:right">'. tombolReqStore().'</div>',  
 			'type'=>'info',
 			//'before'=> tombolCreate().' '.tombolRefresh().' '.tombolExportExcel(),
+			//'before'=> tombolReqStore(),
 			'showFooter'=>false,
 		],
 		// 'floatOverflowContainer'=>true,

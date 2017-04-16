@@ -17,7 +17,7 @@ class StoreSearch extends Store
 	public function attributes()
 	{
 		//Author -ptr.nov- add related fields to searchable attributes 
-		return array_merge(parent::attributes(), ['ProvinsiNm','KotaNm']);
+		return array_merge(parent::attributes(), ['ProvinsiNm','KotaNm','expired']);
 	}
     /**
      * @inheritdoc
