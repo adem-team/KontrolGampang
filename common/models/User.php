@@ -18,7 +18,6 @@ use yii\web\IdentityInterface;
  * @property string $auth_key
  * @property integer $status
  * @property integer $created_at
- * @property integer $updated_at
  * @property string $password write-only password
  */
 class User extends ActiveRecord implements IdentityInterface
@@ -53,6 +52,7 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            [['create_at','update_at'],'safe'],
         ];
     }
 
@@ -73,6 +73,25 @@ class User extends ActiveRecord implements IdentityInterface
 		 return static::findOne(['auth_key' => $token]);
     }
 
+	/**
+	 * RISET TOKEN ACCESS APP.
+	 * If login Reset Access token, chek by UUID.
+	 * Author by : Piter Novian [ptr.nov@gmail.com]
+	*/
+	public static function findResetAccessToken($username)
+    {
+		$modelUser = static::find()->where(['username' => $username])->one();
+		$modelUser->auth_key=Yii::$app->security->generateRandomString();//'233123';
+		$modelUser->save();
+		/* if (!static::isPasswordResetTokenValid($token)) {
+            return null;
+        }
+        return static::findOne([
+            'password_reset_token' =>  '123',//$this->auth_key = Yii::$app->security->generateRandomString(),
+            'status' => self::STATUS_ACTIVE,
+        ]); */
+    }
+	
     /**
      * Finds user by username
      *

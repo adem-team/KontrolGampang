@@ -64,19 +64,7 @@ class UserController extends ActiveController
                 'authMethods' => 
                 [
                     #Hapus Tanda Komentar Untuk Autentifikasi Dengan Token               
-					 ['class' => HttpBasicAuth::className(),
-				    'auth' => function ($username, $password) {
-							  $user = User::find()->where(['username' => $username])->one();
-							   return $user;
-							  // if ($user->verifyPassword($password)) {
-								  // return $user;
-							  // }
-							  // return null; 
-						},
-					], 
-					//['class' => HttpBearerAuth::className()],
-                   //['class' => QueryParamAuth::className(), 'tokenParam' => 'azLSTAYr7Y7TLsEAML-LsVq9cAXLyAWa'],
-                  // ['class' => QueryParamAuth::className()],
+					 ['class' => HttpBearerAuth::className()]
                 ]
             ],
 			'bootstrap'=> 
@@ -120,8 +108,7 @@ class UserController extends ActiveController
 					$param=["UserloginSearch"=>Yii::$app->request->queryParams];
 					//return $param;
                     $searchModel = new UserloginSearch();
-                    return $searchModel->search($param);
-					
+					return $searchModel->search($param);
                 },
             ],
         ];

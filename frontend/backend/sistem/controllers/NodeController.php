@@ -12,7 +12,7 @@ use Yii;
 use Closure;
 use Exception;
 use yii\db\Exception as DbException;
-use yii\base\InvalidConfigException;
+//use yii\base\InvalidConfigException;
 use yii\base\InvalidParamException;
 use yii\base\NotSupportedException;
 use yii\helpers\ArrayHelper;
@@ -66,15 +66,15 @@ class NodeController extends Controller
      *
      * @return void
      */
-    protected static function checkValidRequest($isInvalid = null)
-    {
-        if ($isInvalid === null) {
-            $isInvalid = !Yii::$app->request->isAjax || !Yii::$app->request->isPost;
-        }
-        if ($isInvalid) {
-            throw new InvalidCallException(Yii::t('kvtree', 'This operation is not allowed.'));
-        }
-    }
+    // protected static function checkValidRequest($isInvalid = null)
+    // {
+        // if ($isInvalid === null) {
+            // $isInvalid = !Yii::$app->request->isAjax || !Yii::$app->request->isPost;
+        // }
+        // if ($isInvalid) {
+            // throw new InvalidCallException(Yii::t('kvtree', 'This operation is not allowed.'));
+        // }
+    // }
 
     /**
      * Checks signature of posted data for ensuring security against data tampering.
@@ -270,8 +270,8 @@ class NodeController extends Controller
                 });
             } */
             //static::checkSignature('manage', $data);
-            return $this->renderAjax($nodeView, ['params' => $params]);
-           // return $this->renderAjax('_form', ['params' => $params]);
+           //return $this->renderAjax($nodeView, ['params' => $params]);
+            return $this->renderAjax('_form', ['params' => $params]);
         };
 		
         return self::process(

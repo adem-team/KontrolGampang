@@ -34,7 +34,7 @@ class Userlogin extends \yii\db\ActiveRecord
         return [
 			[['username','auth_key','password_hash','POSITION_ACCESS'], 'required','on' => self::SCENARIO_USER],
 			[['new_pass','username','status'], 'required','on' =>'updateuser'],
-			[['username','auth_key','password_hash','password_reset_token','access_token'], 'string'],
+			[['username','auth_key','password_hash','password_reset_token'], 'string'],
 			[['email'], 'string'],
 			[['id','status','create_at','update_at'],'safe'],
 			[['ACCESS_UNIX','ACCESS_GROUP','ACCESS_LEVEL','ACCESS_SITE','ONLINE','UUID'], 'safe'],

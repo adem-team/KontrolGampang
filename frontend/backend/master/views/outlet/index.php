@@ -28,42 +28,43 @@ $this->params['breadcrumbs'][] = $this->title;
 	];	
 	$valStt = ArrayHelper::map($aryStt, 'STATUS', 'STT_NM');
 	
-	$bColor='rgba(52, 235, 138, 1)';
+	$bColor='rgba(87,114,111, 1)';
 	$gvAttributeItem=[
 		[
 			'class'=>'kartik\grid\SerialColumn',
 			'contentOptions'=>['class'=>'kartik-sheet-style'],
 			'width'=>'10px',
 			'header'=>'No.',
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','30px',$bColor),
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','30px',$bColor,'#fdfdfd'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('center','30px',''),
 		],
 		//KD_BARCODE
 		[
 			'attribute'=>'OUTLET_BARCODE',
-			'filterType'=>true,
+			'filterType'=>false,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','80px'),
 			'hAlign'=>'right',
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
 			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','80px',$bColor),
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','80px',$bColor,'#fdfdfd'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','80px',''),
 			
 		],
 		//CABANG LOCATE 
 		[
 			'attribute'=>'LocateNm',
-			//'label'=>'Cutomer',
+			'label'=>'<font color="#fdfdfd">Cutomer</font>',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','150px'),
 			'hAlign'=>'right',
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
+			'format'=>'html',
 			'noWrap'=>false,
 			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','150px',$bColor),
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','150px',$bColor,'#fdfdfd'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','150px',''),
 			
 		],		
@@ -297,8 +298,8 @@ $this->params['breadcrumbs'][] = $this->title;
 			//'before'=> tombolCreate().' '.tombolRefresh().' '.tombolExportExcel(),
 			'showFooter'=>false,
 		],
-		'floatOverflowContainer'=>true,
-		'floatHeader'=>true,
+		// 'floatOverflowContainer'=>true,
+		// 'floatHeader'=>true,
 	]); 
 	
 ?>
@@ -307,5 +308,71 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="row">
 			<?=$gvStore?>
 		</div>
+		</br>
+		<?php
+		$items = [
+			
+			[
+				'text' => 'Folder 2',
+				'nodes' => [
+					['text' => 'Node 2.1',
+						'state' => [
+							'checked' => true,
+							'disabled' => false,
+							'expanded' => false,
+							'selected' => true
+						],
+						'nodes' =>[
+							[	'text' => 'Node 2.2',
+								'href' => "#node-1",
+								'icon' => "glyphicon glyphicon-stop",
+								'selectedIcon' => "glyphicon glyphicon-stop",
+								'selectable' => false,
+								'state' => [
+									'checked' => true,
+									'disabled' => false,
+									'expanded' => true,
+									'selected' => true
+								],
+							],
+							[	'text' => 'Node 2.3',
+								'href' => "#node-2",
+								'icon' => "glyphicon glyphicon-stop",
+								'selectedIcon' => "glyphicon glyphicon-stop",
+								'selectable' => false,
+								'state' => [
+									'checked' => true,
+									'disabled' => false,
+									'expanded' => true,
+									'selected' => true
+								],
+							
+							]
+						]
+					],
+					['text' => 'Node 2.4']
+				]
+			]
+		];
+		
+		$trev=\lesha724\bootstraptree\TreeView::widget([
+				'htmlOptions'=>[
+							'id'=>'treeview-tabs'
+				],
+				'options'=>[
+					'data'=>$items,
+					'enableLinks'=>true,
+					'showTags'=>true,
+					'levels'=>3
+				],
+				'events'=>[
+					'onNodeSelected'=>'function(event, data) {
+						// Your logic goes here
+						alert(data.href);
+					}'
+				]
+			]);	 
+		?>
+		<?=$trev?>
 	</div>
 </div>

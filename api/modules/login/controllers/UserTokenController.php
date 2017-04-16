@@ -15,7 +15,7 @@ use yii\filters\VerbFilter;
 use yii\web\Response;
 use yii\helpers\ArrayHelper;
 use yii\web\HttpException;
-use api\modules\login\models\UserloginSearch;
+use api\modules\login\models\UserTokenSearch;
 use common\models\User;
 
 /**
@@ -34,11 +34,12 @@ class UserTokenController extends ActiveController
 	  *
 	 */
     //public $modelClass = 'common\models\User';
-    public $modelClass = 'api\modules\login\models\UserloginSearch';
-	public $serializer = [
-		'class' => 'yii\rest\Serializer',
-		'collectionEnvelope' => 'User',
-	];	
+    public $modelClass = 'api\modules\login\models\UserTokenSearch';
+	// public $serializer = [
+		// 'class' => 'yii\rest\Serializer',
+		//'collectionEnvelope' => 'User',
+		//'linksEnvelope'=> false,
+	// ];	
 	
 	/**
      * Behaviors
@@ -52,14 +53,16 @@ class UserTokenController extends ActiveController
                 'class' => CompositeAuth::className(),
 				'authMethods' => 
                 [
-                    ['class' => HttpBasicAuth::className(),
-				    'auth' => function ($username, $password) {
-							  $user = User::find()->where(['username' => $username])->one();
-							   return $user;
-							  // if ($user->verifyPassword($password)) {
-								  // return $user;
-							  // }
-							  // return null; 
+                    ['class' => HttpBasicAuth::className()
+					,'auth' => function ($username, $password) {							
+							$user = User::find()->where(['username' => $username])->one();
+							if($user){
+								if ($user->username==$username && $user->validatePassword($password)) {
+									$user->findResetAccessToken($user->username);								
+									return $user;
+								}
+								return null;
+							}
 						},
 					], 
                 ]
@@ -104,11 +107,18 @@ class UserTokenController extends ActiveController
                 'class' => 'yii\rest\IndexAction',
                 'modelClass' => $this->modelClass,
                 'prepareDataProvider' => function () {					
-					$param=["UserloginSearch"=>Yii::$app->request->queryParams];
+					$param=["UserTokenSearch"=>Yii::$app->request->queryParams];
 					//return $param;
-                    $searchModel = new UserloginSearch();
-                    return $searchModel->search($param);
-					
+                    $searchModel = new UserTokenSearch();
+                    if($searchModel){
+						return $searchModel->search($param);
+					}else{
+						$nodata=[
+							"status"=> 404,
+							'message'=> 'no-data',
+						];
+						return $nodata;
+					}					
                 },
             ],
         ];

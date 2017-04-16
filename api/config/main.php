@@ -33,6 +33,9 @@ return [
                 ],
             ],
         ],
+		'statusCode' =>[
+            'class'=>'common\components\StatusCode',
+        ],
         // 'errorHandler' => [
             // 'errorAction' => 'site/error',
         // ],
@@ -106,12 +109,18 @@ return [
 		 * @author ptrnov  <piter@lukison.com>
 		 * @since 1.1
 		 */
-		// 'request' => [
-            // 'cookieValidationKey' => 'dWut4SrmYAaXg0NfqpPwnJa23RMIUG7j_kgapi',
-            // 'parsers' => [
-                // 'application/json' => 'yii\web\JsonParser', // required for POST input via `php://input`
-            // ]
-        // ],
+		'request' => [
+			'enableCsrfValidation'=>false,
+            'cookieValidationKey' => 'dWut4SrmYAaXg0NfqpPwnJa23RMIUG7j_kgapi',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser', // required for POST input via `php://input`
+            ]
+        ],
+		'response' => [
+			'format' => yii\web\Response::FORMAT_JSON,
+			'charset' => 'UTF-8',
+			// ...
+		]
     ],
     // 'params' => $params,
 ];

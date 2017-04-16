@@ -19,68 +19,227 @@ use yii\widgets\ActiveForm;
 	* @autho Piter Novian [ptr.nov@gmail.com]
 	* @since 1.2
 	*/	
-	$listPermissionCLm = [
-		[	//COL-2
-			/* Attribute Serial No */
+	$bColorStore='rgba(52, 235, 138, 1)';
+	$listPermissionCLm=[
+		[
 			'class'=>'kartik\grid\SerialColumn',
+			'contentOptions'=>['class'=>'kartik-sheet-style'],
 			'width'=>'10px',
 			'header'=>'No.',
-			'hAlign'=>'center',
-			'headerOptions'=>[
-			'style'=>[
-					'text-align'=>'center',
-					'width'=>'10px',
-					'font-family'=>'tahoma',
-					'font-size'=>'8pt',
-					'background-color'=>'rgba(0, 95, 218, 0.3)',
-				]
-			],
-			'contentOptions'=>[
-				'style'=>[
-					'text-align'=>'center',
-					'width'=>'10px',
-					'font-family'=>'tahoma',
-					'font-size'=>'8pt',
-				]
-			],
-			'pageSummaryOptions' => [
-				'style'=>[
-					'border-right'=>'0px',
-				]
-			]
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColorStore),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('center','10px',''),
 		],
-		[  	'attribute' => 'BTN_VIEW',
-			'label'=>'BTN VIEW',
-			'filter' => $valStt,
+		//BTN_VIEW 
+		[
+			'attribute'=>'BTN_VIEW',
+			'label'=>'VIEW',
+			'filterType'=>false,
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
 			'format' => 'raw',
 			'value'=>function($model){
 				if ($model->BTN_VIEW == 1) {
 					return Html::a('<i class="fa fa-unlock "></i>');
 				} else if ($model->BTN_VIEW == 0) {
-					return Html::a('<i class="fa fa-lock"></i>');
-					
+					return Html::a('<i class="fa fa-lock"></i>');					
 				}
 			},
-			'hAlign'=>'left',
+			//gvContainHeader($align,$width,$bColorStore)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColorStore),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('center','10px',''),			
+		],
+		//BTN_REVIEW 
+		[
+			'attribute'=>'BTN_REVIEW',
+			'label'=>'REVIEW',
+			'filterType'=>false,
+			'hAlign'=>'right',
 			'vAlign'=>'middle',
-			'headerOptions'=>[
-				'style'=>[
-					'text-align'=>'center',
-					'width'=>'200px',
-					'font-family'=>'tahoma, arial, sans-serif',
-					'font-size'=>'8pt',
-					//'background-color'=>'rgba(255, 160, 51, 1)',
-				]
-			],
-			'contentOptions'=>[
-				'style'=>[
-					'text-align'=>'center',
-					'width'=>'200px',
-					'font-family'=>'tahoma, arial, sans-serif',
-					'font-size'=>'8pt',
-				]
-			],
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			'format' => 'raw',
+			'value'=>function($model){
+				if ($model->BTN_VIEW == 1) {
+					return Html::a('<i class="fa fa-unlock "></i>');
+				} else if ($model->BTN_VIEW == 0) {
+					return Html::a('<i class="fa fa-lock"></i>');					
+				}
+			},
+			//gvContainHeader($align,$width,$bColorStore)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColorStore),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('center','10px',''),			
 		],		
+		//BTN_CREATE 
+		[
+			'attribute'=>'BTN_CREATE',
+			'label'=>'CREATE',
+			'filterType'=>false,
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			'format' => 'raw',
+			'value'=>function($model){
+				if ($model->BTN_VIEW == 1) {
+					return Html::a('<i class="fa fa-unlock "></i>');
+				} else if ($model->BTN_VIEW == 0) {
+					return Html::a('<i class="fa fa-lock"></i>');					
+				}
+			},
+			//gvContainHeader($align,$width,$bColorStore)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColorStore),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('center','10px',''),			
+		],		
+		//BTN_EDIT 
+		[
+			'attribute'=>'BTN_EDIT',
+			'label'=>'EDIT',
+			'filterType'=>false,
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			'format' => 'raw',
+			'value'=>function($model){
+				if ($model->BTN_VIEW == 1) {
+					return Html::a('<i class="fa fa-unlock "></i>');
+				} else if ($model->BTN_VIEW == 0) {
+					return Html::a('<i class="fa fa-lock"></i>');					
+				}
+			},
+			//gvContainHeader($align,$width,$bColorStore)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColorStore),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('center','10px',''),			
+		],		
+		//BTN_DELETE 
+		[
+			'attribute'=>'BTN_DELETE',
+			'label'=>'DELETE',
+			'filterType'=>false,
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			'format' => 'raw',
+			'value'=>function($model){
+				if ($model->BTN_VIEW == 1) {
+					return Html::a('<i class="fa fa-unlock "></i>');
+				} else if ($model->BTN_VIEW == 0) {
+					return Html::a('<i class="fa fa-lock"></i>');					
+				}
+			},
+			//gvContainHeader($align,$width,$bColorStore)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColorStore),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('center','10px',''),			
+		],		
+		//BTN_SIGN1 
+		[
+			'attribute'=>'BTN_SIGN1',
+			'label'=>'SIGN1',
+			'filterType'=>false,
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			'format' => 'raw',
+			'value'=>function($model){
+				if ($model->BTN_VIEW == 1) {
+					return Html::a('<i class="fa fa-unlock "></i>');
+				} else if ($model->BTN_VIEW == 0) {
+					return Html::a('<i class="fa fa-lock"></i>');					
+				}
+			},
+			//gvContainHeader($align,$width,$bColorStore)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColorStore),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('center','10px',''),			
+		],		
+		//BTN_SIGN2 
+		[
+			'attribute'=>'BTN_SIGN2',
+			'label'=>'SIGN2',
+			'filterType'=>false,
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			'format' => 'raw',
+			'value'=>function($model){
+				if ($model->BTN_VIEW == 1) {
+					return Html::a('<i class="fa fa-unlock "></i>');
+				} else if ($model->BTN_VIEW == 0) {
+					return Html::a('<i class="fa fa-lock"></i>');					
+				}
+			},
+			//gvContainHeader($align,$width,$bColorStore)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColorStore),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('center','10px',''),			
+		],		
+		//BTN_SIGN3 
+		[
+			'attribute'=>'BTN_SIGN3',
+			'label'=>'SIGN3',
+			'filterType'=>false,
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			'format' => 'raw',
+			'value'=>function($model){
+				if ($model->BTN_VIEW == 1) {
+					return Html::a('<i class="fa fa-unlock "></i>');
+				} else if ($model->BTN_VIEW == 0) {
+					return Html::a('<i class="fa fa-lock"></i>');					
+				}
+			},
+			//gvContainHeader($align,$width,$bColorStore)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColorStore),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('center','10px',''),			
+		],		
+		//BTN_SIGN4 
+		[
+			'attribute'=>'BTN_SIGN4',
+			'label'=>'SIGN4',
+			'filterType'=>false,
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			'format' => 'raw',
+			'value'=>function($model){
+				if ($model->BTN_VIEW == 1) {
+					return Html::a('<i class="fa fa-unlock "></i>');
+				} else if ($model->BTN_VIEW == 0) {
+					return Html::a('<i class="fa fa-lock"></i>');					
+				}
+			},
+			//gvContainHeader($align,$width,$bColorStore)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColorStore),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('center','10px',''),			
+		],		
+		//BTN_SIGN5 
+		[
+			'attribute'=>'BTN_SIGN5',
+			'label'=>'SIGN5',
+			'filterType'=>false,
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			'format' => 'raw',
+			'value'=>function($model){
+				if ($model->BTN_VIEW == 1) {
+					return Html::a('<i class="fa fa-unlock "></i>');
+				} else if ($model->BTN_VIEW == 0) {
+					return Html::a('<i class="fa fa-lock"></i>');					
+				}
+			},
+			//gvContainHeader($align,$width,$bColorStore)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColorStore),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('center','10px',''),			
+		],		
+		
 	];
 	
 	/*
@@ -91,7 +250,7 @@ use yii\widgets\ActiveForm;
 	$gvPermissionModul= GridView::widget([
 		'id'=>'gv-perimisson-modul-User',
 		'dataProvider' => $dataProviderpermision,
-		'filterModel' => $searchModelpermision,
+		//'filterModel' => $searchModelpermision,
 		//'filterRowOptions'=>['style'=>'background-color:rgba(97, 211, 96, 0.3); align:center'],
 		// 'floatOverflowContainer'=>true,
 		// 'floatHeader'=>true,
