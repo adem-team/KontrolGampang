@@ -16,7 +16,20 @@ use yii\widgets\Pjax;
 use yii\web\View;
 
 use common\models\Locate;
-
+$this->registerCss("
+	:link {
+		color: #fdfdfd;
+	}
+	/* mouse over link */
+	a:hover {
+		color: #5a96e7;
+	}
+	/* selected link */
+	a:active {
+		color: blue;
+	}
+");
+ 
 $this->title = Yii::t('app', 'ESM - Marketing Dashboard');      /* title pada header page */
 $this->params['breadcrumbs'][] = $this->title;  
 // $this->registerJs($this->render('modal_store.js'),View::POS_READY);
@@ -34,89 +47,42 @@ $this->params['breadcrumbs'][] = $this->title;
 			'class'=>'kartik\grid\SerialColumn',
 			'contentOptions'=>['class'=>'kartik-sheet-style'],
 			'width'=>'10px',
-			'header'=>'No.',
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','30px',$bColor,'#fdfdfd'),
+			'header'=>'No',
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','30px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('center','30px',''),
 		],
 		//KD_BARCODE
 		[
-			'attribute'=>'OUTLET_BARCODE',
+			'attribute'=>'OUTLET_CODE',
 			'filterType'=>false,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','80px'),
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
 			'hAlign'=>'right',
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
 			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','80px',$bColor,'#fdfdfd'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','80px',''),
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
 			
 		],
-		//CABANG LOCATE 
+		//OUTLET_NM
 		[
-			'attribute'=>'LocateNm',
-			'label'=>'<font color="#fdfdfd">Cutomer</font>',
+			'attribute'=>'OUTLET_NM',
 			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','150px'),
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','250px'),
 			'hAlign'=>'right',
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'format'=>'html',
 			'noWrap'=>false,
 			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','150px',$bColor,'#fdfdfd'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','150px',''),
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','250px',$bColor),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','250px',''),
 			
 		],		
-		//SABANG LOCATE SUB
+		//PROVINCE
 		[
-			'attribute'=>'LocatesubNm',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
-			
-		],		
-		//STORE NAME
-		[
-			'attribute'=>'OUTLET_NM',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','200px',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','200px',''),
-			
-		],		
-		//STORE PIC.
-		[
-			'attribute'=>'PIC',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','150px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','150px',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','150px',''),
-			
-		],		
-		//STORE TLP.
-		[
-			'attribute'=>'TLP',
-			//'label'=>'Cutomer',
+			'attribute'=>'ProvinsiNm',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
 			'hAlign'=>'right',
@@ -128,21 +94,76 @@ $this->params['breadcrumbs'][] = $this->title;
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
 			
 		],		
-		//STORE ALAMAT
+		//CITY
 		[
-			'attribute'=>'ALAMAT',
-			//'label'=>'Cutomer',
+			'attribute'=>'KotaNm',
 			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
 			'hAlign'=>'right',
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
 			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','200px',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','200px',''),
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
+			
+		],			
+		//STORE PIC.
+		[
+			'attribute'=>'PIC',
+			'filterType'=>true,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
 			
 		],		
+		//STORE TLP.
+		[
+			'attribute'=>'TLP',
+			'filterType'=>true,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
+			
+		],		
+		//STORE FAX.
+		[
+			'attribute'=>'FAX',
+			'filterType'=>true,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
+			
+		],	
+		//ALAMAT.
+		[
+			'attribute'=>'ALAMAT',
+			'filterType'=>true,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','250px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','250px',$bColor),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','250px',''),
+			
+		],			
 		//CREATE_AT
 		/* [
 			'attribute'=>'CREATE_AT',

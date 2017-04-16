@@ -36,10 +36,9 @@ class GridviewCustomize extends Component{
 	 * Yii::$app->gv->gvContain();
 	 * 'headerOptions'=>[];
 	*/
-	function gvContainHeader($align,$width,$bColor,$color='#060606'){	
+	function gvContainHeader($align,$width,$bColor){	
 		$rslt=[
 			'style'=>[
-				'color'=>$color,
 				'text-align'=>$align,
 				'width'=>$width,
 				// 'min-width'=>$width,
@@ -48,8 +47,7 @@ class GridviewCustomize extends Component{
 				'font-family'=>'tahoma, arial, sans-serif',
 				'font-size'=>'8pt',
 				'background-color'=>$bColor,
-				'float'=>'none',
-							
+				'float'=>'none',							
 			]				
 		];	
 		return $rslt;		

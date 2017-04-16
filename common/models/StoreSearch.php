@@ -17,7 +17,7 @@ class StoreSearch extends Store
 	public function attributes()
 	{
 		//Author -ptr.nov- add related fields to searchable attributes 
-		return array_merge(parent::attributes(), ['LocatesubNm','LocateNm']);
+		return array_merge(parent::attributes(), ['ProvinsiNm','KotaNm']);
 	}
     /**
      * @inheritdoc
@@ -25,8 +25,11 @@ class StoreSearch extends Store
     public function rules()
     {
         return [
-            [['ID', 'STATUS','LOCATE_SUB', 'LOCATE'], 'integer'],
-            [['ACCESS_UNIX','CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT','OUTLET_BARCODE', 'OUTLET_NM', 'ALAMAT', 'PIC', 'TLP','LocatesubNm','LocateNm'], 'safe'],
+            [['CREATE_AT', 'UPDATE_AT','ACCESS_UNIX'], 'safe'],
+            [['STATUS','LOCATE_PROVINCE', 'LOCATE_CITY'], 'integer'],
+            [['ALAMAT'], 'string'],
+            [['CREATE_BY', 'UPDATE_BY', 'OUTLET_CODE', 'TLP'], 'string', 'max' => 50],
+            [['OUTLET_NM', 'PIC'], 'string', 'max' => 100],           
         ];
     }
 
@@ -39,7 +42,8 @@ class StoreSearch extends Store
      */
     public function search($params)
     {
-        $query = Store::find()->JoinWith('locateTbl',true,'LEFT JOIN')->JoinWith('locatesubTbl',true,'LEFT JOIN');
+        $query = Store::find()->JoinWith('provinsiTbl',true,'LEFT JOIN')->JoinWith('kotaTbl',true,'LEFT JOIN');
+        //$query = Store::find();
 
         // add conditions that should always apply here
 
@@ -58,29 +62,30 @@ class StoreSearch extends Store
         // grid filtering conditions
         $query->andFilterWhere([
             'ID' => $this->ID,
-            'STATUS' => $this->STATUS,
-            'LOCATE' => $this->LOCATE,
+            'STATUS' => $this->STATUS
         ]);
 		/* SORTING Group Function Author -ptr.nov-*/
-		$dataProvider->sort->attributes['LocateNm'] = [
-			'asc' => ['locate.LOCATE_NAME' => SORT_ASC],
-			'desc' => ['locate.LOCATE_NAME' => SORT_DESC],
+		$dataProvider->sort->attributes['ProvinsiNm'] = [
+			'asc' => ['locate_province.ProvinsiNm' => SORT_ASC],
+			'desc' => ['locate_province.ProvinsiNm' => SORT_DESC],
 		];
-		$dataProvider->sort->attributes['LocatesubNm'] = [
-			'asc' => ['locate.LOCATE_NAME' => SORT_ASC],
-			'desc' => ['locate.LOCATE_NAME' => SORT_DESC],
+		$dataProvider->sort->attributes['KotaNm'] = [
+			'asc' => ['locate_city.KotaNm' => SORT_ASC],
+			'desc' => ['locate_city.KotaNm' => SORT_DESC],
 		];
 		
         $query->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])           
             ->andFilterWhere(['like', 'CREATE_AT', $this->CREATE_AT])
 			 ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
             ->andFilterWhere(['like', 'UPDATE_AT', $this->UPDATE_AT])
-            ->andFilterWhere(['like', 'LOCATE_SUB', $this->LOCATE_SUB])
-            ->andFilterWhere(['like', 'OUTLET_BARCODE', $this->OUTLET_BARCODE])
+            ->andFilterWhere(['like', 'OUTLET_CODE', $this->OUTLET_CODE])
             ->andFilterWhere(['like', 'OUTLET_NM', $this->OUTLET_NM])
             ->andFilterWhere(['like', 'ALAMAT', $this->ALAMAT])
+            ->andFilterWhere(['like', 'LOCATE_PROVINCE', $this->LOCATE_PROVINCE])
+            ->andFilterWhere(['like', 'LOCATE_CITY', $this->LOCATE_CITY])
             ->andFilterWhere(['like', 'PIC', $this->PIC])
             ->andFilterWhere(['like', 'TLP', $this->TLP])
+            ->andFilterWhere(['like', 'FAX', $this->FAX])
             ->andFilterWhere(['like', 'locate.LOCATE_NAME', $this->getAttribute('LocateNm')])
             ->andFilterWhere(['like', 'locatesub.LOCATE_NAME', $this->getAttribute('LocatesubNm')]);
 
@@ -89,7 +94,8 @@ class StoreSearch extends Store
 	
 	public function searchUserStore($params)
     {
-		$query = Store::find()->JoinWith('locateTbl',true,'LEFT JOIN')->JoinWith('locatesubTbl',true,'LEFT JOIN');
+		$query = Store::find()->JoinWith('provinsiTbl',true,'LEFT JOIN')->JoinWith('kotaTbl',true,'LEFT JOIN');
+        //$query = Store::find();
 	
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

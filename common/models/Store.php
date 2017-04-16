@@ -46,9 +46,9 @@ class Store extends \yii\db\ActiveRecord
     {
         return [
             [['CREATE_AT', 'UPDATE_AT','ACCESS_UNIX'], 'safe'],
-            [['STATUS','LOCATE_SUB', 'LOCATE'], 'integer'],
+            [['STATUS','LOCATE_PROVINCE', 'LOCATE_CITY'], 'integer'],
             [['ALAMAT'], 'string'],
-            [['CREATE_BY', 'UPDATE_BY', 'OUTLET_BARCODE', 'TLP'], 'string', 'max' => 50],
+            [['CREATE_BY', 'UPDATE_BY', 'OUTLET_CODE', 'TLP'], 'string', 'max' => 50],
             [['OUTLET_NM', 'PIC'], 'string', 'max' => 100],
            
         ];
@@ -61,87 +61,89 @@ class Store extends \yii\db\ActiveRecord
     {
         return [
             'ID' => Yii::t('app', 'ID'),
+			'ACCESS_UNIX' => Yii::t('app', 'ACCESS_UNIX'),
             'CREATE_BY' => Yii::t('app', 'CREATE BY'),
             'CREATE_AT' => Yii::t('app', 'CREATE AT'),
             'UPDATE_BY' => Yii::t('app', 'UPDATE BY'),
             'UPDATE_AT' => Yii::t('app', 'UPDATE AT'),
-            'STATUS' => Yii::t('app', 'STATUS'),
-            'ACCESS_UNIX' => Yii::t('app', 'ACCESS_UNIX'),
-            'LOCATE' => Yii::t('app', 'CABANG'),
-            'LOCATE_SUB' => Yii::t('app', 'SUB.CABANG '),
-            'LocateNm' => Yii::t('app', 'CABANG'),
-            'LocatesubNm' => Yii::t('app', 'SUB.CABANG '),
-            'OUTLET_BARCODE' => Yii::t('app', 'BARCODE'),
-            'OUTLET_NM' => Yii::t('app', 'OUTLET NAME'),
-            'ALAMAT' => Yii::t('app', 'ALAMAT'),
-          
-            'TLP' => Yii::t('app', 'PHONE'),
+            'STATUS' => Yii::t('app', 'STATUS'),           
+			'OUTLET_CODE' => Yii::t('app', 'CODE'),
+			'OUTLET_NM' => Yii::t('app', 'OUTLET NAME'),
+            'ProvinsiNm' => Yii::t('app', 'PROVINSI'),
+            'KotaNm' => Yii::t('app', 'KOTA'),
+			'ALAMAT' => Yii::t('app', 'ALAMAT'),
+			'PIC' => Yii::t('app', 'PIC'),
+			'TLP' => Yii::t('app', 'TLP'),
+			'FAX' => Yii::t('app', 'FAX')
         ];
     }
 	
-	public function getLocateTbl()
+	//==PROVINCE==
+	public function getProvinsiTbl()
 	{
-		return $this->hasOne(Locate::className(), ['ID' => 'LOCATE'])->from(['locate' => Locate::tableName()]);
+		return $this->hasOne(LocateProvince::className(), ['PROVINCE_ID' => 'LOCATE_PROVINCE']);
 	}
-	public function getLocateNm()
+	public function getProvinsiNm()
 	{
-		return $this->locateTbl->LOCATE_NAME;
+		return $this->provinsiTbl!=''?$this->provinsiTbl->PROVINCE:'none';
 	}
-	public function getLocatesubTbl()
+	//==CITY==
+	public function getKotaTbl()
 	{
-		return $this->hasOne(Locate::className(), ['ID' => 'LOCATE_SUB'])->from(['locatesub' => Locate::tableName()]);
-	}
-	public function getLocatesubNm()
-	{
-		return $this->locatesubTbl->LOCATE_NAME;
+		return $this->hasOne(LocateKota::className(), ['CITY_ID' => 'LOCATE_CITY']);
 	}	
+	public function getKotaNm()
+	{
+		return $this->kotaTbl!=''?$this->kotaTbl->CITY_NAME:'none';
+	}
 	
 	public function fields()
 	{
-		return [
-			'OUTLET_BARCODE'=>function($model){
-				return $model->OUTLET_BARCODE;
+		return [			
+			'ACCESS_UNIX'=>function($model){
+				return $model->ACCESS_UNIX;
+			},
+			'CREATE_BY'=>function($model){
+				return $model->CREATE_BY;
+			},					
+			'CREATE_AT'=>function($model){
+				return $model->CREATE_AT;
+			},	
+			'UPDATE_BY'=>function($model){
+				return $model->UPDATE_BY;
+			},				
+			'UPDATE_AT'=>function($model){
+				return $model->UPDATE_AT;
+			},	
+			'STATUS'=>function($model){
+				return $model->STATUS;
+			},
+			'OUTLET_CODE'=>function($model){
+				return $model->OUTLET_CODE;
 			},
 			'OUTLET_NM'=>function($model){
 				return $model->OUTLET_NM;
 			},
-			'LOCATE'=>function($model){
-				return $model->LOCATE;
+			'LOCATE_PROVINCE'=>function(){
+				//return $model->LOCATE_PROVINCE;
+				return $this->provinsiTbl!=''?$this->provinsiTbl->PROVINCE:'none';
 			},	
-			'LOCATE_NAME'=>function(){
-				return $this->LocateNm;
-			},		
-			'LOCATE_SUB'=>function($model){
-				return $model->LOCATE_SUB;
-			},		
-			'LOCATE_SUB_NAME'=>function(){
-				return $this->LocatesubNm;
+			'LOCATE_CITY'=>function(){
+				//return $this->LOCATE_CITY;
+				return $this->kotaTbl!=''?$this->kotaTbl->CITY_NAME:'none';
 			},		
 			'ALAMAT'=>function($model){
 				return $model->ALAMAT;
 			},		
 			'PIC'=>function($model){
-				return $model->PIC;
-			},	
+				return $this->PIC;
+			},		
 			'TLP'=>function($model){
 				return $model->TLP;
-			},
-			'STATUS'=>function($model){
-				return $model->STATUS;
-			},
-			'CREATE_BY'=>function($model){
-				return $model->CREATE_BY;
-			},	
-			'UPDATE_BY'=>function($model){
-				return $model->UPDATE_BY;
 			},		
-			'CREATE_AT'=>function($model){
-				return $model->CREATE_AT;
-			},		
-			'UPDATE_AT'=>function($model){
-				return $model->UPDATE_AT;
-			},		
-		
+			'FAX'=>function($model){
+				return $model->FAX;
+			}		
 		];
 	}
 }
