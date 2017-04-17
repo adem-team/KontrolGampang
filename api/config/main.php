@@ -78,13 +78,13 @@ return [
                 ]
             ],
         ],
-		'db' => [
-            'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=kasir',
-            'username' => 'root',
-            'password' => '',
-            'charset' => 'utf8',
-        ],
+		// 'db' => [
+            // 'class' => 'yii\db\Connection',
+            // 'dsn' => 'mysql:host=localhost;dbname=kasir',
+            // 'username' => 'root',
+            // 'password' => '',
+            // 'charset' => 'utf8',
+        // ],
 		/*SERVER CACHED -ptr.nov-*/
 		/* 'cache' => [
 			'class' => 'yii\caching\MemCache',
