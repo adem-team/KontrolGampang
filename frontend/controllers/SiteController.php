@@ -137,9 +137,16 @@ class SiteController extends Controller
         if (\Yii::$app->user->isGuest) {
             return $this->goHome();
         } else {
-			$js='$("#confirm-permission-alert").modal("show")';
-			$this->getView()->registerJs($js);
-            return $this->render('index');
+			if (Yii::$app->session['userSessionTimeout']< time() ) {
+				// timeout
+				Yii::$app->user->logout();
+				return $this->goHome();
+			}else{
+				$js='$("#confirm-permission-alert").modal("show")';
+				$this->getView()->registerJs($js);
+				return $this->render('index');
+			}
+			
         }
 
     }

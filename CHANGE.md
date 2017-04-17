@@ -2,6 +2,15 @@
 Change Log: `KG`
 ===================================
 
+## Version 1.5.0
+**Date:** 2017-04-12
+1. (ven): helper-BaseArrayHelper. "if(is_array($next)){ .... }" 
+2. (ven): kartik-v\yii2-tree-manager. ActionManage() " //static::checkSignature('manage', $data);"
+3. (chg): component(Useroption). "User(),UserMenu(),UserMenuPermission($valueMenu),UserStore(),UserPayment()".
+4. (enh): component(GridviewCustomize).	 ""
+5. (enh): component(ArrayBantuan). ""
+
+
 ## Version 1.4.0
 **Date:** 2017-03-27
 1. (chg): component - userPermission.

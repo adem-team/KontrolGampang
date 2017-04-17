@@ -24,11 +24,55 @@ return [
                 'forceTranslation' => true
             ],
         ],
+		'treemanager' =>  [
+			'class' => '\kartik\tree\Module',
+			'treeStructure'=>[
+				'treeAttribute' => 'ACCESS_UNIX',
+				'leftAttribute' => 'lft',
+				'rightAttribute' => 'rgt',
+				'depthAttribute' => 'lvl',
+			],
+			'dataStructure'=>[
+				'keyAttribute'=>'id',
+				'nameAttribute'=>'username',
+				'iconAttribute'=>'icon',
+				'iconTypeAttribute'=>'icon_type',
+			],
+			// 'treeStructure'=>[
+				// 'treeAttribute' => 'ACCESS_UNIX',
+				// 'leftAttribute' => 'status',
+				// 'rightAttribute' => 'status',
+				// 'depthAttribute' => 'ACCESS_LEVEL',
+			// ],
+			// 'dataStructure'=>[
+				// 'keyAttribute'=>'id',
+				// 'nameAttribute'=>'username',
+				// 'iconAttribute'=>'ACCESS_LEVEL',
+				// 'iconTypeAttribute'=>'icon_type',
+			// ],
+			'treeViewSettings'=> [
+				'nodeView' => '@frontend/backend/sistem/views/permission/_form',
+				/*'nodeActions' => '/sistem/node/manage',
+				 [
+					'Module::NODE_MANAGE' => '/sistem/node/manage111',
+					//"Module::NODE_MANAGE" => "Url::to(['/sistem/node/manage'])",
+					// Module::NODE_SAVE => Url::to(['/treemanager/node/save']),
+					// Module::NODE_REMOVE => Url::to(['/treemanager/node/remove']),
+					// Module::NODE_MOVE => Url::to(['/treemanager/node/move']),
+				]	 */			
+			]
+						
+			// other module settings, refer detailed documentation
+		],
+		
 		'dashboard' => [
             'class' => 'frontend\backend\dashboard\Modul',
         ],
 		'sistem' => [
             'class' => 'frontend\backend\sistem\Modul',
+        ],
+		'master' => [
+            'class' => 'frontend\backend\master\Modul',
         ],
 	],
     'components' => [

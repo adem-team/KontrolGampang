@@ -65,22 +65,22 @@ class ModulPermission extends \yii\db\ActiveRecord
 
     public function getModul()
 	{
-	  return $this->hasOne(Modulerp::className(), ['MODUL_ID' => 'MODUL_ID']);
+	  return $this->hasOne(ModulMenu::className(), ['MODUL_ID' => 'MODUL_ID']);
 	}
 	
-	public function getModulDcrp()
-	{
-		return $this->modul->MODUL_DCRP;
-	}
+	// public function getModulDcrp()
+	// {
+		// return $this->modul->MODUL_DCRP;
+	// }
 	
-	public function getUser()
-	{
-	  return $this->hasOne(Userlogin::className(), ['id' => 'USER_ID']);
-	}
+	// public function getUser()
+	// {
+	  // return $this->hasOne(Userlogin::className(), ['id' => 'USER_ID']);
+	// }
 	
-	public function getUserNm()
-	{
-		return $this->user->username;
-	}
+	// public function getUserNm()
+	// {
+		// return $this->user->username;
+	// }
 	
 }
