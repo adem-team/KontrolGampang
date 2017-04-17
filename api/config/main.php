@@ -15,6 +15,10 @@ return [
 		'login' => [
             'basePath' => '@app/modules/login',
             'class' => 'api\modules\login\Module',
+        ],
+		'master' => [
+            'basePath' => '@app/modules/master',
+            'class' => 'api\modules\master\Module',
         ]
     ],
     'components' => [
@@ -67,6 +71,7 @@ return [
 							'login/signature',
 							'login/profile',
 							'login/user-token',
+							'master/store',
 								
 					],
 
