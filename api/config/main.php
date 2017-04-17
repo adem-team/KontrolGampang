@@ -28,6 +28,11 @@ return [
             'enableSession' => false,
 			'loginUrl' => null,
         ],
+		// 'formatter' => [
+           // 'dateFormat' => 'd-M-Y',
+           // 'datetimeFormat' => 'd-M-Y H:i:s',
+           // 'timeFormat' => 'H:i:s',
+		 // ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
