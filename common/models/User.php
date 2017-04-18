@@ -53,6 +53,7 @@ class User extends ActiveRecord implements IdentityInterface
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
             [['create_at','updated_at'],'safe'],
+			 //[['create_at','updated_at'], 'date','format' => 'yyyy-mm-dd H:i:s'],
         ];
     }
 
@@ -82,6 +83,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
 		$modelUser = static::find()->where(['username' => $username])->one();
 		$modelUser->auth_key=Yii::$app->security->generateRandomString();//'233123';
+		$modelUser->updated_at=date("Y-m-d H:i:s");
 		$modelUser->save();
 		/* if (!static::isPasswordResetTokenValid($token)) {
             return null;
