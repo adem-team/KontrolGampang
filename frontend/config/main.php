@@ -74,6 +74,18 @@ return [
 		'master' => [
             'class' => 'frontend\backend\master\Modul',
         ],
+		'inventory' => [
+            'class' => 'frontend\backend\inventory\Modul',
+        ],
+		'accounting' => [
+            'class' => 'frontend\backend\accounting\Modul',
+        ],
+		'hris' => [
+            'class' => 'frontend\backend\hris\Modul',
+        ],
+		'payment' => [
+            'class' => 'frontend\backend\payment\Modul',
+        ],
 	],
     'components' => [
 		'view' => [

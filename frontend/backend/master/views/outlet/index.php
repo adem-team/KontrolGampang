@@ -338,7 +338,8 @@ echo $this->render('modal_store'); //echo difinition
 				  <i class="fa fa-circle-thin fa-stack-2x" style="color:#25ca4f"></i>
 				  <i class="fa fa-television fa-stack-1x"></i>
 				</span> List Outlet'.'   <div style="float:right">'. tombolReqStore().'</div>',  
-			'type'=>'info',
+			'type'=>'default',
+			'before'=>false,
 			//'before'=> tombolCreate().' '.tombolRefresh().' '.tombolExportExcel(),
 			//'before'=> tombolReqStore(),
 			'showFooter'=>false,
