@@ -306,7 +306,12 @@ echo $this->render('modal_store'); //echo difinition
 		'id'=>'gv-store',
 		'dataProvider' => $dataProvider,
 		'filterModel' => $searchModel,
-		'columns'=>$gvAttributeItem,				
+		'columns'=>$gvAttributeItem,	
+		'rowOptions'   => function ($model, $key, $index, $grid) {
+			//$urlDestination=Url::to(['/efenbi-rasasayang/item-group/index', 'id' => $model->ID]);
+			$urlDestination=Url::to(['/master/item', 'id' => $model->ID]);
+			return ['id'=>	[$model->ID],'onclick' =>'location.href="'.$urlDestination.'"'];
+		},		
 		'pjax'=>true,
 		'pjaxSettings'=>[
 			'options'=>[
@@ -333,7 +338,8 @@ echo $this->render('modal_store'); //echo difinition
 				  <i class="fa fa-circle-thin fa-stack-2x" style="color:#25ca4f"></i>
 				  <i class="fa fa-television fa-stack-1x"></i>
 				</span> List Outlet'.'   <div style="float:right">'. tombolReqStore().'</div>',  
-			'type'=>'info',
+			'type'=>'default',
+			'before'=>false,
 			//'before'=> tombolCreate().' '.tombolRefresh().' '.tombolExportExcel(),
 			//'before'=> tombolReqStore(),
 			'showFooter'=>false,

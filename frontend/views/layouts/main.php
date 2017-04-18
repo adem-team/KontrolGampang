@@ -26,7 +26,8 @@ dmstr\web\AdminLteAsset::register($this);
 			Default collapse ~ptr.nov~ 
 			skin-blue sidebar-mini sidebar-collapse
 		!-->
-		<body class="skin-blue sidebar-collapse" style="min-height:680px"> 		
+		<!--<body class="skin-blue sidebar-collapse" style="min-height:680px"> 	!-->	
+		<body class="skin-blue " style="min-height:680px"> 		
 			<! - NOT LOGIN- Author : -ptr.nov- >
 			<?php if (Yii::$app->user->isGuest) { ?>
 				<?php $this->beginBody(['id'=>'page-top','class'=>'index']) ?>
