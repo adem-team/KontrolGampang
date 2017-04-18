@@ -2,21 +2,22 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use yii\widgets\Pjax;
 /* @var $this yii\web\View */
-/* @var $searchModel app\backend\sistem\models\CorpSearch */
+/* @var $searchModel app\backend\master\models\ItemJualSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Corps');
+$this->title = 'Item Juals';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="corp-index">
+<div class="item-jual-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
+    <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Corp'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Item Jual', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -26,18 +27,21 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'ID',
-            'ACCESS_UNIX:ntext',
-            'CORP_NM',
-            'ALAMAT:ntext',
-            'MAP_LAG',
-            // 'MAP_LAT',
+            'CREATE_BY',
+            'CREATE_AT',
+            'UPDATE_BY',
+            'UPDATE_AT',
             // 'STATUS',
-            // 'CREATE_BY',
-            // 'CREATE_AT',
-            // 'UPDATE_BY',
-            // 'UPDATE_AT',
+            // 'ITEM_ID',
+            // 'OUTLET_CODE',
+            // 'PERIODE_TGL1',
+            // 'PERIODE_TGL2',
+            // 'START_TIME',
+            // 'HARGA_JUAL',
+            // 'DCRIPT:ntext',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+    <?php Pjax::end(); ?>
 </div>

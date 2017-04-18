@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\backend\sistem\models\UserProfil */
+/* @var $model app\backend\master\models\ItemStock */
 
-$this->title = Yii::t('app', 'Create User Profil');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'User Profils'), 'url' => ['index']];
+$this->title = 'Create Item Stock';
+$this->params['breadcrumbs'][] = ['label' => 'Item Stocks', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="user-profil-create">
+<div class="item-stock-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\backend\sistem\models\Corp */
+/* @var $model app\backend\master\models\ItemJual */
 
-$this->title = Yii::t('app', 'Create Corp');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Corps'), 'url' => ['index']];
+$this->title = 'Create Item Jual';
+$this->params['breadcrumbs'][] = ['label' => 'Item Juals', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="corp-create">
+<div class="item-jual-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
