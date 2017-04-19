@@ -68,4 +68,10 @@ class OutletController extends Controller
         ]);
       
     }
+	
+	public function actionView()
+    {
+		  return $this->renderAjax('view');
+      
+    }
 }

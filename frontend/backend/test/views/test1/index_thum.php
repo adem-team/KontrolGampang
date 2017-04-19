@@ -1,39 +1,27 @@
 <?php
-use yii\helpers\Html;
+use kartik\helpers\Html;
 use kartik\widgets\Select2;
 use kartik\grid\GridView;
-use kartik\widgets\FileInput;
-use kartik\widgets\ActiveForm;
-use kartik\tabs\TabsX;
-use kartik\date\DatePicker;
 use yii\helpers\ArrayHelper;
 use yii\widgets\Breadcrumbs;
+use kartik\widgets\Spinner;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
+use kartik\widgets\FileInput;
 use yii\helpers\Json;
 use yii\web\Response;
 use yii\widgets\Pjax;
+use kartik\widgets\ActiveForm;
+use kartik\tabs\TabsX;
+use kartik\date\DatePicker;
 use yii\web\View;
 
-$this->registerCss("
-	:link {
-		color: #fdfdfd;
-	}
-	/* mouse over link */
-	a:hover {
-		color: #5a96e7;
-	}
-	/* selected link */
-	a:active {
-		color: blue;
-	}
-	.modal-content { 
-		border-radius: 50;
-	}
-");
- echo $this->render('modal_store'); //echo difinition
-$this->registerJs($this->render('modal_store.js'),View::POS_READY);
-
+$this->sideCorp = 'PT. Efenbi Sukses Makmur';                       	/* Title Select Company pada header pasa sidemenu/menu samping kiri */
+$this->sideMenu = 'efenbi_rasasayang';                                     		/* kd_menu untuk list menu pada sidemenu, get from table of database */
+$this->title = Yii::t('app', 'ESM - Marketing Dashboard');              /* title pada header page */
+$this->params['breadcrumbs'][] = $this->title;  
+$this->registerJs($this->render('modal_item.js'),View::POS_READY);
+echo $this->render('modal_item'); //echo difinition
 
 	$aryStt= [
 		  ['STATUS' => 0, 'STT_NM' => 'DISABLE'],		  
@@ -41,78 +29,39 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 	];	
 	$valStt = ArrayHelper::map($aryStt, 'STATUS', 'STT_NM');
 	
-	$bColor='rgba(87,114,111, 1)';
+	$bColor='rgba(52, 203, 255, 1)';
 	$gvAttributeItem=[
 		[
 			'class'=>'kartik\grid\SerialColumn',
 			'contentOptions'=>['class'=>'kartik-sheet-style'],
 			'width'=>'10px',
-			'header'=>'No',
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','30px',$bColor,'#ffffff'),
+			'header'=>'No.',
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','30px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('center','30px',''),
 		],
+		//ITEM NAME
+		[	
+			'attribute'=>'IMG64',
+			'filterType'=>false,
+			'format'=>'raw', 
+			'value'=>function($model){
+				$image64 ='data:image/jpg;charset=utf-8;base64,'.$model->IMG64;
+				return $model->IMG64!=''?Html::img($image64,['width'=>'30','height'=>'30']):Html::img('data:image/jpg;charset=utf-8;base64,'.$model->noimage,['width'=>'30','height'=>'30']);
+			},
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>true,
+			'noWrap'=>false,
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','30px',$bColor),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('center','30px',''),
+			
+		],	
 		//KD_BARCODE
 		[
-			'attribute'=>'OUTLET_CODE',
-			'filterType'=>false,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
-			
-		],
-		//OUTLET_NM
-		[
-			'attribute'=>'OUTLET_NM',
+			'attribute'=>'ITEM_ID',
 			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','250px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'format'=>'html',
-			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','250px',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','250px',''),
-			
-		],		
-		//PROVINCE
-		[
-			'attribute'=>'ProvinsiNm',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
-			
-		],		
-		//CITY
-		[
-			'attribute'=>'KotaNm',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
-			
-		],			
-		//STORE PIC.
-		[
-			'attribute'=>'PIC',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','80px'),
 			'hAlign'=>'right',
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
@@ -122,67 +71,22 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
 			
 		],		
-		//STORE TLP.
+		//ITEM NAME
 		[
-			'attribute'=>'TLP',
+			'attribute'=>'ITEM_NM',
 			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
 			'hAlign'=>'right',
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
 			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','200px',$bColor),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','200px',''),
 			
 		],		
-		//STORE FAX.
-		[
-			'attribute'=>'FAX',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
-			
-		],	
-		//ALAMAT.
-		[
-			'attribute'=>'ALAMAT',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','250px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','250px',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','250px',''),
-			
-		],		
-		//EXPIRED.
-		[
-			'attribute'=>'EXPIRED',
-			'label'=>'EXPIRED',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'value'=>function($model){
-				return $model->EXPIRED . ' days';
-			},
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','50px',''),
-			
-		],			
 		//CREATE_AT
-		/* [
+		[
 			'attribute'=>'CREATE_AT',
 			'filterType'=>GridView::FILTER_DATE,
 			'filterWidgetOptions'=>[
@@ -220,9 +124,9 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
 			
-		],	 */	
+		],		
 		//UPDATE_BY
-	/* 	[
+		[
 			'attribute'=>'UPDATE_BY',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
@@ -234,7 +138,7 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
 			
-		], */
+		],
 		//'STATUS',
 		[
 			'attribute'=>'STATUS',
@@ -272,14 +176,14 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 		[
 			'class' => 'kartik\grid\ActionColumn',
 			'template' => '{view}{edit}{reminder}{deny}',
-			'header'=>'ACTION',
+			'header'=>'Action',
 			'dropdown' => true,
 			'dropdownOptions'=>[
 				'class'=>'pull-right dropdown',
 				'style'=>'width:60px;background-color:#E6E6FA'				
 			],
 			'dropdownButton'=>[
-				'label'=>'ACTION',
+				'label'=>'Action',
 				'class'=>'btn btn-default btn-xs',
 				'style'=>'width:100%;'		
 			],
@@ -288,35 +192,33 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 				  return  tombolView($url, $model);
 				},
 				'edit' =>function($url, $model,$key){
-					//if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
+					if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
 						return  tombolReview($url, $model);
-					//}					
+					}					
+				},
+				'reminder' =>function($url, $model,$key){
+					return  tombolRemainder($url, $model);
 				},
 				'deny' =>function($url, $model,$key){
 					return  tombolDeny($url, $model);
 				}
 
 			],
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColor,'#ffffff'),
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('center','10px',''),
 		]
 	];
 
-	$gvStore=GridView::widget([
-		'id'=>'gv-store',
+	$gvItem=GridView::widget([
+		'id'=>'gv-item',
 		'dataProvider' => $dataProvider,
 		'filterModel' => $searchModel,
-		'columns'=>$gvAttributeItem,	
-		'rowOptions'   => function ($model, $key, $index, $grid) {
-			//$urlDestination=Url::to(['/efenbi-rasasayang/item-group/index', 'id' => $model->ID]);
-			$urlDestination=Url::to(['/master/item', 'id' => $model->ID]);
-			return ['id'=>	[$model->ID],'ondblclick' =>'location.href="'.$urlDestination.'"'];
-		},		
+		'columns'=>$gvAttributeItem,				
 		'pjax'=>true,
 		'pjaxSettings'=>[
 			'options'=>[
 				'enablePushState'=>false,
-				'id'=>'gv-store',
+				'id'=>'gv-item',
 		    ],						  
 		],
 		'hover'=>true, //cursor select
@@ -330,29 +232,26 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 		'toolbar' => [
 			''
 		],
-		'summary'=>false,
 		'panel' => [
-			//'heading'=>false,
-			'heading'=>'
-				<span class="fa-stack fa-sm">
-				  <i class="fa fa-circle-thin fa-stack-2x" style="color:#25ca4f"></i>
-				  <i class="fa fa-television fa-stack-1x"></i>
-				</span> List Outlet'.'   <div style="float:right">'. tombolReqStore().'</div>',  
-			'type'=>'default',
-			'before'=>false,
-			//'before'=> tombolCreate().' '.tombolRefresh().' '.tombolExportExcel(),
-			//'before'=> tombolReqStore(),
+			'heading'=>false,
+			// 'heading'=>'
+				// <span class="fa-stack fa-sm">
+				  // <i class="fa fa-circle-thin fa-stack-2x" style="color:#25ca4f"></i>
+				  // <i class="fa fa-cubes fa-stack-1x"></i>
+				// </span> Items',  
+			'type'=>'info',
+			'before'=> tombolCreate().' '.tombolRefresh().' '.tombolExportExcel(),
 			'showFooter'=>false,
 		],
-		// 'floatOverflowContainer'=>true,
-		// 'floatHeader'=>true,
+		'floatOverflowContainer'=>true,
+		'floatHeader'=>true,
 	]); 
 	
 ?>
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;">
 		<div class="row">
-			<?=$gvStore?>
-		</div>		
+			<?=$gvItem?>
+		</div>
 	</div>
 </div>

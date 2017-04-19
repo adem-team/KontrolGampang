@@ -20,11 +20,13 @@ $(document).on('click','#store-button-create', function(ehead){
 /*
  * store-View.
 */
-$.fn.modal.Constructor.prototype.enforceFocus = function(){};	
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
 $(document).on('click','#store-button-view', function(ehead){ 			  
 	$('#store-modal-view').modal('show')
 	.find('#store-modal-content-view').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
-	.load(ehead.target.value);
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
 });
 
 /*

@@ -2,7 +2,8 @@
 use yii\helpers\Html;
 use common\models\User;
 use common\models\UserloginSearch;
-
+use frontend\assets\AppAsset;
+AppAsset::register($this);
 
 ?>
 

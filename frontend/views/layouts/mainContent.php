@@ -1,6 +1,7 @@
 <?php
-use frontend\assets\AppAsset;
-AppAsset::register($this);
+// use frontend\assets\AppAsset;
+// AppAsset::register($this);
+// dmstr\web\AdminLteAsset::register($this);
 ?>
 
 <div class="content-wrapper">
