@@ -40,7 +40,7 @@ echo $this->render('modal_item'); //echo difinition
 	$bColor='rgba(87,114,111, 1)';
 	$pageNm='<span class="fa-stack fa-xs text-right">				  
 				  <i class="fa fa-share fa-1x"></i>
-				</span> Outlet ['.$dataProvider->getModels()[0]['OUTLET_CODE'].']
+				</span> Outlet '.$outletNm.'
 	';
 	
 	$gvAttributeItem=[

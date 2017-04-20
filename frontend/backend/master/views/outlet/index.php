@@ -309,7 +309,7 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 		'columns'=>$gvAttributeItem,	
 		'rowOptions'   => function ($model, $key, $index, $grid) {
 			//$urlDestination=Url::to(['/efenbi-rasasayang/item-group/index', 'id' => $model->ID]);
-			$urlDestination=Url::to(['/master/item', 'id' => $model->ID]);
+			$urlDestination=Url::to(['/master/item', 'outlet_code' => $model->OUTLET_CODE]);
 			return ['id'=>	[$model->ID],'ondblclick' =>'location.href="'.$urlDestination.'"'];
 		},		
 		'pjax'=>true,
