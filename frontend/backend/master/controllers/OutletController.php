@@ -69,9 +69,32 @@ class OutletController extends Controller
       
     }
 	
-	public function actionView()
+	/**
+     * Displays a single Store model.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionView($id)
     {
-		  return $this->renderAjax('view');
-      
+    	$model =  $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            //return $this->redirect(['view', 'id' => $model->ID]);
+            return $this->redirect(['index']);
+        } else {
+           return $this->renderAjax('view', [
+                'model' => $model,
+            ]);
+        }
     }
+	
+	protected function findModel($id)
+    {
+        if (($model = Store::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
 }

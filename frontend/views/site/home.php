@@ -13,11 +13,7 @@
 
 <div style="height:650px; padding-top:150px">
 	<!--<img src="http://ptrnov.net/img/pp.jpg"  class="img-circle" alt="Cinque Terre" width="150" height="150">!-->
-	<div class="intro-text">
-		<h1 class="name">Why Use KG</h1>
-		<hr class="star-light">
-		<span class="skills" style="width30px">Kontrol Gampang - Aplikasi Kasir </span>
-	</div>
+	
 	<div class="col-lg-12 text-center" style="margin-top:30px">		
 		<div class="col-lg-4 col-lg-offset-1 text-center">
 			<div class="row">

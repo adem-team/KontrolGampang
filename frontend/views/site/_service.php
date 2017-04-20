@@ -6,13 +6,7 @@
 	$colorTextIcon='#0f0202';
 ?>
 
-<div class="container">
-	<div class="row">
-		<div class="col-lg-12 text-center">
-			<h2>service</h2>
-			<hr class="star-primary">
-		</div>
-	</div>
+<div class="container">	
 	<div class="row">
 		<div class="col-lg-3 col-lg-offset-1">
 			<div class="box1" style="height:80%">

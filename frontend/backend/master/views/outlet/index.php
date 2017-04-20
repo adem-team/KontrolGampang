@@ -1,18 +1,19 @@
 <?php
-use yii\helpers\Html;
+use kartik\helpers\Html;
 use kartik\widgets\Select2;
 use kartik\grid\GridView;
-use kartik\widgets\FileInput;
-use kartik\widgets\ActiveForm;
-use kartik\tabs\TabsX;
-use kartik\date\DatePicker;
 use yii\helpers\ArrayHelper;
 use yii\widgets\Breadcrumbs;
+use kartik\widgets\Spinner;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
+use kartik\widgets\FileInput;
 use yii\helpers\Json;
 use yii\web\Response;
 use yii\widgets\Pjax;
+use kartik\widgets\ActiveForm;
+use kartik\tabs\TabsX;
+use kartik\date\DatePicker;
 use yii\web\View;
 
 $this->registerCss("
@@ -31,9 +32,9 @@ $this->registerCss("
 		border-radius: 50;
 	}
 ");
- echo $this->render('modal_store'); //echo difinition
-$this->registerJs($this->render('modal_store.js'),View::POS_READY);
 
+$this->registerJs($this->render('modal_store.js'),View::POS_READY);
+ echo $this->render('modal_store'); //echo difinition
 
 	$aryStt= [
 		  ['STATUS' => 0, 'STT_NM' => 'DISABLE'],		  
@@ -271,7 +272,7 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 		//ACTION
 		[
 			'class' => 'kartik\grid\ActionColumn',
-			'template' => '{view}{edit}{reminder}{deny}',
+			'template' => '{{view}{edit}{reminder}{deny}}',
 			'header'=>'ACTION',
 			'dropdown' => true,
 			'dropdownOptions'=>[
@@ -281,7 +282,7 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 			'dropdownButton'=>[
 				'label'=>'ACTION',
 				'class'=>'btn btn-default btn-xs',
-				'style'=>'width:100%;'		
+				//'style'=>'width:100%;'		
 			],
 			'buttons' => [
 				'view' =>function ($url, $model){
@@ -296,7 +297,7 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 					return  tombolDeny($url, $model);
 				}
 
-			],
+			], 
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('center','10px',''),
 		]

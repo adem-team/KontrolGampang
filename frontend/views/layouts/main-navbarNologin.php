@@ -28,12 +28,12 @@ AppAssetSmoth::register($this);
 	
 	if (Yii::$app->user->isGuest) {
 		$menuItems[] = '<li class="hidden"> <a href="#page-top"></a></li>';
-		$menuItems[] = '<li class="page-scroll"> <a href="/#home" id="home-controller">Home</a></li>';
-		$menuItems[] = '<li class="page-scroll"> <a href="/#service" id="service-controller">Service</a></li>';
-		$menuItems[] = '<li class="page-scroll"> <a href="/#help" id="help-controller">Help</a></li>';
-		$menuItems[] = '<li class="page-scroll"> <a href="/#contact" id="contact-controller">Contact</a></li>'; 
+		$menuItems[] = '<li class="page-scroll"> <a href="#home" id="home-controller">Home</a></li>';
+		$menuItems[] = '<li class="page-scroll"> <a href="#service" id="service-controller">Service</a></li>';
+		$menuItems[] = '<li class="page-scroll"> <a href="#help" id="help-controller">Help</a></li>';
+		$menuItems[] = '<li class="page-scroll"> <a href="#contact" id="contact-controller">Contact</a></li>'; 
        //$menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-        $menuItems[] = '<li class="page-scroll">  <a href="#signup-select" id="signup-controller">Signup</a></li>';
+        //$menuItems[] = '<li class="page-scroll">  <a href="#signup-select" id="signup-controller">Signup</a></li>';
 		$menuItems[] = '<li class="page-scroll">  <a href="#login-select" id="login-controller">Login</a></li>';
 	
        // $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];

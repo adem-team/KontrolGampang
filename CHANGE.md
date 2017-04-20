@@ -2,7 +2,11 @@
 Change Log: `KG`
 ===================================
 
-## Version 1.5.0
+## Version 1.6.0
+**Date:** 2017-04-21#
+1. (ven): composer require cross-solution/bootstrap3-dialog:dev-master@dev.
+
+# Version 1.5.0
 **Date:** 2017-04-12
 1. (ven): helper-BaseArrayHelper. "if(is_array($next)){ .... }" 
 2. (ven): kartik-v\yii2-tree-manager. ActionManage() " //static::checkSignature('manage', $data);"

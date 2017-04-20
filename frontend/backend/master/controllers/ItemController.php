@@ -38,7 +38,7 @@ class ItemController extends Controller
     {
 		$paramCari=Yii::$app->getRequest()->getQueryParam('outlet_code');
 		//Get 
-		$modelOutlet=Store::find()->where(['OUTLET_CODE'=>$paramCari])->andWhere('FIND_IN_SET("'.$this->ACCESS_UNIX.'", ACCESS_UNIX)')->one();
+		$modelOutlet=Store::find()->where(['OUTLET_CODE'=>$paramCari])->one();//->andWhere('FIND_IN_SET("'.$this->ACCESS_UNIX.'", ACCESS_UNIX)')->one();
 		if($modelOutlet){
 		    $searchModel = new ItemSearch(['OUTLET_CODE'=>$paramCari]);
 			$dataProvider = $searchModel->search(Yii::$app->request->queryParams);			

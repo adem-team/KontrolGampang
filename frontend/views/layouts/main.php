@@ -6,7 +6,7 @@ use yii\widgets\Breadcrumbs;
 use common\widgets\Alert;
 use frontend\assets\AppAsset;
 AppAsset::register($this);
-dmstr\web\AdminLteAsset::register($this);
+
 	
 ?>
 <?php $this->beginPage() ?>
