@@ -64,7 +64,9 @@ return [
 						
 			// other module settings, refer detailed documentation
 		],
-		
+		'test' => [
+            'class' => 'frontend\backend\test\Modul',
+        ],
 		'dashboard' => [
             'class' => 'frontend\backend\dashboard\Modul',
         ],

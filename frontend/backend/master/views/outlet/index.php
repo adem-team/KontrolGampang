@@ -1,21 +1,25 @@
 <?php
-use yii\helpers\Html;
+use kartik\helpers\Html;
 use kartik\widgets\Select2;
 use kartik\grid\GridView;
-use kartik\widgets\FileInput;
-use kartik\widgets\ActiveForm;
-use kartik\tabs\TabsX;
-use kartik\date\DatePicker;
 use yii\helpers\ArrayHelper;
 use yii\widgets\Breadcrumbs;
+use kartik\widgets\Spinner;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
+use kartik\widgets\FileInput;
 use yii\helpers\Json;
 use yii\web\Response;
 use yii\widgets\Pjax;
+use kartik\widgets\ActiveForm;
+use kartik\tabs\TabsX;
+use kartik\date\DatePicker;
 use yii\web\View;
+use common\models\LocateProvince;
 
-use common\models\Locate;
+$userProvinsi=$dataProvider->getModels()[0]['countProvinsi'];
+$aryProvinsi = ArrayHelper::map(LocateProvince::find()->where('PROVINCE_ID IN ('.$userProvinsi.')')->all(), 'PROVINCE_ID', 'PROVINCE');
+
 $this->registerCss("
 	:link {
 		color: #fdfdfd;
@@ -28,12 +32,13 @@ $this->registerCss("
 	a:active {
 		color: blue;
 	}
+	.modal-content { 
+		border-radius: 50;
+	}
 ");
- 
-$this->title = Yii::t('app', 'ESM - Marketing Dashboard');      /* title pada header page */
-$this->params['breadcrumbs'][] = $this->title;  
+
 $this->registerJs($this->render('modal_store.js'),View::POS_READY);
-echo $this->render('modal_store'); //echo difinition
+ echo $this->render('modal_store'); //echo difinition
 
 	$aryStt= [
 		  ['STATUS' => 0, 'STT_NM' => 'DISABLE'],		  
@@ -60,7 +65,10 @@ echo $this->render('modal_store'); //echo difinition
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
+			'format'=>'raw',
+			'value'=>function($data) {				
+					return Html::tag('div', $data->OUTLET_CODE, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
+			},
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
 			
@@ -75,7 +83,10 @@ echo $this->render('modal_store'); //echo difinition
 			'mergeHeader'=>false,
 			'format'=>'html',
 			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
+			'format'=>'raw',
+			'value'=>function($data) {				
+					return Html::tag('div', $data->OUTLET_NM, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
+			},
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','250px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','250px',''),
 			
@@ -83,13 +94,21 @@ echo $this->render('modal_store'); //echo difinition
 		//PROVINCE
 		[
 			'attribute'=>'ProvinsiNm',
-			'filterType'=>true,
+			'filter' => $aryProvinsi,
+			'filterType'=>GridView::FILTER_SELECT2,
+			'filterWidgetOptions'=>[
+				'pluginOptions' =>Yii::$app->gv->gvPliginSelect2(),
+			],
+			'filterInputOptions'=>['placeholder'=>'Cari Provinsi'],
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
 			'hAlign'=>'right',
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
+			'format'=>'raw',
+			'value'=>function($data) {				
+					return Html::tag('div', $data->ProvinsiNm, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
+			},
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
 			
@@ -103,7 +122,10 @@ echo $this->render('modal_store'); //echo difinition
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
+			'format'=>'raw',
+			'value'=>function($data) {				
+					return Html::tag('div', $data->KotaNm, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
+			},
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
 			
@@ -117,7 +139,10 @@ echo $this->render('modal_store'); //echo difinition
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
+			'format'=>'raw',
+			'value'=>function($data) {				
+					return Html::tag('div', $data->PIC, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
+			},
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
 			
@@ -131,7 +156,10 @@ echo $this->render('modal_store'); //echo difinition
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
+			'format'=>'raw',
+			'value'=>function($data) {				
+					return Html::tag('div', $data->TLP, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
+			},
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
 			
@@ -145,7 +173,10 @@ echo $this->render('modal_store'); //echo difinition
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
+			'format'=>'raw',
+			'value'=>function($data) {				
+					return Html::tag('div', $data->FAX, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
+			},
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
 			
@@ -159,7 +190,10 @@ echo $this->render('modal_store'); //echo difinition
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
+			'format'=>'raw',
+			'value'=>function($data) {				
+					return Html::tag('div', $data->ALAMAT, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
+			},
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','250px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','250px',''),
 			
@@ -174,8 +208,9 @@ echo $this->render('modal_store'); //echo difinition
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
-			'value'=>function($model){
-				return $model->EXPIRED . ' days';
+			'format'=>'raw',
+			'value'=>function($data) {				
+					return Html::tag('div', $data->EXPIRED . ' days', ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
 			},
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('right','50px',''),
@@ -271,32 +306,33 @@ echo $this->render('modal_store'); //echo difinition
 		//ACTION
 		[
 			'class' => 'kartik\grid\ActionColumn',
-			'template' => '{view}{edit}{reminder}{deny}',
+			'template' => '{view}{review}{payment}',
 			'header'=>'ACTION',
 			'dropdown' => true,
 			'dropdownOptions'=>[
-				'class'=>'pull-right dropdown',
+				'class'=>'pull-right dropup',
 				'style'=>'width:60px;background-color:#E6E6FA'				
 			],
 			'dropdownButton'=>[
 				'label'=>'ACTION',
 				'class'=>'btn btn-default btn-xs',
-				'style'=>'width:100%;'		
+				//'style'=>'width:100%;'		
 			],
 			'buttons' => [
 				'view' =>function ($url, $model){
 				  return  tombolView($url, $model);
 				},
-				'edit' =>function($url, $model,$key){
+				'review' =>function($url, $model,$key){
 					//if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
 						return  tombolReview($url, $model);
 					//}					
 				},
-				'deny' =>function($url, $model,$key){
-					return  tombolDeny($url, $model);
+				'payment' =>function($url, $model,$key){
+					//if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
+						return  tombolPayment($url, $model);
+					//}					
 				}
-
-			],
+			], 
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('center','10px',''),
 		]
@@ -309,8 +345,8 @@ echo $this->render('modal_store'); //echo difinition
 		'columns'=>$gvAttributeItem,	
 		'rowOptions'   => function ($model, $key, $index, $grid) {
 			//$urlDestination=Url::to(['/efenbi-rasasayang/item-group/index', 'id' => $model->ID]);
-			$urlDestination=Url::to(['/master/item', 'id' => $model->ID]);
-			return ['id'=>	[$model->ID],'onclick' =>'location.href="'.$urlDestination.'"'];
+			$urlDestination=Url::to(['/master/item', 'outlet_code' => $model->OUTLET_CODE]);
+			return ['id'=>	[$model->ID],'ondblclick' =>'location.href="'.$urlDestination.'"'];
 		},		
 		'pjax'=>true,
 		'pjaxSettings'=>[
@@ -353,72 +389,6 @@ echo $this->render('modal_store'); //echo difinition
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;">
 		<div class="row">
 			<?=$gvStore?>
-		</div>
-		</br>
-		<?php
-		$items = [
-			
-			[
-				'text' => 'Folder 2',
-				'nodes' => [
-					['text' => 'Node 2.1',
-						'state' => [
-							'checked' => true,
-							'disabled' => false,
-							'expanded' => false,
-							'selected' => true
-						],
-						'nodes' =>[
-							[	'text' => 'Node 2.2',
-								'href' => "#node-1",
-								'icon' => "glyphicon glyphicon-stop",
-								'selectedIcon' => "glyphicon glyphicon-stop",
-								'selectable' => false,
-								'state' => [
-									'checked' => true,
-									'disabled' => false,
-									'expanded' => true,
-									'selected' => true
-								],
-							],
-							[	'text' => 'Node 2.3',
-								'href' => "#node-2",
-								'icon' => "glyphicon glyphicon-stop",
-								'selectedIcon' => "glyphicon glyphicon-stop",
-								'selectable' => false,
-								'state' => [
-									'checked' => true,
-									'disabled' => false,
-									'expanded' => true,
-									'selected' => true
-								],
-							
-							]
-						]
-					],
-					['text' => 'Node 2.4']
-				]
-			]
-		];
-		
-		$trev=\lesha724\bootstraptree\TreeView::widget([
-				'htmlOptions'=>[
-							'id'=>'treeview-tabs'
-				],
-				'options'=>[
-					'data'=>$items,
-					'enableLinks'=>true,
-					'showTags'=>true,
-					'levels'=>3
-				],
-				'events'=>[
-					'onNodeSelected'=>'function(event, data) {
-						// Your logic goes here
-						alert(data.href);
-					}'
-				]
-			]);	 
-		?>
-		<?=$trev?>
+		</div>		
 	</div>
 </div>

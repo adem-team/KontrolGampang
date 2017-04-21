@@ -8,23 +8,15 @@
 */
 
 /*
- * store-Create.
-*/
-$.fn.modal.Constructor.prototype.enforceFocus = function(){};	
-$(document).on('click','#store-button-create', function(ehead){ 			  
-	$('#store-modal-create').modal('show')
-	.find('#store-modal-content-create').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
-	.load(ehead.target.value);
-});
-
-/*
  * store-View.
 */
-$.fn.modal.Constructor.prototype.enforceFocus = function(){};	
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
 $(document).on('click','#store-button-view', function(ehead){ 			  
 	$('#store-modal-view').modal('show')
 	.find('#store-modal-content-view').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
-	.load(ehead.target.value);
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
 });
 
 /*
@@ -34,16 +26,6 @@ $.fn.modal.Constructor.prototype.enforceFocus = function(){};
 $(document).on('click','#store-button-review', function(ehead){ 			  
 	$('#store-modal-review').modal('show')
 	.find('#store-modal-content-review').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
-	.load(ehead.target.value);
-});
-
-/*
- * store-Remainder.
-*/
-$.fn.modal.Constructor.prototype.enforceFocus = function(){};	
-$(document).on('click','#store-button-remainder', function(ehead){ 			  
-	$('#store-modal-remainder').modal('show')
-	.find('#store-modal-content-remainder').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
 	.load(ehead.target.value);
 });
 

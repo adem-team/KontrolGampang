@@ -4,12 +4,9 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use common\widgets\Alert;
-// use frontend\assets\AppAsset;
-// AppAsset::register($this);
-// use frontend\assets\AppAssetFreelancer;
-// AppAssetFreelancer::register($this);
+use frontend\assets\AppAsset;
+AppAsset::register($this);
 
-dmstr\web\AdminLteAsset::register($this);
 	
 ?>
 <?php $this->beginPage() ?>
@@ -56,7 +53,7 @@ dmstr\web\AdminLteAsset::register($this);
 						<!-- BODY CONTAINER !-->	
 						<?=$this->render('mainContent',['content'=>$content]); ?>	
 						<!-- FOOTER !-->
-						<?=$this->render('main-footer')?>						
+						<?php //=$this->render('main-footer')?>						
 					</div>
 					
 				<?php $this->endBody() ?>

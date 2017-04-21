@@ -3,8 +3,13 @@
 namespace common\models;
 
 use Yii;
+<<<<<<< HEAD
 //use frontend\backend\master\models\Item;
 use api\modules\master\models\Item;
+=======
+use yii\helpers\ArrayHelper;
+
+>>>>>>> 8be1e655df4d2ebef2ef08c9443789e4659214f7
 /**
  * This is the model class for table "store".
  *
@@ -46,7 +51,7 @@ class Store extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['CREATE_AT', 'UPDATE_AT','ACCESS_UNIX','expired'], 'safe'],
+            [['CREATE_AT', 'UPDATE_AT','ACCESS_UNIX','expired','countProvinsi'], 'safe'],
             [['STATUS','LOCATE_PROVINCE', 'LOCATE_CITY'], 'integer'],
             [['ALAMAT'], 'string'],
             [['CREATE_BY', 'UPDATE_BY', 'OUTLET_CODE', 'TLP'], 'string', 'max' => 50],
@@ -88,6 +93,7 @@ class Store extends \yii\db\ActiveRecord
 	{
 		return $this->provinsiTbl!=''?$this->provinsiTbl->PROVINCE:'none';
 	}
+	
 	//==CITY==
 	public function getKotaTbl()
 	{
@@ -101,6 +107,25 @@ class Store extends \yii\db\ActiveRecord
 	{
 		return '30';
 	}
+	//FILTER COUNT - PROVINCE PER USER.
+	public function getCountProvinsi()
+	{
+		$a='';
+		$cntStoreProvinsi=Store::find()->select('LOCATE_PROVINCE')->asArray()->where('FIND_IN_SET("'.Yii::$app->getUserOpt->user()['ACCESS_UNIX'].'", ACCESS_UNIX)')->all();
+		//return $cntStoreProvinsi!=''?$cntStoreProvinsi['LOCATE_PROVINCE'][0]:0;
+		foreach($cntStoreProvinsi as $row){
+			$i=$row['LOCATE_PROVINCE'];
+			$a=$a!=''?$a.','.$i:$i;
+		}
+		return $a;
+	}
+	//FILTER COUNT - KOTA PER USER.
+	public function getCountKota()
+	{
+		return $this->provinsiTbl!=''?$this->provinsiTbl->PROVINCE:'none';
+	}
+	
+	
 	
 	public function fields()
 	{

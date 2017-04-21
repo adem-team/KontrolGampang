@@ -3,6 +3,20 @@ use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+$this->registerCss("
+	/**
+	 * CSS - Border radius Sudut.
+	 * piter novian [ptr.nov@gmail.com].
+	 * 'clientOptions' => [
+	 *		'backdrop' => FALSE, //Static=disable, false=enable
+	 *		'keyboard' => TRUE,	// Kyboard 
+	 *	]
+	*/
+	.modal-content { 
+		border-radius: 5px;
+	}
+");
+
 /**
 * ===============================
  * Button Permission.
@@ -24,7 +38,8 @@ use yii\helpers\Url;
 	*/
 	function bgIconColor(){
 		//return '#f08f2e';//kuning.
-		return '#1eaac2';//biru Laut.
+		//return '#1eaac2';//biru Laut.
+		return '#25ca4f';//Hijau.
 	}
 	
 	
@@ -36,24 +51,42 @@ use yii\helpers\Url;
  * Version	: 2.1
  * ===============================
 */
-	/*
-	 * Button - CREATE.
+	/**
+	 * STORE - REGISTER STORE
 	*/
 	function tombolReqStore(){
-		// if(getPermission()){
-			// if(getPermission()->BTN_CREATE==1){
-				$title1 = Yii::t('app', ' Ragister New Store');
-				$url = Url::toRoute(['/efenbi-rasasayang/store/create']);
-				$options1 = ['value'=>$url,
-							'id'=>'store-button-create',
-							'class'=>"btn btn-success btn-xs"  
+		$title = Yii::t('app', 'Ragister New Store');
+		$url =  Url::toRoute(['/payment/status']);
+		$options = ['id'=>'store-id-register',
+				  'data-pjax' => 0,
+				  'class'=>"btn btn-success btn-xs",
 				];
-				$icon1 = '<span class="fa fa-check-circle fa-lg"></span>';
-				$label1 = $icon1 . '  ' . $title1;
-				$content = Html::button($label1,$options1);
-				return $content;
-			// }
-		// }
+		$icon = '<span class="fa fa-check-circle fa-lg"></span>';
+		$label = $icon . ' ' . $title;
+
+		return $content = Html::a($label,$url,$options);
+	}
+	
+	/**
+	 * STORE - PAYMENT
+	*/
+	function tombolPayment(){
+		$title = Yii::t('app', 'Payment');
+		$url =  Url::toRoute(['/payment/status']);
+		$options = ['id'=>'store-id-payment',
+				  'data-pjax' => 0,
+				  'class'=>"btn btn-default btn-xs",    
+				  'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+				];
+		$icon = '
+					<span class="fa-stack fa-xs">																	
+						<i class="fa fa-circle-thin fa-stack-2x " style="color:'.bgIconColor().'"></i>
+						<i class="fa fa-money fa-stack-1x" style="color:black"></i>
+					</span>
+				';   
+		$label = $icon . ' ' . $title;
+		$content = Html::a($label,$url,$options);
+		return  $content ;
 	}
 	
 	/*
@@ -65,20 +98,20 @@ use yii\helpers\Url;
 			// if(getPermission()->BTN_VIEW==1 OR getPermission()->BTN_CREATE==1){
 				$title1 = Yii::t('app',' View');
 				$options1 = [
-					'value'=>url::to(['/efenbi-rasasayang/store/view','id'=>$model->ID]),
+					'value'=>url::to(['/master/outlet/view','id'=>$model->ID]),
 					'id'=>'store-button-view',
-					'class'=>"btn btn-default btn-xs",      
+					'class'=>"btn btn-default btn-xs",    
 					'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
 				];
 				$icon1 = '
 					<span class="fa-stack fa-xs">																	
-						<i class="fa fa-circle fa-stack-2x " style="color:'.bgIconColor().'"></i>
-						<i class="fa fa-eye fa-stack-1x" style="color:#fbfbfb"></i>
+						<i class="fa fa-circle-thin fa-stack-2x " style="color:'.bgIconColor().'"></i>
+						<i class="fa fa-eye fa-stack-1x" style="color:black"></i>
 					</span>
 				';      
 				$label1 = $icon1 . '  ' . $title1;
 				$content = Html::button($label1,$options1);		
-				return $content;
+				return '<li>'.$content.'</li>';
 			// }
 		// }
 	}
@@ -92,7 +125,7 @@ use yii\helpers\Url;
 			// if(getPermission()->BTN_REVIEW==1){
 				$title1 = Yii::t('app',' Review');
 				$options1 = [
-					'value'=>url::to(['/efenbi-rasasayang/store/review','id'=>$model->ID]),
+					'value'=>url::to(['/master/outlet/review','id'=>$model->ID]),
 					'id'=>'store-button-review',
 					'class'=>"btn btn-default btn-xs",      
 					'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
@@ -100,45 +133,18 @@ use yii\helpers\Url;
 				//thin -> untuk bulet luar
 				$icon1 = '
 					<span class="fa-stack fa-xs">																	
-						<i class="fa fa-circle fa-stack-2x " style="color:'.bgIconColor().'"></i>
-						<i class="fa fa-edit fa-stack-1x" style="color:#fbfbfb"></i>
+						<i class="fa fa-circle-thin fa-stack-2x " style="color:'.bgIconColor().'"></i>
+						<i class="fa fa-edit fa-stack-1x" style="color:black"></i>
 					</span>
 				';      
 				$label1 = $icon1 . '  ' . $title1;
 				$content = Html::button($label1,$options1);		
-				return $content;
+				return '<li>'.$content.'</li>';
 			// }
 		// }
 	}
 	
-	/*
-	 * Button - REMAINDER.
-	 * BTN_PROCESS1.
-	*/	
-	function tombolRemainder($url, $model){
-		if(getPermission()){
-			if(getPermission()->BTN_PROCESS1==1){
-				$title1 = Yii::t('app',' Remainder');
-				$url = url::to(['/efenbi-rasasayang/store/remainder','id'=>$model->ID]);
-				$options1 = [
-					'value'=>$url,
-					'id'=>'store-button-remainder',
-					'class'=>"btn btn-default btn-xs",      
-					'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
-				];
-				$icon1 = '
-					<span class="fa-stack fa-xs">																	
-						<i class="fa fa-circle fa-stack-2x " style="color:'.bgIconColor().'"></i>
-						<i class="fa fa-clock-o fa-stack-1x" style="color:#fbfbfb"></i>
-					</span>
-				';      
-				$label1 = $icon1 . '  ' . $title1;
-				$content = Html::button($label1,$options1);		
-				 return $content;
-			}
-		}
-	}
-	
+		
 	/*
 	 * Button - DENY.
 	 * Limited Access.
@@ -225,6 +231,7 @@ use yii\helpers\Url;
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
 		],
+		
 	]);
 	echo "<div id='store-modal-content-create'></div>";
 	Modal::end();
@@ -239,11 +246,18 @@ use yii\helpers\Url;
 				<i class="fa fa-circle fa-stack-2x " style="color:'.bgIconColor().'"></i>
 				<i class="fa fa-eye fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> VIEW STORE</b>
-		',		
+		',	
 		'size' => 'modal-dm',
+		//'options' => ['class'=>'slide'],
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
+			//'toggleButton' => ['label' => 'click me'],
 		],
+		//'clientOptions' => ['backdrop' => 'static', 'keyboard' => TRUE]
+		'clientOptions' => [
+			'backdrop' => FALSE, //Static=disable, false=enable
+			'keyboard' => TRUE,	// Kyboard 
+		]
 	]);
 	echo "<div id='store-modal-content-view'></div>";
 	Modal::end();
@@ -253,6 +267,7 @@ use yii\helpers\Url;
 	*/
 	Modal::begin([
 		'id' => 'store-modal-review',
+		
 		'header' => '
 			<span class="fa-stack fa-xs">																	
 				<i class="fa fa-circle fa-stack-2x " style="color:'.bgIconColor().'"></i>
@@ -261,7 +276,10 @@ use yii\helpers\Url;
 		',		
 		'size' =>'modal-dm',
 		'headerOptions'=>[
+			// 'backdrop'=> 'static',
+			// 'keyboard'=> true,
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
+			
 		],
 	]);
 	echo "<div id='store-modal-content-review'></div>";
