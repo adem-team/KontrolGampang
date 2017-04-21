@@ -38,7 +38,8 @@ $this->registerCss("
 	*/
 	function bgIconColor(){
 		//return '#f08f2e';//kuning.
-		return '#1eaac2';//biru Laut.
+		//return '#1eaac2';//biru Laut.
+		return '#25ca4f';//Hijau.
 	}
 	
 	
@@ -50,24 +51,42 @@ $this->registerCss("
  * Version	: 2.1
  * ===============================
 */
-	/*
-	 * Button - CREATE.
+	/**
+	 * STORE - REGISTER STORE
 	*/
 	function tombolReqStore(){
-		// if(getPermission()){
-			// if(getPermission()->BTN_CREATE==1){
-				$title1 = Yii::t('app', ' Ragister New Store');
-				$url = Url::toRoute(['/efenbi-rasasayang/store/create']);
-				$options1 = ['value'=>$url,
-							'id'=>'store-button-create',
-							'class'=>"btn btn-success btn-xs"  
+		$title = Yii::t('app', 'Ragister New Store');
+		$url =  Url::toRoute(['/payment/status']);
+		$options = ['id'=>'store-id-register',
+				  'data-pjax' => 0,
+				  'class'=>"btn btn-success btn-xs",
 				];
-				$icon1 = '<span class="fa fa-check-circle fa-lg"></span>';
-				$label1 = $icon1 . '  ' . $title1;
-				$content = Html::button($label1,$options1);
-				return $content;
-			// }
-		// }
+		$icon = '<span class="fa fa-check-circle fa-lg"></span>';
+		$label = $icon . ' ' . $title;
+
+		return $content = Html::a($label,$url,$options);
+	}
+	
+	/**
+	 * STORE - PAYMENT
+	*/
+	function tombolPayment(){
+		$title = Yii::t('app', 'Payment');
+		$url =  Url::toRoute(['/payment/status']);
+		$options = ['id'=>'store-id-payment',
+				  'data-pjax' => 0,
+				  'class'=>"btn btn-default btn-xs",    
+				  'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+				];
+		$icon = '
+					<span class="fa-stack fa-xs">																	
+						<i class="fa fa-circle-thin fa-stack-2x " style="color:'.bgIconColor().'"></i>
+						<i class="fa fa-money fa-stack-1x" style="color:black"></i>
+					</span>
+				';   
+		$label = $icon . ' ' . $title;
+		$content = Html::a($label,$url,$options);
+		return  $content ;
 	}
 	
 	/*
@@ -82,19 +101,17 @@ $this->registerCss("
 					'value'=>url::to(['/master/outlet/view','id'=>$model->ID]),
 					'id'=>'store-button-view',
 					'class'=>"btn btn-default btn-xs",    
-					'data-backdrop'=>'static',
-					'data-keyboard'=>'true',
 					'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
 				];
 				$icon1 = '
 					<span class="fa-stack fa-xs">																	
-						<i class="fa fa-circle fa-stack-2x " style="color:'.bgIconColor().'"></i>
-						<i class="fa fa-eye fa-stack-1x" style="color:#fbfbfb"></i>
+						<i class="fa fa-circle-thin fa-stack-2x " style="color:'.bgIconColor().'"></i>
+						<i class="fa fa-eye fa-stack-1x" style="color:black"></i>
 					</span>
 				';      
 				$label1 = $icon1 . '  ' . $title1;
 				$content = Html::button($label1,$options1);		
-				return $content;
+				return '<li>'.$content.'</li>';
 			// }
 		// }
 	}
@@ -108,7 +125,7 @@ $this->registerCss("
 			// if(getPermission()->BTN_REVIEW==1){
 				$title1 = Yii::t('app',' Review');
 				$options1 = [
-					'value'=>url::to(['/efenbi-rasasayang/store/review','id'=>$model->ID]),
+					'value'=>url::to(['/master/outlet/review','id'=>$model->ID]),
 					'id'=>'store-button-review',
 					'class'=>"btn btn-default btn-xs",      
 					'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
@@ -116,45 +133,18 @@ $this->registerCss("
 				//thin -> untuk bulet luar
 				$icon1 = '
 					<span class="fa-stack fa-xs">																	
-						<i class="fa fa-circle fa-stack-2x " style="color:'.bgIconColor().'"></i>
-						<i class="fa fa-edit fa-stack-1x" style="color:#fbfbfb"></i>
+						<i class="fa fa-circle-thin fa-stack-2x " style="color:'.bgIconColor().'"></i>
+						<i class="fa fa-edit fa-stack-1x" style="color:black"></i>
 					</span>
 				';      
 				$label1 = $icon1 . '  ' . $title1;
 				$content = Html::button($label1,$options1);		
-				return $content;
+				return '<li>'.$content.'</li>';
 			// }
 		// }
 	}
 	
-	/*
-	 * Button - REMAINDER.
-	 * BTN_PROCESS1.
-	*/	
-	function tombolRemainder($url, $model){
-		if(getPermission()){
-			if(getPermission()->BTN_PROCESS1==1){
-				$title1 = Yii::t('app',' Remainder');
-				$url = url::to(['/efenbi-rasasayang/store/remainder','id'=>$model->ID]);
-				$options1 = [
-					'value'=>$url,
-					'id'=>'store-button-remainder',
-					'class'=>"btn btn-default btn-xs",      
-					'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
-				];
-				$icon1 = '
-					<span class="fa-stack fa-xs">																	
-						<i class="fa fa-circle fa-stack-2x " style="color:'.bgIconColor().'"></i>
-						<i class="fa fa-clock-o fa-stack-1x" style="color:#fbfbfb"></i>
-					</span>
-				';      
-				$label1 = $icon1 . '  ' . $title1;
-				$content = Html::button($label1,$options1);		
-				 return $content;
-			}
-		}
-	}
-	
+		
 	/*
 	 * Button - DENY.
 	 * Limited Access.

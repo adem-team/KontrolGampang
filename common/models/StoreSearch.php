@@ -17,7 +17,7 @@ class StoreSearch extends Store
 	public function attributes()
 	{
 		//Author -ptr.nov- add related fields to searchable attributes 
-		return array_merge(parent::attributes(), ['ProvinsiNm','KotaNm','expired']);
+		return array_merge(parent::attributes(), ['ProvinsiNm','KotaNm','countProvinsi','expired']);
 	}
     /**
      * @inheritdoc
@@ -25,7 +25,7 @@ class StoreSearch extends Store
     public function rules()
     {
         return [
-            [['CREATE_AT', 'UPDATE_AT','ACCESS_UNIX'], 'safe'],
+            [['CREATE_AT', 'UPDATE_AT','ACCESS_UNIX','ProvinsiNm','KotaNm'], 'safe'],
             [['STATUS','LOCATE_PROVINCE', 'LOCATE_CITY'], 'integer'],
             [['ALAMAT'], 'string'],
             [['CREATE_BY', 'UPDATE_BY', 'OUTLET_CODE', 'TLP'], 'string', 'max' => 50],

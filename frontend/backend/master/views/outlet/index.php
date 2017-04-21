@@ -15,6 +15,10 @@ use kartik\widgets\ActiveForm;
 use kartik\tabs\TabsX;
 use kartik\date\DatePicker;
 use yii\web\View;
+use common\models\LocateProvince;
+
+$userProvinsi=$dataProvider->getModels()[0]['countProvinsi'];
+$aryProvinsi = ArrayHelper::map(LocateProvince::find()->where('PROVINCE_ID IN ('.$userProvinsi.')')->all(), 'PROVINCE_ID', 'PROVINCE');
 
 $this->registerCss("
 	:link {
@@ -61,7 +65,10 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
+			'format'=>'raw',
+			'value'=>function($data) {				
+					return Html::tag('div', $data->OUTLET_CODE, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
+			},
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
 			
@@ -76,7 +83,10 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 			'mergeHeader'=>false,
 			'format'=>'html',
 			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
+			'format'=>'raw',
+			'value'=>function($data) {				
+					return Html::tag('div', $data->OUTLET_NM, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
+			},
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','250px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','250px',''),
 			
@@ -84,13 +94,21 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 		//PROVINCE
 		[
 			'attribute'=>'ProvinsiNm',
-			'filterType'=>true,
+			'filter' => $aryProvinsi,
+			'filterType'=>GridView::FILTER_SELECT2,
+			'filterWidgetOptions'=>[
+				'pluginOptions' =>Yii::$app->gv->gvPliginSelect2(),
+			],
+			'filterInputOptions'=>['placeholder'=>'Cari Provinsi'],
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
 			'hAlign'=>'right',
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
+			'format'=>'raw',
+			'value'=>function($data) {				
+					return Html::tag('div', $data->ProvinsiNm, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
+			},
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
 			
@@ -104,7 +122,10 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
+			'format'=>'raw',
+			'value'=>function($data) {				
+					return Html::tag('div', $data->KotaNm, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
+			},
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
 			
@@ -118,7 +139,10 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
+			'format'=>'raw',
+			'value'=>function($data) {				
+					return Html::tag('div', $data->PIC, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
+			},
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
 			
@@ -132,7 +156,10 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
+			'format'=>'raw',
+			'value'=>function($data) {				
+					return Html::tag('div', $data->TLP, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
+			},
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
 			
@@ -146,7 +173,10 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
+			'format'=>'raw',
+			'value'=>function($data) {				
+					return Html::tag('div', $data->FAX, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
+			},
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
 			
@@ -160,7 +190,10 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
+			'format'=>'raw',
+			'value'=>function($data) {				
+					return Html::tag('div', $data->ALAMAT, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
+			},
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','250px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','250px',''),
 			
@@ -175,8 +208,9 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
-			'value'=>function($model){
-				return $model->EXPIRED . ' days';
+			'format'=>'raw',
+			'value'=>function($data) {				
+					return Html::tag('div', $data->EXPIRED . ' days', ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
 			},
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('right','50px',''),
@@ -272,11 +306,11 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 		//ACTION
 		[
 			'class' => 'kartik\grid\ActionColumn',
-			'template' => '{{view}{edit}{reminder}{deny}}',
+			'template' => '{view}{review}{payment}',
 			'header'=>'ACTION',
 			'dropdown' => true,
 			'dropdownOptions'=>[
-				'class'=>'pull-right dropdown',
+				'class'=>'pull-right dropup',
 				'style'=>'width:60px;background-color:#E6E6FA'				
 			],
 			'dropdownButton'=>[
@@ -288,15 +322,16 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 				'view' =>function ($url, $model){
 				  return  tombolView($url, $model);
 				},
-				'edit' =>function($url, $model,$key){
+				'review' =>function($url, $model,$key){
 					//if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
 						return  tombolReview($url, $model);
 					//}					
 				},
-				'deny' =>function($url, $model,$key){
-					return  tombolDeny($url, $model);
+				'payment' =>function($url, $model,$key){
+					//if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
+						return  tombolPayment($url, $model);
+					//}					
 				}
-
 			], 
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('center','10px',''),

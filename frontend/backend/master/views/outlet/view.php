@@ -26,14 +26,6 @@ use kartik\widgets\ActiveForm;
             'value'=>'<kbd>'.$model->OUTLET_CODE.'</kbd>',
 		],
 		[
-			'attribute' =>'ALAMAT',
-			'type'=>DetailView::INPUT_TEXTAREA,
-			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
-			//'displayOnly'=>true,	
-			'format'=>'raw', 
-            //'value'=>'<kbd>'.$model->ITEM_NM.'</kbd>',
-		],
-		[
 			'attribute' =>'OUTLET_NM',
 			'type'=>DetailView::INPUT_TEXTAREA,
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
@@ -41,19 +33,28 @@ use kartik\widgets\ActiveForm;
 			'format'=>'raw', 
             //'value'=>'<kbd>'.$model->ITEM_NM.'</kbd>',
 		],
-		/* [		
-			'attribute' =>'LocateNm',			
+		[
+			'attribute' =>'ALAMAT',
+			'type'=>DetailView::INPUT_TEXTAREA,
+			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
+			//'displayOnly'=>true,	
+			'format'=>'raw', 
+            //'value'=>'<kbd>'.$model->ITEM_NM.'</kbd>',
+		],
+		
+		[		
+			'attribute' =>'ProvinsiNm',			
 			'format'=>'raw',
 			'type'=>DetailView::INPUT_SELECT2,
 			'widgetOptions'=>[
-				'data'=>$aryLocate,
+				//'data'=>$aryLocate,
 				'options'=>['id'=>'locate-view-store-id','placeholder'=>'Select ...'],
 				'pluginOptions'=>['allowClear'=>true],
 			],	
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 		],
 		[	
-			'attribute' =>'LocatesubNm',			
+			'attribute' =>'KotaNm',			
 			'format'=>'raw',
 			'type'=>DetailView::INPUT_DEPDROP,
 			'widgetOptions'=>[
@@ -66,7 +67,7 @@ use kartik\widgets\ActiveForm;
 				],
 			],	
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
-		], */
+		], 
 		[
 			'attribute' =>'TLP',
 			//'type'=>DetailView::INPUT_TEXTAREA,
