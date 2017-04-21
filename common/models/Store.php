@@ -3,13 +3,11 @@
 namespace common\models;
 
 use Yii;
-<<<<<<< HEAD
 //use frontend\backend\master\models\Item;
 use api\modules\master\models\Item;
-=======
 use yii\helpers\ArrayHelper;
 
->>>>>>> 8be1e655df4d2ebef2ef08c9443789e4659214f7
+
 /**
  * This is the model class for table "store".
  *
