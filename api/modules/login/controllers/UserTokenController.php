@@ -48,7 +48,7 @@ class UserTokenController extends ActiveController
      */
     public function behaviors()    {
         return ArrayHelper::merge(parent::behaviors(), [
-            'authenticator' => 
+            /* 'authenticator' => 
             [
                 'class' => CompositeAuth::className(),
 				'authMethods' => 
@@ -66,7 +66,7 @@ class UserTokenController extends ActiveController
 						},
 					], 
                 ]
-            ],
+            ], */
 			'bootstrap'=> 
             [
 				'class' => ContentNegotiator::className(),
@@ -82,7 +82,6 @@ class UserTokenController extends ActiveController
 					//'Origin' => ['http://lukisongroup.com', 'http://lukisongroup.int','http://localhost','http://103.19.111.1','http://202.53.354.82'],
 					'Origin' => ['*'],
 					'Access-Control-Request-Method' => ['POST', 'PUT','GET'],
-					//'Access-Control-Request-Headers' => ['*'],
 					// Allow only POST and PUT methods
 					'Access-Control-Request-Headers' => ['X-Wsse'],
 					'Access-Control-Allow-Headers' => ['X-Requested-With','Content-Type'],
@@ -91,8 +90,8 @@ class UserTokenController extends ActiveController
 					// Allow OPTIONS caching
 					'Access-Control-Max-Age' => 3600,
 					// Allow the X-Pagination-Current-Page header to be exposed to the browser.
-					'Access-Control-Expose-Headers' => ['X-Pagination-Current-Page']
-					]		 
+					'Access-Control-Expose-Headers' => ['X-Pagination-Current-Page'],
+				]		
 			],
         ]);		
     }

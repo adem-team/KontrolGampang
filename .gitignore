@@ -21,6 +21,7 @@ Thumbs.db
 /vendor
 /vendorOld1
 /vendor_2
+/api1
 # composer itself is not needed
 composer.phar
 

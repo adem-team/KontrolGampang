@@ -30,7 +30,7 @@ use common\models\StoreSearch;
   * CMD : curl -i http://api.kontrolgampang.int/login/users -H "Authorization: Bearer Yt4kLWLYlQf9OfnFSpZ5IO3128Gvw2gP"
   *   http://api.kontrolgampang.com/master/stores?ACCESS_UNIX=20170404081601
  */
-class StoreController extends ActiveController
+class StoretestController extends ActiveController
 {	
 	/**
 	  * Source Database declaration 

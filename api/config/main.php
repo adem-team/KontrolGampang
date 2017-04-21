@@ -28,6 +28,11 @@ return [
             'enableSession' => false,
 			'loginUrl' => null,
         ],
+		// 'formatter' => [
+           // 'dateFormat' => 'd-M-Y',
+           // 'datetimeFormat' => 'd-M-Y H:i:s',
+           // 'timeFormat' => 'H:i:s',
+		 // ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -63,6 +68,44 @@ return [
             'showScriptName' => false,
             'rules' => [
 				[
+                        'class' => 'yii\rest\UrlRule',
+                        'controller' =>[
+							'login/user-token',
+							'login/user'
+						],
+						'patterns' => [
+							'PUT,PATCH {id}' => 'update',
+							'DELETE {id}' => 'delete',
+							'GET,HEAD {id}' => 'view',
+							'POST' => 'create',
+							'GET,HEAD' => 'index',
+							'{id}' => 'options',
+							'' => 'options',
+						]
+                        //'extraPatterns' => ['GET search' => 'search'],
+
+                        //'except' => ['view', 'create', 'update'],
+                ],
+				[
+                        'class' => 'yii\rest\UrlRule',
+                        'controller' =>[
+							'master/store',
+							'master/storetest'
+						],
+						'patterns' => [
+							'PUT,PATCH {id}' => 'update',
+							'DELETE {id}' => 'delete',
+							'GET,HEAD {id}' => 'view',
+							'POST' => 'create',
+							'GET,HEAD' => 'index',
+							'{id}' => 'options',
+							'' => 'options',
+						]
+                        //'extraPatterns' => ['GET search' => 'search'],
+
+                        //'except' => ['view', 'create', 'update'],
+                ],
+				/* [
 					'class' => 'yii\rest\UrlRule',
                     'controller' =>
                     [   //ptr,.nov penting buat API
@@ -80,7 +123,7 @@ return [
                     [
                       '{id}' => '<id:\\w+>',
                     ],
-                ]
+                ] */
             ],
         ],
 		// 'db' => [
