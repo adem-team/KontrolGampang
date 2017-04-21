@@ -81,10 +81,10 @@ class User extends ActiveRecord implements IdentityInterface
 	*/
 	public static function findResetAccessToken($username)
     {
-		$modelUser = static::find()->where(['username' => $username])->one();
-		$modelUser->auth_key=Yii::$app->security->generateRandomString();//'233123';
-		$modelUser->updated_at=date("Y-m-d H:i:s");
-		$modelUser->save();
+		// $modelUser = static::find()->where(['username' => $username])->one();
+		// $modelUser->auth_key=Yii::$app->security->generateRandomString();//'233123';
+		// $modelUser->updated_at=date("Y-m-d H:i:s");
+		// $modelUser->save();
 		/* if (!static::isPasswordResetTokenValid($token)) {
             return null;
         }

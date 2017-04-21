@@ -13,6 +13,7 @@ use yii\filters\auth\HttpBearerAuth;
 use yii\filters\ContentNegotiator;
 use yii\filters\VerbFilter;
 use yii\web\Response;
+use yii\web\Request;
 use yii\helpers\ArrayHelper;
 use yii\web\HttpException;
 use api\modules\login\models\UserloginSearch;
@@ -51,53 +52,50 @@ class UserController extends ActiveController
         }
 
         return true;
-    } */
+    }  */
 	/**
      * @inheritdoc
      */
     public function behaviors()    {
         return ArrayHelper::merge(parent::behaviors(), [
-            'authenticator' => 
-            [
+            'authenticator' => [
                 'class' => CompositeAuth::className(),
-				//'except' => ['token'],
-                'authMethods' => 
-                [
-                    #Hapus Tanda Komentar Untuk Autentifikasi Dengan Token               
-					 ['class' => HttpBearerAuth::className()]
-                ]
+                'authMethods' => [
+                    ['class' => HttpBearerAuth::className()],
+                    // ['class' => QueryParamAuth::className(), 'tokenParam' => 'access-token'],
+                ],
+                'except' => ['options']
             ],
-			'bootstrap'=> 
-            [
+			'bootstrap'=> [
 				'class' => ContentNegotiator::className(),
-				'formats' => 
-                [
+				'formats' => [
 					'application/json' => Response::FORMAT_JSON,
 				],
 			],
-			'corsFilter' => [
-				'class' => \yii\filters\Cors::className(),
-				'cors' => [
-					// restrict access to
-					//'Origin' => ['http://lukisongroup.com', 'http://lukisongroup.int','http://localhost','http://103.19.111.1','http://202.53.354.82'],
-					'Origin' => ['*'],
-					'Access-Control-Request-Method' => ['POST', 'PUT','GET'],
-					//'Access-Control-Request-Headers' => ['*'],
-					// Allow only POST and PUT methods
-					'Access-Control-Request-Headers' => ['X-Wsse'],
-					'Access-Control-Allow-Headers' => ['X-Requested-With','Content-Type'],
-					// Allow only headers 'X-Wsse'
-					'Access-Control-Allow-Credentials' => true,
-					// Allow OPTIONS caching
-					'Access-Control-Max-Age' => 3600,
-					// Allow the X-Pagination-Current-Page header to be exposed to the browser.
-					'Access-Control-Expose-Headers' => ['X-Pagination-Current-Page']
-					]		 
-			],
-        ]);		
+			'corsFilter' => 
+            [
+                'class' => \yii\filters\Cors::className(),
+                'cors' => 
+                [
+                    // restrict access to
+                    'Origin' =>['*'],// ['http://ptrnov-erp.dev', 'https://ptrnov-erp.dev'],
+                    'Access-Control-Request-Method' => ['GET','POST', 'PUT','OPTIONS'],
+                    // Allow only POST and PUT methods
+                    'Access-Control-Request-Headers' => ['*'],
+                    // Allow only headers 'X-Wsse'
+                    'Access-Control-Allow-Credentials' => true,
+                    // Allow OPTIONS caching
+                    'Access-Control-Max-Age' => 3600,
+                    // Allow the X-Pagination-Current-Page header to be exposed to the browser.
+                    'Access-Control-Expose-Headers' => ['X-Pagination-Current-Page'],
+                ],
+
+            ],
+            //'exceptionFilter' => [
+            //    'class' => ErrorToExceptionFilter::className()            ],
+        ]);
     }
 
-	
 	public function actions()
     {		
         return [
@@ -111,8 +109,38 @@ class UserController extends ActiveController
 					return $searchModel->search($param);
                 },
             ],
+			/*  'options' => [
+                'class' => 'yii\rest\IndexAction',
+                'modelClass' => $this->modelClass,
+                'prepareDataProvider' => function () {					
+					$param=["UserloginSearch"=>Yii::$app->request->queryParams];
+					//return $param;
+                    $searchModel = new UserloginSearch();
+					return $searchModel->search($param);
+                },
+            ],  */
         ];
     }	 
+	
+	//private $_verbs = ['GET','HEAD','POST','OPTIONS'];
+	//private $_verbs =$request->getHeaders()->get('Authorization');
+
+	/* public function actionOptions()
+	{
+		if (Yii::$app->getRequest()->getMethod() !== 'OPTIONS') {
+			Yii::$app->getResponse()->setStatusCode(405);
+		}
+		//return $this->index;
+		//$options =$this->_verbs;
+		 //$options = preg_match("/^Bearer\\s+(.*?)$/", $authHeader, $matches);//$this->_verbs;
+		$rq= new Request;
+		return $rq->getHeaders();//->get('Authorization');
+		//return $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];//->get('Authorization');
+		//return Yii::$app->getResponse()->getHeaders()->set('Allow', implode(', ', $options));
+		//return  $request->getHeaders()->get('Authorization');
+		//return $_verbs;
+		
+	}	 */ 
 }
 
 
