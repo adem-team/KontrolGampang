@@ -22,6 +22,10 @@ use api\modules\login\models\CorpImage;
  */
 class Corp extends \yii\db\ActiveRecord
 {
+	public static function getDb()
+    {
+        return Yii::$app->get('api_dbkg');
+    }
     /**
      * @inheritdoc
      */

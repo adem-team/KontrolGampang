@@ -17,10 +17,7 @@ use yii\web\Request;
 use yii\helpers\ArrayHelper;
 use yii\web\HttpException;
 use api\modules\login\models\UserloginSearch;
-use common\models\User;
-//use yii\web\User;
-
-//use yii\data\ActiveDataProvider;
+use api\modules\login\models\User;
 
 /**
   * Data user login by Token.

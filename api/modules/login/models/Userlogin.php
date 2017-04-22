@@ -18,12 +18,14 @@ class Userlogin extends \yii\db\ActiveRecord
 {
 	
 	const SCENARIO_USER = 'createuser';
-	public static function getDb()
-	{
-		return \Yii::$app->db;
-	}
+	
 	public $new_pass;
     
+	public static function getDb()
+    {
+        return Yii::$app->get('api_dbkg');
+    }
+	
 	public static function tableName()
     {
         return '{{user}}';

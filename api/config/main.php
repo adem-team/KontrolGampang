@@ -23,7 +23,7 @@ return [
     ],
     'components' => [
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => 'api\modules\login\models\User',
             'enableAutoLogin' => false,
             'enableSession' => false,
 			'loginUrl' => null,

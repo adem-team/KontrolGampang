@@ -26,8 +26,11 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
 
-
-    /**
+	public static function getDb()
+    {
+        return Yii::$app->get('api_dbkg');
+    }
+	/**
      * @inheritdoc
      */
     public static function tableName()
@@ -53,6 +56,8 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            [['create_at','updated_at'],'safe'],
+			 //[['create_at','updated_at'], 'date','format' => 'yyyy-mm-dd H:i:s'],
         ];
     }
 
@@ -73,6 +78,26 @@ class User extends ActiveRecord implements IdentityInterface
 		 return static::findOne(['auth_key' => $token]);
     }
 
+	/**
+	 * RISET TOKEN ACCESS APP.
+	 * If login Reset Access token, chek by UUID.
+	 * Author by : Piter Novian [ptr.nov@gmail.com]
+	*/
+	public static function findResetAccessToken($username)
+    {
+		// $modelUser = static::find()->where(['username' => $username])->one();
+		// $modelUser->auth_key=Yii::$app->security->generateRandomString();//'233123';
+		// $modelUser->updated_at=date("Y-m-d H:i:s");
+		// $modelUser->save();
+		/* if (!static::isPasswordResetTokenValid($token)) {
+            return null;
+        }
+        return static::findOne([
+            'password_reset_token' =>  '123',//$this->auth_key = Yii::$app->security->generateRandomString(),
+            'status' => self::STATUS_ACTIVE,
+        ]); */
+    }
+	
     /**
      * Finds user by username
      *

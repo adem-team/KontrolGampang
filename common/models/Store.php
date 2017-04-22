@@ -3,7 +3,10 @@
 namespace common\models;
 
 use Yii;
+//use frontend\backend\master\models\Item;
+use api\modules\master\models\Item;
 use yii\helpers\ArrayHelper;
+
 
 /**
  * This is the model class for table "store".
@@ -177,5 +180,19 @@ class Store extends \yii\db\ActiveRecord
 				return $this->expired;
 			}		
 		];
+	}
+	
+	//Join TABLE ITEM
+	public function getItems(){
+		//return $this->hasMany(Item::className(), ['OUTLET_CODE' => 'OUTLET_CODE']);//->from(['formula' => Item::tableName()]);
+		return $this->hasMany(Item::className(), ['OUTLET_CODE' => 'OUTLET_CODE']);
+		//PR STATUS=1
+		//return $this->hasMany(ItemFormulaDetail::className(), ['FORMULA_ID' => 'FORMULA_ID'],['STATUS' => '1']);//->from(['formula' => Item::tableName()]);
+	}
+	
+	public function extraFields()
+	{
+		return ['items','harga'];
+		//return ['unit'];
 	}
 }

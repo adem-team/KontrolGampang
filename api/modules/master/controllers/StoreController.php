@@ -15,9 +15,9 @@ use yii\filters\VerbFilter;
 use yii\web\Response;
 use yii\helpers\ArrayHelper;
 use yii\web\HttpException;
-use api\modules\login\models\UserloginSearch;
-use common\models\User;
-use common\models\StoreSearch;
+use api\modules\master\models\UserloginSearch;
+//use common\models\User;
+use api\modules\master\models\StoreSearch;
 //use yii\web\User;
 
 //use yii\data\ActiveDataProvider;
@@ -36,7 +36,7 @@ class StoreController extends ActiveController
 	  * Source Database declaration 
 	 */
     //public $modelClass = 'common\models\User';
-    public $modelClass = 'common\models\StoreSearch';
+    public $modelClass = 'api\modules\master\models\StoreSearch';
 	public $serializer = [
 		'class' => 'yii\rest\Serializer',
 		'collectionEnvelope' => 'store',

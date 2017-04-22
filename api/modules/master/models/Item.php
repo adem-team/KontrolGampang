@@ -19,6 +19,12 @@ use api\modules\master\models\ItemJual;
  */
 class Item extends \yii\db\ActiveRecord
 {
+
+	public static function getDb()
+    {
+        return Yii::$app->get('api_dbkg');
+    }
+	
     /**
      * @inheritdoc
      */
