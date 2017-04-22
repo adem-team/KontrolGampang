@@ -45,7 +45,7 @@ class ItemFdiscount extends \yii\db\ActiveRecord
         return [
             [['CREATE_AT', 'UPDATE_AT', 'PERIODE_TGL1', 'PERIODE_TGL2', 'PERIODE_TIME1', 'PERIODE_TIME2'], 'safe'],
             [['STATUS', 'HARI'], 'integer'],
-            [['DISCOUNT_PERCENT'], 'number'],
+            [['DISCOUNT_PERCENT','MAX_DISCOUNT'], 'number'],
             [['DCRIPT'], 'string'],
             [['CREATE_BY', 'UPDATE_BY', 'ITEM_ID', 'OUTLET_CODE'], 'string', 'max' => 50],
         ];
@@ -62,7 +62,7 @@ class ItemFdiscount extends \yii\db\ActiveRecord
             'CREATE_AT' => Yii::t('app', 'Create  At'),
             'UPDATE_BY' => Yii::t('app', 'Update  By'),
             'UPDATE_AT' => Yii::t('app', 'Update  At'),
-            'STATUS' => Yii::t('app', 'Status'),
+            'STATUS' => Yii::t('app', 'Status'), //1Discount FIX;1=DISCOUNT CONDITIONAL
             'ITEM_ID' => Yii::t('app', 'Item  ID'),
             'OUTLET_CODE' => Yii::t('app', 'Outlet  Code'),
             'HARI' => Yii::t('app', 'Hari'),
@@ -71,7 +71,38 @@ class ItemFdiscount extends \yii\db\ActiveRecord
             'PERIODE_TIME1' => Yii::t('app', 'Periode  Time1'),
             'PERIODE_TIME2' => Yii::t('app', 'Periode  Time2'),
             'DISCOUNT_PERCENT' => Yii::t('app', 'Discount  Percent'),
+            'MAX_DISCOUNT' => Yii::t('app', 'Discount  Percent'),
             'DCRIPT' => Yii::t('app', 'Dcript'),
         ];
     }
+	
+	public function fields()
+	{
+		return [			
+			'STATUS'=>function($model){
+				return $model->STATUS;
+			},
+			'PERIODE_TGL1'=>function($model){
+				return $model->PERIODE_TGL1;
+			},
+			'PERIODE_TGL2'=>function($model){
+				return $model->PERIODE_TGL2;
+			},					
+			'PERIODE_TIME1'=>function($model){
+				return $model->PERIODE_TIME1;
+			},	
+			'PERIODE_TIME2'=>function($model){
+				return $model->PERIODE_TIME2;
+			},	
+			'DISCOUNT_PERCENT'=>function($model){
+				return $model->DISCOUNT_PERCENT;
+			},
+			'MAX_DISCOUNT'=>function($model){
+				return $model->MAX_DISCOUNT;
+			},				
+			'DCRIPT'=>function($model){
+				return $model->DCRIPT;
+			}			
+		];
+	}
 }

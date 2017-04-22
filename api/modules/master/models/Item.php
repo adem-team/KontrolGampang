@@ -3,7 +3,10 @@
 namespace api\modules\master\models;
 
 use Yii;
+use yii\helpers\Json;
 use api\modules\master\models\ItemJual;
+use api\modules\master\models\ItemImage;
+use api\modules\master\models\ItemFdiscount;
 /**
  * This is the model class for table "item".
  *
@@ -91,20 +94,37 @@ class Item extends \yii\db\ActiveRecord
 			},	
 			'HARGA'=>function(){
 				return $this->harga;
+			},	
+			'DISCOUNT'=>function(){
+				return $this->discount;
+			},
+			'IMAGE'=>function(){
+				return $this->image;
+				//return isset($this->image)?$this->image:$this->noImage;
+				//return  $this->noImage;
 			}					
 		];
 	}
-	//Join TABLE ITEM
+	//Join TABLE IMAGE
+	public function getImage(){
+		return $this->hasMany(ItemImage::className(), ['OUTLET_CODE' => 'OUTLET_CODE','ITEM_ID'=>'ITEM_ID']);
+	}
+	//Join TABLE HARGA JUAL
 	public function getHarga(){
-		//return $this->hasMany(Item::className(), ['OUTLET_CODE' => 'OUTLET_CODE']);//->from(['formula' => Item::tableName()]);
 		return $this->hasMany(ItemJual::className(), ['OUTLET_CODE' => 'OUTLET_CODE','ITEM_ID'=>'ITEM_ID']);
-		//PR STATUS=1
-		//return $this->hasMany(ItemFormulaDetail::className(), ['FORMULA_ID' => 'FORMULA_ID'],['STATUS' => '1']);//->from(['formula' => Item::tableName()]);
 	}
 	
-	/* public function extraFields()
-	{
-		return ['harga'];
-		//return ['unit'];
-	} */
+	//Join TABLE DISCOUNT
+	public function getDiscount(){
+		return $this->hasMany(ItemFdiscount::className(), ['OUTLET_CODE' => 'OUTLET_CODE','ITEM_ID'=>'ITEM_ID']);
+	}
+	
+	public function getNoimage(){
+		$rslt[]=[
+			'CREATE_AT'=>'0000-00-00 00:00:00',
+			'UPDATE_AT'=>'0000-00-00 00:00:00',
+			'IMG64'=>'NoImage'
+		];	 
+		return $rslt;			
+	}
 }
