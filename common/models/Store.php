@@ -105,14 +105,18 @@ class Store extends \yii\db\ActiveRecord
 	//FILTER COUNT - PROVINCE PER USER.
 	public function getCountProvinsi()
 	{
-		$a='';
-		$cntStoreProvinsi=Store::find()->select('LOCATE_PROVINCE')->asArray()->where('FIND_IN_SET("'.Yii::$app->getUserOpt->user()['ACCESS_UNIX'].'", ACCESS_UNIX)')->all();
-		//return $cntStoreProvinsi!=''?$cntStoreProvinsi['LOCATE_PROVINCE'][0]:0;
-		foreach($cntStoreProvinsi as $row){
-			$i=$row['LOCATE_PROVINCE'];
-			$a=$a!=''?$a.','.$i:$i;
+		if (!Yii::$app->user->isGuest){
+			$rslt='';
+			$cntStoreProvinsi=Store::find()->select('LOCATE_PROVINCE')->asArray()->where('FIND_IN_SET("'.Yii::$app->getUserOpt->user()['ACCESS_UNIX'].'", ACCESS_UNIX)')->all();
+			//return $cntStoreProvinsi!=''?$cntStoreProvinsi['LOCATE_PROVINCE'][0]:0;
+			foreach($cntStoreProvinsi as $row){
+				$i=$row['LOCATE_PROVINCE'];
+				$rslt=$rslt!=''?$rslt.','.$i:$i;
+			}
+			return $rslt;
+		}else{
+			return '0';
 		}
-		return $a;
 	}
 	//FILTER COUNT - KOTA PER USER.
 	public function getCountKota()
