@@ -18,8 +18,8 @@ use yii\web\View;
 use common\models\LocateProvince;
 
 $userProvinsi=$dataProvider->getModels()[0]['countProvinsi'];
-$aryProvinsi = ArrayHelper::map(LocateProvince::find()->where('PROVINCE_ID IN ('.$userProvinsi.')')->all(), 'PROVINCE_ID', 'PROVINCE');
-
+ $aryProvinsi = ArrayHelper::map(LocateProvince::find()->where('PROVINCE_ID IN ('.$userProvinsi.')')->all(), 'PROVINCE_ID', 'PROVINCE');
+//print_r($userProvinsi);
 $this->registerCss("
 	:link {
 		color: #fdfdfd;
