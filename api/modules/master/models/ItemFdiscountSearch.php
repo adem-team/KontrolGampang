@@ -5,7 +5,7 @@ namespace api\modules\master\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\backend\master\models\ItemFdiscount;
+use api\modules\master\models\ItemFdiscount;
 
 /**
  * ItemFdiscountSearch represents the model behind the search form of `app\backend\master\models\ItemFdiscount`.
@@ -20,7 +20,7 @@ class ItemFdiscountSearch extends ItemFdiscount
         return [
             [['ID', 'STATUS', 'HARI'], 'integer'],
             [['CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'ITEM_ID', 'OUTLET_CODE', 'PERIODE_TGL1', 'PERIODE_TGL2', 'PERIODE_TIME1', 'PERIODE_TIME2', 'DCRIPT'], 'safe'],
-            [['DISCOUNT_PERCENT'], 'number'],
+            [['DISCOUNT_PERCENT','MAX_DISCOUNT'], 'number'],
         ];
     }
 
@@ -70,6 +70,7 @@ class ItemFdiscountSearch extends ItemFdiscount
             'PERIODE_TIME1' => $this->PERIODE_TIME1,
             'PERIODE_TIME2' => $this->PERIODE_TIME2,
             'DISCOUNT_PERCENT' => $this->DISCOUNT_PERCENT,
+            'MAX_DISCOUNT' => $this->MAX_DISCOUNT,
         ]);
 
         $query->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])

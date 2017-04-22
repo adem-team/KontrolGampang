@@ -20,6 +20,10 @@ use Yii;
  */
 class ItemImage extends \yii\db\ActiveRecord
 {
+	public static function getDb()
+    {
+        return Yii::$app->get('api_dbkg');
+    }
     /**
      * @inheritdoc
      */
@@ -59,4 +63,19 @@ class ItemImage extends \yii\db\ActiveRecord
             'IMGNM' => Yii::t('app', 'Imgnm'),
         ];
     }
+	public function fields()
+	{
+		return [			
+			'CREATE_AT'=>function($model){
+				return $model->CREATE_AT;
+			},
+			'UPDATE_AT'=>function($model){
+				return $model->UPDATE_AT;
+			},					
+			'IMG64'=>function($model){
+				return $model->IMG64;
+			}	
+		];
+	}
 }
+
