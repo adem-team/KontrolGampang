@@ -19,6 +19,10 @@ return [
 		'master' => [
             'basePath' => '@app/modules/master',
             'class' => 'api\modules\master\Module',
+        ],
+		'transaksi' => [
+            'basePath' => '@app/modules/transaksi',
+            'class' => 'api\modules\transaksi\Module',
         ]
     ],
     'components' => [
@@ -92,6 +96,27 @@ return [
 							'master/store',
 							'master/storetest',
 							'master/item-image'
+						],
+						'patterns' => [
+							'PUT,PATCH {id}' => 'update',
+							'DELETE {id}' => 'delete',
+							'GET,HEAD {id}' => 'view',
+							'POST' => 'create',
+							'GET,HEAD' => 'index',
+							'{id}' => 'options',
+							'' => 'options',
+						]
+                        //'extraPatterns' => ['GET search' => 'search'],
+
+                        //'except' => ['view', 'create', 'update'],
+                ],
+				[
+                        'class' => 'yii\rest\UrlRule',
+                        'controller' =>[
+							'transaksi/penjualan-header',
+							'transaksi/penjualan-detail',
+							'transaksi/penjualan-closing',
+							'transaksi/penjualan-closing-bukti'
 						],
 						'patterns' => [
 							'PUT,PATCH {id}' => 'update',
