@@ -21,7 +21,7 @@ use common\models\CorpImage;
  */
 class Corp extends \yii\db\ActiveRecord
 {
-    /**
+	/**
      * @inheritdoc
      */
     public static function tableName()

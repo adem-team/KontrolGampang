@@ -9,6 +9,12 @@ class ModulMenu extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+	 
+	public static function getDb()
+    {
+        return Yii::$app->get('api_dbkg');
+    }
+	
     public static function tableName()
     {
         return 'modul';

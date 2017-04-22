@@ -16,7 +16,7 @@ use yii\web\Response;
 use yii\helpers\ArrayHelper;
 use yii\web\HttpException;
 use api\modules\login\models\UserTokenSearch;
-use common\models\User;
+use api\modules\login\models\User;
 
 /**
   * LOGIN AND CHECK TOKEN USER.
