@@ -74,4 +74,29 @@ class ItemImageSearch extends ItemImage
 
         return $dataProvider;
     }
+	
+	public function searchByDateTime($params)
+    {
+        $query = ItemImage::find();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+			'OUTLET_CODE'=> $this->OUTLET_CODE,
+			'ITEM_ID'=> $this->ITEM_ID      
+        ]);
+        $query->andFilterWhere(['>=', 'UPDATE_AT', $this->UPDATE_AT]);
+
+        return $dataProvider;
+    }
 }
