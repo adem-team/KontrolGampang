@@ -15,7 +15,8 @@ use yii\filters\VerbFilter;
 use yii\web\Response;
 use yii\helpers\ArrayHelper;
 use yii\web\HttpException;
-use api\modules\master\models\StoreSearch;
+use api\modules\master\models\ItemImageSearch;
+
 
 /**
   * Data user login by Token.
@@ -25,18 +26,30 @@ use api\modules\master\models\StoreSearch;
   * CMD : curl -i http://api.kontrolgampang.int/login/users -H "Authorization: Bearer Yt4kLWLYlQf9OfnFSpZ5IO3128Gvw2gP"
   *   http://api.kontrolgampang.com/master/stores?ACCESS_UNIX=20170404081601
  */
-class StoreController extends ActiveController
+class ItemImageController extends ActiveController
 {	
 	/**
 	  * Source Database declaration 
 	 */
     //public $modelClass = 'common\models\User';
-    public $modelClass = 'api\modules\master\models\StoreSearch';
+    public $modelClass = 'api\modules\master\models\ItemImageSearch';
 	public $serializer = [
 		'class' => 'yii\rest\Serializer',
-		'collectionEnvelope' => 'items-image',
+		'collectionEnvelope' => 'store',
 	];
 	
+	/* public function beforeAction($action)
+    {
+        $this->enableCsrfValidation = false;
+        parent::beforeAction($action);
+
+        if (Yii::$app->getRequest()->getMethod() === 'OPTIONS') {
+            // End it, otherwise a 401 will be shown.
+            Yii::$app->end();
+        }
+
+        return true;
+    } */
 	/**
      * @inheritdoc
      */
@@ -46,7 +59,8 @@ class StoreController extends ActiveController
                 'class' => CompositeAuth::className(),
                 'authMethods' => [
                     ['class' => HttpBearerAuth::className()],
-               ],
+                    // ['class' => QueryParamAuth::className(), 'tokenParam' => 'access-token'],
+                ],
                 'except' => ['options']
             ], 
 			'bootstrap'=> [
@@ -74,9 +88,13 @@ class StoreController extends ActiveController
                 ],
 
             ],
+            //'exceptionFilter' => [
+            //    'class' => ErrorToExceptionFilter::className()            ],
         ]);
     }
 
+	
+	
 	public function actions()
     {		
         return [
@@ -84,14 +102,14 @@ class StoreController extends ActiveController
                 'class' => 'yii\rest\IndexAction',
                 'modelClass' => $this->modelClass,
                 'prepareDataProvider' => function () {					
-					$param=["StoreSearch"=>Yii::$app->request->queryParams];
+					$param=["ItemImageSearch"=>Yii::$app->request->queryParams];
 					//return $param;
-                    $searchModel = new StoreSearch();
-					return $searchModel->searchUserStore($param);
+                    $searchModel = new ItemImageSearch();
+					return $searchModel->searchByDateTime($param);
                 },
             ],
         ];
-    }	 	 
+    }
 }
 
 

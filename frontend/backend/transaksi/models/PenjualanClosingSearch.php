@@ -1,16 +1,16 @@
 <?php
 
-namespace api\modules\master\models;
+namespace frontend\backend\transaksi\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use api\modules\master\models\ItemImage;
+use frontend\backend\transaksi\models\PenjualanClosing;
 
 /**
- * ItemImageSearch represents the model behind the search form of `app\backend\master\models\ItemImage`.
+ * PenjualanClosingSearch represents the model behind the search form of `frontend\backend\transaksi\models\PenjualanClosing`.
  */
-class ItemImageSearch extends ItemImage
+class PenjualanClosingSearch extends PenjualanClosing
 {
     /**
      * @inheritdoc
@@ -19,7 +19,8 @@ class ItemImageSearch extends ItemImage
     {
         return [
             [['ID', 'STATUS'], 'integer'],
-            [['CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'ITEM_ID', 'OUTLET_CODE', 'IMG64', 'IMGNM','UPDATE_CURREN'], 'safe'],
+            [['CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'CLOSING_ID', 'ACCESS_UNIX', 'CLOSING_DATE', 'OUTLET_ID'], 'safe'],
+            [['TTL_MODAL', 'TTL_UANG', 'TTL_QTY', 'TTL_STORAN', 'TTL_SISA'], 'number'],
         ];
     }
 
@@ -41,7 +42,7 @@ class ItemImageSearch extends ItemImage
      */
     public function search($params)
     {
-        $query = ItemImage::find();
+        $query = PenjualanClosing::find();
 
         // add conditions that should always apply here
 
@@ -63,40 +64,19 @@ class ItemImageSearch extends ItemImage
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
             'STATUS' => $this->STATUS,
+            'CLOSING_DATE' => $this->CLOSING_DATE,
+            'TTL_MODAL' => $this->TTL_MODAL,
+            'TTL_UANG' => $this->TTL_UANG,
+            'TTL_QTY' => $this->TTL_QTY,
+            'TTL_STORAN' => $this->TTL_STORAN,
+            'TTL_SISA' => $this->TTL_SISA,
         ]);
 
         $query->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
-            ->andFilterWhere(['like', 'ITEM_ID', $this->ITEM_ID])
-            ->andFilterWhere(['like', 'OUTLET_CODE', $this->OUTLET_CODE])
-            ->andFilterWhere(['like', 'IMG64', $this->IMG64])
-            ->andFilterWhere(['like', 'IMGNM', $this->IMGNM]);
-
-        return $dataProvider;
-    }
-	
-	public function searchByDateTime($params)
-    {
-        $query = ItemImage::find();
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-
-        $this->load($params);
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
-        }
-
-        // grid filtering conditions
-        $query->andFilterWhere([
-			'OUTLET_CODE'=> $this->OUTLET_CODE,
-			'ITEM_ID'=> $this->ITEM_ID      
-        ]);
-        $query->andFilterWhere(['>=', 'UPDATE_AT', $this->UPDATE_AT]);
-			//->andFilterWhere(['IN', 'UPDATE_CURREN', $this->UPDATE_CURREN]);
+            ->andFilterWhere(['like', 'CLOSING_ID', $this->CLOSING_ID])
+            ->andFilterWhere(['like', 'ACCESS_UNIX', $this->ACCESS_UNIX])
+            ->andFilterWhere(['like', 'OUTLET_ID', $this->OUTLET_ID]);
 
         return $dataProvider;
     }

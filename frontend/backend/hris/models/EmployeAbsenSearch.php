@@ -1,16 +1,16 @@
 <?php
 
-namespace api\modules\master\models;
+namespace frontend\backend\hris\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use api\modules\master\models\ItemImage;
+use frontend\backend\hris\models\EmployeAbsen;
 
 /**
- * ItemImageSearch represents the model behind the search form of `app\backend\master\models\ItemImage`.
+ * EmployeAbsenSearch represents the model behind the search form of `frontend\backend\hris\models\EmployeAbsen`.
  */
-class ItemImageSearch extends ItemImage
+class EmployeAbsenSearch extends EmployeAbsen
 {
     /**
      * @inheritdoc
@@ -19,7 +19,7 @@ class ItemImageSearch extends ItemImage
     {
         return [
             [['ID', 'STATUS'], 'integer'],
-            [['CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'ITEM_ID', 'OUTLET_CODE', 'IMG64', 'IMGNM','UPDATE_CURREN'], 'safe'],
+            [['CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'EMP_ID', 'TGL', 'TIME'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class ItemImageSearch extends ItemImage
      */
     public function search($params)
     {
-        $query = ItemImage::find();
+        $query = EmployeAbsen::find();
 
         // add conditions that should always apply here
 
@@ -63,40 +63,13 @@ class ItemImageSearch extends ItemImage
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
             'STATUS' => $this->STATUS,
+            'TGL' => $this->TGL,
+            'TIME' => $this->TIME,
         ]);
 
         $query->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
-            ->andFilterWhere(['like', 'ITEM_ID', $this->ITEM_ID])
-            ->andFilterWhere(['like', 'OUTLET_CODE', $this->OUTLET_CODE])
-            ->andFilterWhere(['like', 'IMG64', $this->IMG64])
-            ->andFilterWhere(['like', 'IMGNM', $this->IMGNM]);
-
-        return $dataProvider;
-    }
-	
-	public function searchByDateTime($params)
-    {
-        $query = ItemImage::find();
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-
-        $this->load($params);
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
-        }
-
-        // grid filtering conditions
-        $query->andFilterWhere([
-			'OUTLET_CODE'=> $this->OUTLET_CODE,
-			'ITEM_ID'=> $this->ITEM_ID      
-        ]);
-        $query->andFilterWhere(['>=', 'UPDATE_AT', $this->UPDATE_AT]);
-			//->andFilterWhere(['IN', 'UPDATE_CURREN', $this->UPDATE_CURREN]);
+            ->andFilterWhere(['like', 'EMP_ID', $this->EMP_ID]);
 
         return $dataProvider;
     }
