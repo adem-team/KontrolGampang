@@ -87,12 +87,12 @@ class Item extends \yii\db\ActiveRecord
 			'UPDATE_AT'=>function($model){
 				return $model->UPDATE_AT;
 			},	
-			'STATUS'=>function($model){
-				return $model->STATUS;
+			'DEFAULT_HARGA'=>function(){
+				return $this->DEFAULT_HARGA;
 			},
-			'STATUS'=>function($model){
-				return $model->STATUS;
-			},	
+			'DAFAULT_STOCK'=>function(){
+				return '100';
+			},
 			'STOCK'=>function(){
 				return $this->stockCurrent;
 			},	
