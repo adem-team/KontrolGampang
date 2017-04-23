@@ -18,7 +18,7 @@ class ItemSearch extends Item
     public function rules()
     {
         return [
-            [['ID', 'STATUS'], 'integer'],
+            [['ACCESS_UNIX','ID', 'STATUS'], 'integer'],
             [['CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'ITEM_ID', 'OUTLET_CODE', 'ITEM_NM','SATUAN'], 'safe'],
         ];
     }
@@ -60,6 +60,7 @@ class ItemSearch extends Item
         // grid filtering conditions
         $query->andFilterWhere([
             'ID' => $this->ID,
+			'ACCESS_UNIX' => $this->ACCESS_UNIX,
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
             'STATUS' => $this->STATUS,

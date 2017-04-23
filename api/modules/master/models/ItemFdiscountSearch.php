@@ -19,7 +19,7 @@ class ItemFdiscountSearch extends ItemFdiscount
     {
         return [
             [['ID', 'STATUS', 'HARI'], 'integer'],
-            [['CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'ITEM_ID', 'OUTLET_CODE', 'PERIODE_TGL1', 'PERIODE_TGL2', 'PERIODE_TIME1', 'PERIODE_TIME2', 'DCRIPT'], 'safe'],
+            [['ACCESS_UNIX','CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'ITEM_ID', 'OUTLET_CODE', 'PERIODE_TGL1', 'PERIODE_TGL2', 'PERIODE_TIME1', 'PERIODE_TIME2', 'DCRIPT'], 'safe'],
             [['DISCOUNT_PERCENT','MAX_DISCOUNT'], 'number'],
         ];
     }
@@ -61,6 +61,7 @@ class ItemFdiscountSearch extends ItemFdiscount
         // grid filtering conditions
         $query->andFilterWhere([
             'ID' => $this->ID,
+			'ACCESS_UNIX' => $this->ACCESS_UNIX,
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
             'STATUS' => $this->STATUS,

@@ -19,7 +19,7 @@ class ItemJualSearch extends ItemJual
     {
         return [
             [['ID', 'STATUS'], 'integer'],
-            [['CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'ITEM_ID', 'OUTLET_CODE', 'PERIODE_TGL1', 'PERIODE_TGL2', 'START_TIME', 'DCRIPT'], 'safe'],
+            [['ACCESS_UNIX','CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'ITEM_ID', 'OUTLET_CODE', 'PERIODE_TGL1', 'PERIODE_TGL2', 'START_TIME', 'DCRIPT'], 'safe'],
             [['HARGA_JUAL'], 'number'],
         ];
     }
@@ -61,6 +61,7 @@ class ItemJualSearch extends ItemJual
         // grid filtering conditions
         $query->andFilterWhere([
             'ID' => $this->ID,
+            'ACCESS_UNIX' => $this->ACCESS_UNIX,
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
             'STATUS' => $this->STATUS,

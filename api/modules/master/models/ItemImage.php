@@ -38,7 +38,7 @@ class ItemImage extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['CREATE_AT', 'UPDATE_AT','UPDATE_CURREN'], 'safe'],
+            [['ACCESS_UNIX','CREATE_AT', 'UPDATE_AT','UPDATE_CURREN'], 'safe'],
             [['STATUS'], 'integer'],
             [['IMG64', 'IMGNM'], 'string'],
             [['CREATE_BY', 'UPDATE_BY', 'ITEM_ID', 'OUTLET_CODE'], 'string', 'max' => 50],
@@ -58,6 +58,7 @@ class ItemImage extends \yii\db\ActiveRecord
             'UPDATE_AT' => Yii::t('app', 'Update  At'),
             'UPDATE_CURREN' => Yii::t('app', 'Current Update'),
             'STATUS' => Yii::t('app', 'Status'),
+            'ACCESS_UNIX' => Yii::t('app', 'Access Unix'),
             'ITEM_ID' => Yii::t('app', 'Item  ID'),
             'OUTLET_CODE' => Yii::t('app', 'Outlet  Code'),
             'IMG64' => Yii::t('app', 'Img64'),
