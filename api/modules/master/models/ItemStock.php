@@ -44,7 +44,7 @@ class ItemStock extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['CREATE_AT', 'UPDATE_AT', 'TGL_BELI'], 'safe'],
+            [['ACCESS_UNIX','CREATE_AT', 'UPDATE_AT', 'TGL_BELI'], 'safe'],
             [['STATUS'], 'integer'],
             [['STOCK', 'HARGA_BELI', 'MARGIN_KEUNTUNGAN', 'MAX_DISCOUNT'], 'number'],
             [['DCRIPT'], 'string'],
@@ -64,6 +64,7 @@ class ItemStock extends \yii\db\ActiveRecord
             'UPDATE_BY' => Yii::t('app', 'Update  By'),
             'UPDATE_AT' => Yii::t('app', 'Update  At'),
             'STATUS' => Yii::t('app', 'Status'),
+            'ACCESS_UNIX' => Yii::t('app', 'Access Unix'),
             'ITEM_ID' => Yii::t('app', 'Item  ID'),
             'OUTLET_CODE' => Yii::t('app', 'Outlet  Code'),
             'STOCK' => Yii::t('app', 'Stock'),

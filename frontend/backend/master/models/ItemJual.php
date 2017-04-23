@@ -37,7 +37,7 @@ class ItemJual extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['CREATE_AT', 'UPDATE_AT', 'PERIODE_TGL1', 'PERIODE_TGL2', 'START_TIME'], 'safe'],
+            [['ACCESS_UNIX','CREATE_AT', 'UPDATE_AT', 'PERIODE_TGL1', 'PERIODE_TGL2', 'START_TIME'], 'safe'],
             [['STATUS'], 'integer'],
             [['HARGA_JUAL'], 'number'],
             [['DCRIPT'], 'string'],
@@ -57,6 +57,7 @@ class ItemJual extends \yii\db\ActiveRecord
             'UPDATE_BY' => Yii::t('app', 'Update  By'),
             'UPDATE_AT' => Yii::t('app', 'Update  At'),
             'STATUS' => Yii::t('app', 'Status'),
+            'ACCESS_UNIX' => Yii::t('app', 'Access Unix'),
             'ITEM_ID' => Yii::t('app', 'Item  ID'),
             'OUTLET_CODE' => Yii::t('app', 'Outlet  Code'),
             'PERIODE_TGL1' => Yii::t('app', 'Periode  Tgl1'),

@@ -184,7 +184,7 @@ class Store extends \yii\db\ActiveRecord
 	//Join TABLE ITEM
 	public function getItems(){
 		//return $this->hasMany(Item::className(), ['OUTLET_CODE' => 'OUTLET_CODE']);//->from(['formula' => Item::tableName()]);
-		return $this->hasMany(Item::className(), ['OUTLET_CODE' => 'OUTLET_CODE']);
+		return $this->hasMany(Item::className(), ['OUTLET_CODE' => 'OUTLET_CODE'])->andWhere('FIND_IN_SET( ACCESS_UNIX,"'.$this->ACCESS_UNIX.'")');
 		//PR STATUS=1
 		//return $this->hasMany(ItemFormulaDetail::className(), ['FORMULA_ID' => 'FORMULA_ID'],['STATUS' => '1']);//->from(['formula' => Item::tableName()]);
 	}
@@ -193,5 +193,10 @@ class Store extends \yii\db\ActiveRecord
 	{
 		return ['items','harga'];
 		//return ['unit'];
+	}
+	
+	public function getDna()
+	{
+		return $this->ACCESS_UNIX;
 	}
 }

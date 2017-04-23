@@ -49,7 +49,7 @@ class ItemFdiscount extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['CREATE_AT', 'UPDATE_AT', 'PERIODE_TGL1', 'PERIODE_TGL2', 'PERIODE_TIME1', 'PERIODE_TIME2'], 'safe'],
+            [['ACCESS_UNIX','CREATE_AT', 'UPDATE_AT', 'PERIODE_TGL1', 'PERIODE_TGL2', 'PERIODE_TIME1', 'PERIODE_TIME2'], 'safe'],
             [['STATUS', 'HARI'], 'integer'],
             [['DISCOUNT_PERCENT','MAX_DISCOUNT'], 'number'],
             [['DCRIPT'], 'string'],
@@ -69,6 +69,7 @@ class ItemFdiscount extends \yii\db\ActiveRecord
             'UPDATE_BY' => Yii::t('app', 'Update  By'),
             'UPDATE_AT' => Yii::t('app', 'Update  At'),
             'STATUS' => Yii::t('app', 'Status'), //1Discount FIX;1=DISCOUNT CONDITIONAL
+			'ACCESS_UNIX' => Yii::t('app', 'Access Unix'),
             'ITEM_ID' => Yii::t('app', 'Item  ID'),
             'OUTLET_CODE' => Yii::t('app', 'Outlet  Code'),
             'HARI' => Yii::t('app', 'Hari'),

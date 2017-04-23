@@ -33,7 +33,7 @@ class Item extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['CREATE_AT', 'UPDATE_AT'], 'safe'],
+            [['ACCESS_UNIX','CREATE_AT', 'UPDATE_AT'], 'safe'],
             [['STATUS'], 'integer'],
             [['CREATE_BY', 'UPDATE_BY', 'ITEM_ID', 'OUTLET_CODE'], 'string', 'max' => 50],
             [['ITEM_NM','SATUAN'], 'string', 'max' => 100],
@@ -52,6 +52,7 @@ class Item extends \yii\db\ActiveRecord
             'UPDATE_BY' => Yii::t('app', 'Update  By'),
             'UPDATE_AT' => Yii::t('app', 'Update  At'),
             'STATUS' => Yii::t('app', 'STATUS'),
+			'ACCESS_UNIX' => Yii::t('app', 'Access Unix'),
             'ITEM_ID' => Yii::t('app', 'ITEM.ID'),
             'OUTLET_CODE' => Yii::t('app', 'OUTLET.CODE'),
             'ITEM_NM' => Yii::t('app', 'ITEM NAME'),

@@ -42,13 +42,13 @@ class StoreController extends ActiveController
      */
     public function behaviors()    {
         return ArrayHelper::merge(parent::behaviors(), [
-            'authenticator' => [
-                'class' => CompositeAuth::className(),
-                'authMethods' => [
-                    ['class' => HttpBearerAuth::className()],
-               ],
-                'except' => ['options']
-            ], 
+            // 'authenticator' => [
+                // 'class' => CompositeAuth::className(),
+                // 'authMethods' => [
+                    // ['class' => HttpBearerAuth::className()],
+               // ],
+                // 'except' => ['options']
+            // ], 
 			'bootstrap'=> [
 				'class' => ContentNegotiator::className(),
 				'formats' => [

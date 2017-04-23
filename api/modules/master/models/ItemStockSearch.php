@@ -19,7 +19,7 @@ class ItemStockSearch extends ItemStock
     {
         return [
             [['ID', 'STATUS'], 'integer'],
-            [['CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'ITEM_ID', 'OUTLET_CODE', 'TGL_BELI', 'DCRIPT'], 'safe'],
+            [['ACCESS_UNIX','CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'ITEM_ID', 'OUTLET_CODE', 'TGL_BELI', 'DCRIPT'], 'safe'],
             [['STOCK', 'HARGA_BELI', 'MARGIN_KEUNTUNGAN', 'MAX_DISCOUNT'], 'number'],
         ];
     }
@@ -61,6 +61,7 @@ class ItemStockSearch extends ItemStock
         // grid filtering conditions
         $query->andFilterWhere([
             'ID' => $this->ID,
+			'ACCESS_UNIX' => $this->ACCESS_UNIX,
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
             'STATUS' => $this->STATUS,
