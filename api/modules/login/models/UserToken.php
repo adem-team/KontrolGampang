@@ -38,7 +38,7 @@ class UserToken extends \yii\db\ActiveRecord
 			[['username','auth_key','password_hash','POSITION_ACCESS'], 'required','on' => self::SCENARIO_USER],		
 			[['username','auth_key','password_hash','password_reset_token'], 'string'],
 			[['update_at'],'safe'],
-			[['ACCESS_UNIX','UUID'], 'safe'],
+			[['ACCESS_UNIX','ACCESS_GROUP','UUID'], 'safe'],
 		];
     }
 
@@ -48,6 +48,7 @@ class UserToken extends \yii\db\ActiveRecord
             'username' => Yii::t('app', 'User Name'),
 			'password_hash' => Yii::t('app', 'Password Hash'),
 			'ACCESS_UNIX' => Yii::t('app', 'ACCESS_UNIX'),
+			'ACCESS_GROUP' => Yii::t('app', 'ACCESS_GROUP'),
 			'UUID' => Yii::t('app', 'UUID')			
         ];
     }
@@ -60,6 +61,9 @@ class UserToken extends \yii\db\ActiveRecord
 			},	
 			'ACCESS_UNIX'=>function($model){
 				return $model->ACCESS_UNIX;
+			},
+			'ACCESS_GROUP'=>function($model){
+				return $model->ACCESS_GROUP;
 			},
 			'UUID'=>function($model){
 				return $model->UUID;

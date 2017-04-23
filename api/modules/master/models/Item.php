@@ -93,6 +93,9 @@ class Item extends \yii\db\ActiveRecord
 			'STATUS'=>function($model){
 				return $model->STATUS;
 			},	
+			'STOCK'=>function(){
+				return $this->stockCurrent;
+			},	
 			'HARGA'=>function(){
 				return $this->harga;
 			},	
@@ -108,16 +111,16 @@ class Item extends \yii\db\ActiveRecord
 	}
 	//Join TABLE IMAGE
 	public function getImage(){
-		return $this->hasMany(ItemImage::className(), ['OUTLET_CODE' => 'OUTLET_CODE','ITEM_ID'=>'ITEM_ID']);
+		return $this->hasMany(ItemImage::className(), ['ACCESS_UNIX'=>'ACCESS_UNIX','OUTLET_CODE' => 'OUTLET_CODE','ITEM_ID'=>'ITEM_ID']);
 	}
 	//Join TABLE HARGA JUAL
 	public function getHarga(){
-		return $this->hasMany(ItemJual::className(), ['OUTLET_CODE' => 'OUTLET_CODE','ITEM_ID'=>'ITEM_ID']);
+		return $this->hasMany(ItemJual::className(), ['ACCESS_UNIX'=>'ACCESS_UNIX','OUTLET_CODE' => 'OUTLET_CODE','ITEM_ID'=>'ITEM_ID']);
 	}
 	
 	//Join TABLE DISCOUNT
 	public function getDiscount(){
-		return $this->hasMany(ItemFdiscount::className(), ['OUTLET_CODE' => 'OUTLET_CODE','ITEM_ID'=>'ITEM_ID']);
+		return $this->hasMany(ItemFdiscount::className(), ['ACCESS_UNIX'=>'ACCESS_UNIX','OUTLET_CODE' => 'OUTLET_CODE','ITEM_ID'=>'ITEM_ID']);
 	}
 	
 	public function getNoimage(){
@@ -125,6 +128,15 @@ class Item extends \yii\db\ActiveRecord
 			'CREATE_AT'=>'0000-00-00 00:00:00',
 			'UPDATE_AT'=>'0000-00-00 00:00:00',
 			'IMG64'=>'NoImage'
+		];	 
+		return $rslt;			
+	}
+	public function getStockCurrent(){
+		$rslt[]=[
+			'STOCK_DAFAULT'=>'100',
+			'STOCK_BELI'=>'100',
+			'STOCK_JUAL'=>'20',
+			'STOCK_BERJALAN'=>'80'			
 		];	 
 		return $rslt;			
 	}
