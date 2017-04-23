@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model frontend\backend\hris\models\EmployeDataSearch */
+/* @var $model frontend\backend\master\models\PayMetodeSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="employe-data-search">
+<div class="pay-metode-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -31,27 +31,11 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'OUTLET_CODE') ?>
 
-    <?php // echo $form->field($model, 'EMP_ID') ?>
+    <?php // echo $form->field($model, 'TYPE_PAY') ?>
 
-    <?php // echo $form->field($model, 'EMP_NM_DPN') ?>
+    <?php // echo $form->field($model, 'BANK_NM') ?>
 
-    <?php // echo $form->field($model, 'EMP_NM_TGH') ?>
-
-    <?php // echo $form->field($model, 'EMP_NM_BLK') ?>
-
-    <?php // echo $form->field($model, 'EMP_KTP') ?>
-
-    <?php // echo $form->field($model, 'EMP_ALAMAT') ?>
-
-    <?php // echo $form->field($model, 'EMP_GENDER') ?>
-
-    <?php // echo $form->field($model, 'EMP_STS_NIKAH') ?>
-
-    <?php // echo $form->field($model, 'EMP_TLP') ?>
-
-    <?php // echo $form->field($model, 'EMP_HP') ?>
-
-    <?php // echo $form->field($model, 'EMP_EMAIL') ?>
+    <?php // echo $form->field($model, 'DCRIPT') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

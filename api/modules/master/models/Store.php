@@ -4,11 +4,12 @@ namespace api\modules\master\models;
 
 use Yii;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Json;
 
 use api\modules\master\models\Item;
 use api\modules\login\models\LocateProvince;
 use api\modules\login\models\LocateKota;
-
+use api\modules\master\models\PayMetode;
 
 
 /**
@@ -30,6 +31,7 @@ use api\modules\login\models\LocateKota;
  */
 class Store extends \yii\db\ActiveRecord
 {
+	public $dflt=3;
     /**
      * @inheritdoc
      */
@@ -52,7 +54,7 @@ class Store extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['CREATE_AT', 'UPDATE_AT','ACCESS_UNIX','expired','countProvinsi'], 'safe'],
+            [['CREATE_AT', 'UPDATE_AT','ACCESS_UNIX','expired','countProvinsi','dflt'], 'safe'],
             [['STATUS','LOCATE_PROVINCE', 'LOCATE_CITY'], 'integer'],
             [['ALAMAT'], 'string'],
             [['CREATE_BY', 'UPDATE_BY', 'OUTLET_CODE', 'TLP'], 'string', 'max' => 50],
@@ -189,14 +191,29 @@ class Store extends \yii\db\ActiveRecord
 		//return $this->hasMany(ItemFormulaDetail::className(), ['FORMULA_ID' => 'FORMULA_ID'],['STATUS' => '1']);//->from(['formula' => Item::tableName()]);
 	}
 	
-	public function extraFields()
-	{
-		return ['items','harga'];
-		//return ['unit'];
+	//TABEL PAY METODE
+	public function getPayMetodeTbl(){
+		$data1= $this->hasMany(PayMetode::className(), ['OUTLET_CODE' => 'OUTLET_CODE'])->andWhere('FIND_IN_SET( ACCESS_UNIX,"'.$this->ACCESS_UNIX.'")');
+		return  $data1;
+	}
+	/**
+	 * MANIPULATION RELEATIONSHIP
+	 * MERGE ARRAY TO RELEATIONSHIP.
+	 * Author ptr.nov@gmail.com
+	*/
+	public function getMetodebayar(){
+		$data2= $this->payMetodeTbl;
+		 $defaultPay[]=[
+			"TYPE_PAY"=> 0,
+			"BANK_NM"=> "CASE",
+			"DCRIPT"=> 'Tunai'
+		];
+		return ArrayHelper::merge($defaultPay,$data2);
 	}
 	
-	public function getDna()
+	
+	public function extraFields()
 	{
-		return $this->ACCESS_UNIX;
+		return ['items','metodebayar'];
 	}
 }

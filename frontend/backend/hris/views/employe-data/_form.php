@@ -22,17 +22,31 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'STATUS')->textInput() ?>
 
-    <?= $form->field($model, 'EMP_ID')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'ACCESS_UNIX')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'OUTLET_CODE')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'EMP_ID')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'EMP_NM_DPN')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'EMP_NM_TGH')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'EMP_NM_BLK')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'EMP_KTP')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'EMP_ALAMAT')->textarea(['rows' => 6]) ?>
+
+    <?= $form->field($model, 'EMP_GENDER')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'EMP_STS_NIKAH')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'EMP_TLP')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'EMP_HP')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'EMP_EMAIL')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
