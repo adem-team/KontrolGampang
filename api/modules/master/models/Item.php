@@ -89,18 +89,23 @@ class Item extends \yii\db\ActiveRecord
 			},	
 			'DEFAULT_HARGA'=>function(){
 				return $this->DEFAULT_HARGA;
+				//HARGA DARI TABEL ITEM (KONDISI HARGA TODAK PAKAI FORMULA).
 			},
 			'DAFAULT_STOCK'=>function(){
 				return '100';
+				//HARGA DARI TABEL ITEM (KONDISI HARGA TODAK PAKAI FORMULA).
 			},
 			'STOCK'=>function(){
 				return $this->stockCurrent;
+				//FORMULA STOCK (BELI-JUAL)
 			},	
 			'HARGA'=>function(){
 				return $this->harga;
+				//FORMULA HARGA BY PERIODE,
 			},	
 			'DISCOUNT'=>function(){
 				return $this->discount;
+				//DISCOUNT HARGA BY PERIODE.
 			},
 			'IMAGE'=>function(){
 				return $this->image;
@@ -133,7 +138,6 @@ class Item extends \yii\db\ActiveRecord
 	}
 	public function getStockCurrent(){
 		$rslt[]=[
-			'STOCK_DAFAULT'=>'100',
 			'STOCK_BELI'=>'100',
 			'STOCK_JUAL'=>'20',
 			'STOCK_BERJALAN'=>'80'			
