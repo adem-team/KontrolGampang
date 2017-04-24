@@ -6,8 +6,7 @@ use yii\helpers\Url;
 use ptrnov\fusionchart\Chart;
 use ptrnov\fusionchart\ChartAsset;
 ChartAsset::register($this);
-use frontend\assets\AppAssetProfile;
-AppAssetProfile::register($this);
+
 //print_r(Yii::$app->getUserOpt->user());
 	$_indexChart1=$this->render('_indexChart1',[
 		'totalGrandHari'=>'100',//$totalGrandHari,
@@ -15,7 +14,7 @@ AppAssetProfile::register($this);
 		'totalMember'=>'100',//$totalMember
 	]);
 
-	$items=[
+	/* $items=[
 		[
 			'label'=>'<i class="glyphicon glyphicon-home"></i> Sales Rasa-Sayang','content'=>
 			$_indexChart1,
@@ -25,15 +24,8 @@ AppAssetProfile::register($this);
 			// $_indexTop5MemberTenanMonth,
 			'active'=>true,			
 		],		
-		/* [
-			'label'=>'<i class="glyphicon glyphicon-home"></i> Store','content'=>$_indexTop5TenanMonthYear,
-			//active'=>true
-		],
-		[
-			'label'=>'<i class="glyphicon glyphicon-home"></i> Menu','content'=>$_indexTop5MemberMonthYear,
-			//active'=>true
-		], */
-	];	
+		
+	]; */	
 
 
 	// $tabDashboard= TabsX::widget([
