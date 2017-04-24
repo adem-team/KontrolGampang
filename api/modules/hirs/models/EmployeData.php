@@ -7,6 +7,11 @@ use api\modules\hirs\models\EmployeDataImage;
 
 class EmployeData extends \yii\db\ActiveRecord
 {
+	public static function getDb()
+    {
+        return Yii::$app->get('api_dbkg');
+    }
+	
     /**
      * @inheritdoc
      */
