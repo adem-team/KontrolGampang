@@ -5,21 +5,23 @@ namespace frontend\backend\hris\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\backend\hris\models\Item;
+use frontend\backend\hris\models\EmployeDataImage;
 
 /**
- * ItemSearch represents the model behind the search form of `app\backend\hris\models\Item`.
+ * EmployeDataSearch represents the model behind the search form of `frontend\backend\hris\models\EmployeData`.
  */
-class ItemSearch extends Item
+class EmployeDataImageSearch extends EmployeDataImage
 {
     /**
      * @inheritdoc
      */
     public function rules()
     {
-        return [
-            [['ID', 'STATUS'], 'integer'],
-            [['CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'ITEM_ID', 'OUTLET_CODE', 'ITEM_NM','SATUAN'], 'safe'],
+       return [
+            [['CREATE_AT', 'UPDATE_AT'], 'safe'],
+            [['STATUS'], 'integer'],
+            [['CREATE_BY', 'UPDATE_BY', 'ACCESS_UNIX', 'OUTLET_CODE', 'EMP_ID'], 'string', 'max' => 50],
+            ['IMG64'], 'safe'],
         ];
     }
 
@@ -41,7 +43,7 @@ class ItemSearch extends Item
      */
     public function search($params)
     {
-        $query = Item::find();
+        $query = EmployeDataImage::find();
 
         // add conditions that should always apply here
 
@@ -67,9 +69,10 @@ class ItemSearch extends Item
 
         $query->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
-            ->andFilterWhere(['like', 'ITEM_ID', $this->ITEM_ID])
+            ->andFilterWhere(['like', 'ACCESS_UNIX', $this->ACCESS_UNIX])
             ->andFilterWhere(['like', 'OUTLET_CODE', $this->OUTLET_CODE])
-            ->andFilterWhere(['like', 'ITEM_NM', $this->ITEM_NM]);
+            ->andFilterWhere(['like', 'EMP_ID', $this->EMP_ID])
+            ->andFilterWhere(['like', 'IMG64', $this->EMP_NM_DPN]);
 
         return $dataProvider;
     }

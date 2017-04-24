@@ -19,6 +19,7 @@ class PenjualanHeaderSearch extends PenjualanHeader
     {
         return [
             [['ID', 'STATUS'], 'integer'],
+			[['TOTAL_ITEM','TOTAL_HARGA','TYPE_PAY','BANK_NM','BANK_NO'], 'safe'],
             [['CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'TRANS_ID', 'ACCESS_UNIX', 'TRANS_DATE', 'OUTLET_ID', 'CONSUMER_NM', 'CONSUMER_EMAIL', 'CONSUMER_PHONE'], 'safe'],
         ];
     }

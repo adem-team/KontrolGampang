@@ -38,6 +38,7 @@ class PenjualanHeader extends \yii\db\ActiveRecord
     {
         return [
             [['CREATE_AT', 'UPDATE_AT', 'TRANS_DATE'], 'safe'],
+            [['TOTAL_ITEM','TOTAL_HARGA','TYPE_PAY','BANK_NM','BANK_NO'], 'safe'],
             [['STATUS'], 'integer'],
             [['CREATE_BY', 'UPDATE_BY', 'ACCESS_UNIX', 'OUTLET_ID'], 'string', 'max' => 50],
             [['TRANS_ID', 'CONSUMER_NM'], 'string', 'max' => 100],
@@ -62,6 +63,11 @@ class PenjualanHeader extends \yii\db\ActiveRecord
             'ACCESS_UNIX' => Yii::t('app', 'Access  Unix'),
             'TRANS_DATE' => Yii::t('app', 'Trans  Date'),
             'OUTLET_ID' => Yii::t('app', 'Outlet  ID'),
+			'TOTAL_ITEM' => Yii::t('app', 'Total Item'),
+            'TOTAL_HARGA' => Yii::t('app', 'Total Harga'),
+			'TYPE_PAY' => Yii::t('app', 'TYPE_PAY'),
+            'BANK_NM' => Yii::t('app', 'BANK_NM'),
+            'BANK_NO' => Yii::t('app', 'BANK_NO'),
             'CONSUMER_NM' => Yii::t('app', 'Consumer  Nm'),
             'CONSUMER_EMAIL' => Yii::t('app', 'Consumer  Email'),
             'CONSUMER_PHONE' => Yii::t('app', 'Consumer  Phone'),

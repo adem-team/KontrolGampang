@@ -4,19 +4,19 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel frontend\backend\hris\models\EmployeDataSearch */
+/* @var $searchModel frontend\backend\master\models\PayMetodeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Employe Datas';
+$this->title = 'Pay Metodes';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="employe-data-index">
+<div class="pay-metode-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Employe Data', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Pay Metode', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -33,17 +33,9 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'STATUS',
             // 'ACCESS_UNIX',
             // 'OUTLET_CODE',
-            // 'EMP_ID',
-            // 'EMP_NM_DPN',
-            // 'EMP_NM_TGH',
-            // 'EMP_NM_BLK',
-            // 'EMP_KTP',
-            // 'EMP_ALAMAT:ntext',
-            // 'EMP_GENDER',
-            // 'EMP_STS_NIKAH',
-            // 'EMP_TLP',
-            // 'EMP_HP',
-            // 'EMP_EMAIL:email',
+            // 'TYPE_PAY',
+            // 'BANK_NM',
+            // 'DCRIPT:ntext',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

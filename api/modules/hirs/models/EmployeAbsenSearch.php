@@ -1,16 +1,16 @@
 <?php
 
-namespace api\modules\transaksi\models;
+namespace api\modules\hirs\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use api\modules\transaksi\models\PenjualanHeader;
+use api\modules\hirs\models\EmployeAbsen;
 
 /**
- * PenjualanHeaderSearch represents the model behind the search form of `frontend\backend\transaksi\models\PenjualanHeader`.
+ * EmployeAbsenSearch represents the model behind the search form of `frontend\backend\hris\models\EmployeAbsen`.
  */
-class PenjualanHeaderSearch extends PenjualanHeader
+class EmployeAbsenSearch extends EmployeAbsen
 {
     /**
      * @inheritdoc
@@ -19,8 +19,7 @@ class PenjualanHeaderSearch extends PenjualanHeader
     {
         return [
             [['ID', 'STATUS'], 'integer'],
-			[['TOTAL_ITEM','TOTAL_HARGA','TYPE_PAY','BANK_NM','BANK_NO'], 'safe'],
-            [['CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'TRANS_ID', 'ACCESS_UNIX', 'TRANS_DATE', 'OUTLET_ID', 'CONSUMER_NM', 'CONSUMER_EMAIL', 'CONSUMER_PHONE'], 'safe'],
+            [['CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'EMP_ID', 'TGL', 'TIME'], 'safe'],
         ];
     }
 
@@ -42,7 +41,7 @@ class PenjualanHeaderSearch extends PenjualanHeader
      */
     public function search($params)
     {
-        $query = PenjualanHeader::find();
+        $query = EmployeAbsen::find();
 
         // add conditions that should always apply here
 
@@ -64,17 +63,13 @@ class PenjualanHeaderSearch extends PenjualanHeader
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
             'STATUS' => $this->STATUS,
-            'TRANS_DATE' => $this->TRANS_DATE,
+            'TGL' => $this->TGL,
+            'TIME' => $this->TIME,
         ]);
 
         $query->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
-            ->andFilterWhere(['like', 'TRANS_ID', $this->TRANS_ID])
-            ->andFilterWhere(['like', 'ACCESS_UNIX', $this->ACCESS_UNIX])
-            ->andFilterWhere(['like', 'OUTLET_ID', $this->OUTLET_ID])
-            ->andFilterWhere(['like', 'CONSUMER_NM', $this->CONSUMER_NM])
-            ->andFilterWhere(['like', 'CONSUMER_EMAIL', $this->CONSUMER_EMAIL])
-            ->andFilterWhere(['like', 'CONSUMER_PHONE', $this->CONSUMER_PHONE]);
+            ->andFilterWhere(['like', 'EMP_ID', $this->EMP_ID]);
 
         return $dataProvider;
     }

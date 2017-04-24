@@ -1,16 +1,16 @@
 <?php
 
-namespace api\modules\transaksi\models;
+namespace api\modules\hirs\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use api\modules\transaksi\models\PenjualanHeader;
+use api\modules\hirs\models\EmployeData;
 
 /**
- * PenjualanHeaderSearch represents the model behind the search form of `frontend\backend\transaksi\models\PenjualanHeader`.
+ * EmployeDataSearch represents the model behind the search form of `frontend\backend\hris\models\EmployeData`.
  */
-class PenjualanHeaderSearch extends PenjualanHeader
+class EmployeDataSearch extends EmployeData
 {
     /**
      * @inheritdoc
@@ -19,8 +19,7 @@ class PenjualanHeaderSearch extends PenjualanHeader
     {
         return [
             [['ID', 'STATUS'], 'integer'],
-			[['TOTAL_ITEM','TOTAL_HARGA','TYPE_PAY','BANK_NM','BANK_NO'], 'safe'],
-            [['CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'TRANS_ID', 'ACCESS_UNIX', 'TRANS_DATE', 'OUTLET_ID', 'CONSUMER_NM', 'CONSUMER_EMAIL', 'CONSUMER_PHONE'], 'safe'],
+            [['CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'ACCESS_UNIX', 'OUTLET_CODE', 'EMP_ID', 'EMP_NM_DPN', 'EMP_NM_TGH', 'EMP_NM_BLK', 'EMP_KTP', 'EMP_ALAMAT', 'EMP_GENDER', 'EMP_STS_NIKAH', 'EMP_TLP', 'EMP_HP', 'EMP_EMAIL'], 'safe'],
         ];
     }
 
@@ -42,7 +41,7 @@ class PenjualanHeaderSearch extends PenjualanHeader
      */
     public function search($params)
     {
-        $query = PenjualanHeader::find();
+        $query = EmployeData::find();
 
         // add conditions that should always apply here
 
@@ -64,17 +63,23 @@ class PenjualanHeaderSearch extends PenjualanHeader
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
             'STATUS' => $this->STATUS,
-            'TRANS_DATE' => $this->TRANS_DATE,
         ]);
 
         $query->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
-            ->andFilterWhere(['like', 'TRANS_ID', $this->TRANS_ID])
             ->andFilterWhere(['like', 'ACCESS_UNIX', $this->ACCESS_UNIX])
-            ->andFilterWhere(['like', 'OUTLET_ID', $this->OUTLET_ID])
-            ->andFilterWhere(['like', 'CONSUMER_NM', $this->CONSUMER_NM])
-            ->andFilterWhere(['like', 'CONSUMER_EMAIL', $this->CONSUMER_EMAIL])
-            ->andFilterWhere(['like', 'CONSUMER_PHONE', $this->CONSUMER_PHONE]);
+            ->andFilterWhere(['like', 'OUTLET_CODE', $this->OUTLET_CODE])
+            ->andFilterWhere(['like', 'EMP_ID', $this->EMP_ID])
+            ->andFilterWhere(['like', 'EMP_NM_DPN', $this->EMP_NM_DPN])
+            ->andFilterWhere(['like', 'EMP_NM_TGH', $this->EMP_NM_TGH])
+            ->andFilterWhere(['like', 'EMP_NM_BLK', $this->EMP_NM_BLK])
+            ->andFilterWhere(['like', 'EMP_KTP', $this->EMP_KTP])
+            ->andFilterWhere(['like', 'EMP_ALAMAT', $this->EMP_ALAMAT])
+            ->andFilterWhere(['like', 'EMP_GENDER', $this->EMP_GENDER])
+            ->andFilterWhere(['like', 'EMP_STS_NIKAH', $this->EMP_STS_NIKAH])
+            ->andFilterWhere(['like', 'EMP_TLP', $this->EMP_TLP])
+            ->andFilterWhere(['like', 'EMP_HP', $this->EMP_HP])
+            ->andFilterWhere(['like', 'EMP_EMAIL', $this->EMP_EMAIL]);
 
         return $dataProvider;
     }

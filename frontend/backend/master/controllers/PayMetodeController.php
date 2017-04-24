@@ -1,18 +1,18 @@
 <?php
 
-namespace frontend\backend\hris\controllers;
+namespace frontend\backend\master\controllers;
 
 use Yii;
-use frontend\backend\hris\models\Item;
-use frontend\backend\hris\models\ItemSearch;
+use frontend\backend\master\models\PayMetode;
+use frontend\backend\master\models\PayMetodeSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ItemController implements the CRUD actions for Item model.
+ * PayMetodeController implements the CRUD actions for PayMetode model.
  */
-class KaryawanController extends Controller
+class PayMetodeController extends Controller
 {
     /**
      * @inheritdoc
@@ -30,12 +30,12 @@ class KaryawanController extends Controller
     }
 
     /**
-     * Lists all Item models.
+     * Lists all PayMetode models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ItemSearch();
+        $searchModel = new PayMetodeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class KaryawanController extends Controller
     }
 
     /**
-     * Displays a single Item model.
+     * Displays a single PayMetode model.
      * @param string $id
      * @return mixed
      */
@@ -57,13 +57,13 @@ class KaryawanController extends Controller
     }
 
     /**
-     * Creates a new Item model.
+     * Creates a new PayMetode model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Item();
+        $model = new PayMetode();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->ID]);
@@ -75,7 +75,7 @@ class KaryawanController extends Controller
     }
 
     /**
-     * Updates an existing Item model.
+     * Updates an existing PayMetode model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
@@ -94,7 +94,7 @@ class KaryawanController extends Controller
     }
 
     /**
-     * Deletes an existing Item model.
+     * Deletes an existing PayMetode model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
@@ -107,15 +107,15 @@ class KaryawanController extends Controller
     }
 
     /**
-     * Finds the Item model based on its primary key value.
+     * Finds the PayMetode model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return Item the loaded model
+     * @return PayMetode the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Item::findOne($id)) !== null) {
+        if (($model = PayMetode::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
