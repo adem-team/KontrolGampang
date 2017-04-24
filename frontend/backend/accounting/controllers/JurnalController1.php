@@ -3,14 +3,14 @@
 namespace frontend\backend\accounting\controllers;
 
 use Yii;
-use frontend\backend\transaksi\models\PenjualanDetail;
-use frontend\backend\transaksi\models\PenjualanDetailSearch;
+use frontend\backend\accounting\models\Item;
+use frontend\backend\accounting\models\ItemSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * PenjualanDetailController implements the CRUD actions for PenjualanDetail model.
+ * ItemController implements the CRUD actions for Item model.
  */
 class JurnalController extends Controller
 {
@@ -30,12 +30,12 @@ class JurnalController extends Controller
     }
 
     /**
-     * Lists all PenjualanDetail models.
+     * Lists all Item models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new PenjualanDetailSearch();
+        $searchModel = new ItemSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class JurnalController extends Controller
     }
 
     /**
-     * Displays a single PenjualanDetail model.
+     * Displays a single Item model.
      * @param string $id
      * @return mixed
      */
@@ -57,13 +57,13 @@ class JurnalController extends Controller
     }
 
     /**
-     * Creates a new PenjualanDetail model.
+     * Creates a new Item model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new PenjualanDetail();
+        $model = new Item();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->ID]);
@@ -75,7 +75,7 @@ class JurnalController extends Controller
     }
 
     /**
-     * Updates an existing PenjualanDetail model.
+     * Updates an existing Item model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
@@ -94,7 +94,7 @@ class JurnalController extends Controller
     }
 
     /**
-     * Deletes an existing PenjualanDetail model.
+     * Deletes an existing Item model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
@@ -107,15 +107,15 @@ class JurnalController extends Controller
     }
 
     /**
-     * Finds the PenjualanDetail model based on its primary key value.
+     * Finds the Item model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return PenjualanDetail the loaded model
+     * @return Item the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = PenjualanDetail::findOne($id)) !== null) {
+        if (($model = Item::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

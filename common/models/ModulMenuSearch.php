@@ -24,7 +24,7 @@ class ModulMenuSearch extends ModulMenu
     {
         return [
             [['MODUL_DCRP'], 'string'],
-            [['MODUL_STS', 'SORT','MODUL_ID','MODUL_GRP'], 'integer'],
+            [['MODUL_STS', 'SORT','SORT_PARENT','MODUL_ID','MODUL_GRP'], 'integer'],
             [['MODUL_NM','BTN_NM',], 'string', 'max' => 100],
             [['BTN_URL','BTN_ICON',], 'safe']
         ];
@@ -37,7 +37,7 @@ class ModulMenuSearch extends ModulMenu
 	*/
     public function searchUserMenu($params)
     {
-        $query = ModulMenu::find()->JoinWith('modulMenuTbl',true,'INNER JOIN');//->where(['USER_UNIX' =>$params['UserUnix']]);
+        $query = ModulMenu::find()->JoinWith('modulMenuTbl',true,'INNER JOIN')->orderBy(['SORT_PARENT'=>SORT_ASC]);//->where(['USER_UNIX' =>$params['UserUnix']]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

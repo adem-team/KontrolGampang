@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model frontend\backend\transaksi\models\PenjualanDetail */
+/* @var $model app\backend\master\models\Item */
 
-$this->title = 'Create Penjualan Detail';
-$this->params['breadcrumbs'][] = ['label' => 'Penjualan Details', 'url' => ['index']];
+$this->title = 'Create Item';
+$this->params['breadcrumbs'][] = ['label' => 'Items', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="penjualan-detail-create">
+<div class="item-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

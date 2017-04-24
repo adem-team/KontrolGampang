@@ -88,6 +88,12 @@ return [
 		'payment' => [
             'class' => 'frontend\backend\payment\Modul',
         ],
+		'transaksi' => [
+            'class' => 'frontend\backend\transaksi\Modul',
+        ],
+		'afiliasi' => [
+            'class' => 'frontend\backend\afiliasi\Modul',
+        ],
 	],
     'components' => [
 		'view' => [

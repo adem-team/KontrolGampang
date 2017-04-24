@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\backend\accounting\controllers;
+namespace frontend\backend\transaksi\controllers;
 
 use Yii;
 use frontend\backend\transaksi\models\PenjualanDetail;
@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * PenjualanDetailController implements the CRUD actions for PenjualanDetail model.
  */
-class JurnalController extends Controller
+class SalesReportController extends Controller
 {
     /**
      * @inheritdoc
