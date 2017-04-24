@@ -29,7 +29,7 @@ class StoreSearch extends Store
             [['STATUS','LOCATE_PROVINCE', 'LOCATE_CITY'], 'integer'],
             [['ALAMAT'], 'string'],
             [['CREATE_BY', 'UPDATE_BY', 'OUTLET_CODE', 'TLP'], 'string', 'max' => 50],
-            [['OUTLET_NM', 'PIC'], 'string', 'max' => 100],           
+            [['OUTLET_NM', 'PIC','FAX'], 'string', 'max' => 100],           
         ];
     }
 
@@ -81,13 +81,11 @@ class StoreSearch extends Store
             ->andFilterWhere(['like', 'OUTLET_CODE', $this->OUTLET_CODE])
             ->andFilterWhere(['like', 'OUTLET_NM', $this->OUTLET_NM])
             ->andFilterWhere(['like', 'ALAMAT', $this->ALAMAT])
-            ->andFilterWhere(['like', 'LOCATE_PROVINCE', $this->LOCATE_PROVINCE])
-            ->andFilterWhere(['like', 'LOCATE_CITY', $this->LOCATE_CITY])
+            ->andFilterWhere(['like', 'LOCATE_PROVINCE', $this->ProvinsiNm])
+            ->andFilterWhere(['like', 'LOCATE_CITY', $this->KotaNm])
             ->andFilterWhere(['like', 'PIC', $this->PIC])
             ->andFilterWhere(['like', 'TLP', $this->TLP])
-            ->andFilterWhere(['like', 'FAX', $this->FAX])
-            ->andFilterWhere(['like', 'locate.LOCATE_NAME', $this->getAttribute('LocateNm')])
-            ->andFilterWhere(['like', 'locatesub.LOCATE_NAME', $this->getAttribute('LocatesubNm')]);
+            ->andFilterWhere(['like', 'FAX', $this->FAX]);
 
         return $dataProvider;
     }

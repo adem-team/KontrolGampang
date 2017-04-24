@@ -8,27 +8,41 @@ use yii\helpers\ArrayHelper;
 use kartik\widgets\FileInput;
 use kartik\widgets\ActiveField;
 use kartik\widgets\ActiveForm;
-//use lukisongroup\efenbi\rasasayang\models\Locate;
 
+	//Difinition Status.
 	$aryStt= [
 	  ['STATUS' => 0, 'STT_NM' => 'Trial'],		  
-	  ['STATUS' => 1, 'STT_NM' => 'Enable'],
-	  ['STATUS' => 2, 'STT_NM' => 'Disable'],
+	  ['STATUS' => 1, 'STT_NM' => 'Active'],
+	  ['STATUS' => 2, 'STT_NM' => 'Deactive'],
 	  ['STATUS' => 3, 'STT_NM' => 'Deleted'],
-	];	
-	function sttMsg($stt){
-		if($stt==0){
-			return 'Trial';
-		}elseif($stt==1){
-			return 'Enable';
-		}elseif($stt==2){
-			return 'Disable';
-		}elseif($stt==3){
-			return 'Delete';
-		}
-	};
+	];
 	$valStt = ArrayHelper::map($aryStt, 'STATUS', 'STT_NM');
-   // $aryLocate = ArrayHelper::map(Locate::find()->where(['PARENT' => 0])->all(), 'ID', 'LOCATE_NAME');
+	
+	//Result Status value.
+	function sttMsg($stt){
+		if($stt==0){ //TRIAL
+			 return Html::decode('<span class="fa-stack fa-xl">
+					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+					  <i class="fa fa-check fa-stack-1x" style="color:#ee0b0b"></i>
+					</span> Trial','',['title'=>'Trial']);
+		}elseif($stt==1){
+			 return Html::decode('<span class="fa-stack fa-xl">
+					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+					  <i class="fa fa-check fa-stack-1x" style="color:#05944d"></i>
+					</span> Active','',['title'=>'Active']);
+		}elseif($stt==2){
+			return Html::decode('<span class="fa-stack fa-xl">
+					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+					  <i class="fa fa-remove fa-stack-1x" style="color:#01190d"></i>
+					</span> Deactive','',['title'=>'Deactive']);
+		}elseif($stt==3){
+			return Html::decode('<span class="fa-stack fa-xl">
+					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+					  <i class="fa fa-close fa-stack-1x" style="color:#ee0b0b"></i>
+					</span> Delete','',['title'=>'Delete']);
+		}
+	};	
+	
 	$attSroreData=[	
 		[
 			'attribute' =>'OUTLET_NM',
