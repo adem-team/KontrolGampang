@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		],
 		//KD_BARCODE
 		[
-			'attribute'=>'OUTLET_BARCODE',
+			'attribute'=>'OUTLET_CODE',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','80px'),
 			'hAlign'=>'right',
@@ -57,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		],
 		//CABANG LOCATE 
 		[
-			'attribute'=>'LocateNm',
+			'attribute'=>'LOCATE_PROVINCE',
 			//'label'=>'Cutomer',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','150px'),
@@ -72,7 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		],		
 		//SABANG LOCATE SUB
 		[
-			'attribute'=>'LocatesubNm',
+			'attribute'=>'LOCATE_CITY',
 			//'label'=>'Cutomer',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),

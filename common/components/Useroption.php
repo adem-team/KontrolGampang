@@ -135,7 +135,8 @@ class Useroption extends Component{
 			$dataProvider = $searchModel->searchUserMenu(Yii::$app->request->queryParams);
 			$modelMenu=$dataProvider->getModels();
 			$data=Yii::$app->arrayBantuan->array_find($modelMenu, 'ID',$valueMenu)[0];
-			if(	$data['modulMenuTbl']['BTN_VIEW'] OR
+			if(	$data['modulMenuTbl']['STATUS'] OR
+				$data['modulMenuTbl']['BTN_VIEW'] OR
 				$data['modulMenuTbl']['BTN_REVIEW']==1 OR
 				$data['modulMenuTbl']['BTN_CREATE']==1 OR
 				$data['modulMenuTbl']['BTN_EDIT']==1 OR
