@@ -1,19 +1,18 @@
 <?php
 
-namespace frontend\backend\master\controllers;
+namespace frontend\backend\transaksi\controllers;
 
 use Yii;
+use frontend\backend\transaksi\models\PenjualanDetail;
+use frontend\backend\transaksi\models\PenjualanDetailSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-use common\models\Store;
-use frontend\backend\master\models\Item;
-use frontend\backend\master\models\ItemSearch;
 /**
- * ItemController implements the CRUD actions for Item model.
+ * PenjualanDetailController implements the CRUD actions for PenjualanDetail model.
  */
-class ItemController extends Controller
+class SalesReportController extends Controller
 {
     /**
      * @inheritdoc
@@ -31,33 +30,22 @@ class ItemController extends Controller
     }
 
     /**
-     * Lists all Item models.
+     * Lists all PenjualanDetail models.
      * @return mixed
      */
     public function actionIndex()
     {
-		$paramCari=Yii::$app->getRequest()->getQueryParam('outlet_code');
-		//Get 
-		$modelOutlet=Store::find()->where(['OUTLET_CODE'=>$paramCari])->one();//->andWhere('FIND_IN_SET("'.$this->ACCESS_UNIX.'", ACCESS_UNIX)')->one();
-		if($modelOutlet){
-		    $searchModel = new ItemSearch(['OUTLET_CODE'=>$paramCari]);
-			$dataProvider = $searchModel->search(Yii::$app->request->queryParams);			
-		
-		///OUTLET ID.
-		
+        $searchModel = new PenjualanDetailSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
         return $this->render('index', [
-			'outletNm'=>$modelOutlet!=''?$modelOutlet->OUTLET_NM:'none',
-            'searchModel' => $searchModel!=''?$searchModel:false,
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-			'paramUrl'=>$paramCari,
         ]);
-		}else{
-			$this->redirect(array('/site/alert'));
-		}
     }
 
     /**
-     * Displays a single Item model.
+     * Displays a single PenjualanDetail model.
      * @param string $id
      * @return mixed
      */
@@ -69,13 +57,13 @@ class ItemController extends Controller
     }
 
     /**
-     * Creates a new Item model.
+     * Creates a new PenjualanDetail model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Item();
+        $model = new PenjualanDetail();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->ID]);
@@ -87,7 +75,7 @@ class ItemController extends Controller
     }
 
     /**
-     * Updates an existing Item model.
+     * Updates an existing PenjualanDetail model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
@@ -106,7 +94,7 @@ class ItemController extends Controller
     }
 
     /**
-     * Deletes an existing Item model.
+     * Deletes an existing PenjualanDetail model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
@@ -119,15 +107,15 @@ class ItemController extends Controller
     }
 
     /**
-     * Finds the Item model based on its primary key value.
+     * Finds the PenjualanDetail model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return Item the loaded model
+     * @return PenjualanDetail the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Item::findOne($id)) !== null) {
+        if (($model = PenjualanDetail::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

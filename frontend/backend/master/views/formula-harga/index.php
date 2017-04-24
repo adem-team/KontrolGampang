@@ -180,7 +180,7 @@ echo $this->render('modal_item'); //echo difinition
 		]		
 	];
 
-	$gvItem=GridView::widget([
+$gvItem=GridView::widget([
 		'id'=>'gv-item',
 		'dataProvider' => $dataProvider,
 		'filterModel' => $searchModel,
@@ -204,7 +204,7 @@ echo $this->render('modal_item'); //echo difinition
 		'panel' => [
 			//'heading'=>false,
 			//'heading'=>tombolBack().'<div style="float:right"> '.tombolCreate().' '.tombolExportExcel().'</div>',  
-			'heading'=>tombolBack().' '.tombolCreate().' '.tombolExportExcel($paramUrl).' '.tombolFHarga($paramUrl).' ' .$pageNm,  
+			'heading'=>tombolBack().' '.tombolCreate().' '.tombolExportExcel().' '.$pageNm,  
 			'type'=>'info',
 			//'before'=> tombolBack().'<div style="float:right"> '.tombolCreate().' '.tombolExportExcel().'</div>',
 			'before'=>false,

@@ -29,7 +29,7 @@ class ModulMenu extends \yii\db\ActiveRecord
     {
         return [
             [['MODUL_DCRP','UserUnix'], 'string'],
-            [['MODUL_STS', 'SORT','MODUL_ID','MODUL_GRP'], 'integer'],
+            [['MODUL_STS', 'SORT','SORT_PARENT','MODUL_ID','MODUL_GRP'], 'integer'],
             [['MODUL_NM','BTN_NM',], 'string', 'max' => 100],
             [['BTN_URL','BTN_ICON',], 'safe']
         ];
@@ -44,6 +44,7 @@ class ModulMenu extends \yii\db\ActiveRecord
             'MODUL_ID' => 'Modul  ID',
             'MODUL_GRP' => 'Group',
 			'SORT' => 'Sort',
+            'SORT_PARENT' => 'Sort Parent',
             'MODUL_NM' => 'Modul  Nm',           
             'MODUL_STS' => 'Modul  Sts',            
             'BTN_NM' => 'Button Name',

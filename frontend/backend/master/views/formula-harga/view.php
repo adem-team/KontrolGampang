@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model frontend\backend\transaksi\models\PenjualanDetail */
+/* @var $model app\backend\master\models\Item */
 
 $this->title = $model->ID;
-$this->params['breadcrumbs'][] = ['label' => 'Penjualan Details', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Items', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="penjualan-detail-view">
+<div class="item-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -34,18 +34,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'UPDATE_BY',
             'UPDATE_AT',
             'STATUS',
-            'TRANS_ID',
-            'ACCESS_UNIX',
-            'TRANS_DATE',
-            'OUTLET_ID',
-            'OUTLET_NM',
             'ITEM_ID',
+            'OUTLET_CODE',
             'ITEM_NM',
-            'ITEM_QTY',
-            'SATUAN',
-            'HARGA',
-            'DISCOUNT',
-            'DISCOUNT_STT',
         ],
     ]) ?>
 

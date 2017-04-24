@@ -12,6 +12,7 @@ use yii\helpers\ArrayHelper;
 
 use common\models\Store;
 use common\models\StoreSearch;
+use common\models\LocateKota;
 
 class OutletController extends Controller
 {
@@ -88,6 +89,48 @@ class OutletController extends Controller
         }
     }
 	
+	/**
+     * Displays a single Store model.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionReview($id)
+    {
+    	$model =  $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            //return $this->redirect(['view', 'id' => $model->ID]);
+            return $this->redirect(['index']);
+        } else {
+           return $this->renderAjax('review', [
+                'model' => $model,
+            ]);
+        }
+    }
+	
+	/**
+     * Depdrop Sub Kota - depedence Province
+     * @author Piter
+     * @since 1.1.0
+     * @return mixed
+     */
+   public function actionKotaSub() {
+    $out = [];
+		if (isset($_POST['depdrop_parents'])) {
+        $parents = $_POST['depdrop_parents'];
+			if ($parents != null) {
+				$id = $parents[0];
+				$model = LocateKota::find()->asArray()->where(['PROVINCE_ID'=>$id])->all();														
+														
+				foreach ($model as $key => $value) {
+				   $out[] = ['id'=>$value['CITY_ID'],'name'=> $value['CITY_NAME']];
+			    } 
+				echo json_encode(['output'=>$out, 'selected'=>'']);
+				return;
+           }
+       }
+       echo Json::encode(['output'=>'', 'selected'=>'']);
+   }
 	protected function findModel($id)
     {
         if (($model = Store::findOne($id)) !== null) {

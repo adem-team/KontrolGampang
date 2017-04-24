@@ -16,9 +16,19 @@ use kartik\tabs\TabsX;
 use kartik\date\DatePicker;
 use yii\web\View;
 use common\models\LocateProvince;
+use common\models\LocateKota;
 
-$userProvinsi=$dataProvider->getModels()[0]['countProvinsi'];
- $aryProvinsi = ArrayHelper::map(LocateProvince::find()->where('PROVINCE_ID IN ('.$userProvinsi.')')->all(), 'PROVINCE_ID', 'PROVINCE');
+	//get Count Provinsi - exist data.
+	$modelFilter=$dataProvider->getModels();
+	//$userProvinsi=$dataProvider->getModels()[0]['countProvinsi'];
+	$userProvinsi=isset($modelFilter[0])?$modelFilter[0]['countProvinsi']:0;
+	$aryProvinsi = ArrayHelper::map(LocateProvince::find()->where('PROVINCE_ID IN ('.$userProvinsi.')')->all(), 'PROVINCE_ID', 'PROVINCE');
+	//get Count Kota - exist data.
+	$userKota=isset($modelFilter[0])?$modelFilter[0]['CountKota']:0; 
+	$aryKota = ArrayHelper::map(LocateKota::find()->where('CITY_ID IN ('.$userKota.')')->all(), 'CITY_ID', 'CITY_NAME');
+	
+	
+	
 //print_r($userProvinsi);
 $this->registerCss("
 	:link {
@@ -39,12 +49,56 @@ $this->registerCss("
 
 $this->registerJs($this->render('modal_store.js'),View::POS_READY);
  echo $this->render('modal_store'); //echo difinition
-
+	
+	//Difinition Status.
 	$aryStt= [
-		  ['STATUS' => 0, 'STT_NM' => 'DISABLE'],		  
-		  ['STATUS' => 1, 'STT_NM' => 'ENABLE']
+	  ['STATUS' => 0, 'STT_NM' => 'Trial'],		  
+	  ['STATUS' => 1, 'STT_NM' => 'Active'],
+	  ['STATUS' => 2, 'STT_NM' => 'Deactive'],
+	  ['STATUS' => 3, 'STT_NM' => 'Deleted'],
 	];	
 	$valStt = ArrayHelper::map($aryStt, 'STATUS', 'STT_NM');
+	
+	//Result Status value.
+	function sttMsg($stt){
+		if($stt==0){ //TRIAL
+			 return Html::a('<span class="fa-stack fa-xl">
+					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+					  <i class="fa fa-check fa-stack-1x" style="color:#ee0b0b"></i>
+					</span>','',['title'=>'Trial']);
+		}elseif($stt==1){
+			 return Html::a('<span class="fa-stack fa-xl">
+					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+					  <i class="fa fa-check fa-stack-1x" style="color:#05944d"></i>
+					</span>','',['title'=>'Active']);
+		}elseif($stt==2){
+			return Html::a('<span class="fa-stack fa-xl">
+					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+					  <i class="fa fa-remove fa-stack-1x" style="color:#01190d"></i>
+					</span>','',['title'=>'Deactive']);
+		}elseif($stt==3){
+			return Html::a('<span class="fa-stack fa-xl">
+					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+					  <i class="fa fa-close fa-stack-1x" style="color:#ee0b0b"></i>
+					</span>','',['title'=>'Delete']);
+		}
+	};	
+	
+	// if ($model->STATUS == 0) {
+				  // return Html::a('
+					// <span class="fa-stack fa-xl">
+					  // <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+					  // <i class="fa fa-close fa-stack-1x" style="color:#0f39ab"></i>
+					// </span>','',['title'=>'Running']);
+				// } else if ($model->STATUS == 1) {
+				  // return Html::a('<span class="fa-stack fa-xl">
+					  // <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+					  // <i class="fa fa-check fa-stack-1x" style="color:#ee0b0b"></i>
+					// </span>','',['title'=>'Finish']);
+				// }
+	
+	
+	
 	
 	$bColor='rgba(87,114,111, 1)';
 	$gvAttributeItem=[
@@ -116,8 +170,13 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 		//CITY
 		[
 			'attribute'=>'KotaNm',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
+			'filter' => $aryKota,
+			'filterType'=>GridView::FILTER_SELECT2,
+			'filterWidgetOptions'=>[
+				'pluginOptions' =>Yii::$app->gv->gvPliginSelect2(),
+			],
+			'filterInputOptions'=>['placeholder'=>'Cari Kota'],	
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),						
 			'hAlign'=>'right',
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
@@ -215,61 +274,7 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('right','50px',''),
 			
-		],			
-		//CREATE_AT
-		/* [
-			'attribute'=>'CREATE_AT',
-			'filterType'=>GridView::FILTER_DATE,
-			'filterWidgetOptions'=>[
-				'pluginOptions' =>Yii::$app->gv->gvPliginDate(),
-				'layout'=>'{picker}{remove}{input}'
-			],
-			'filter'=>true,
-			'value'=>function($model){
-				if ($model->CREATE_AT!=''){
-					return $model->CREATE_AT;
-				}else{
-					return '';
-				}
-			},
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
-			
-		],
-		//CREATE_BY
-		[
-			'attribute'=>'CREATE_BY',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
-			
-		],	 */	
-		//UPDATE_BY
-	/* 	[
-			'attribute'=>'UPDATE_BY',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
-			
-		], */
+		],	
 		//'STATUS',
 		[
 			'attribute'=>'STATUS',
@@ -286,18 +291,7 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 			'noWrap'=>false,
 			'format' => 'raw',	
 			'value'=>function($model){
-				 if ($model->STATUS == 0) {
-				  return Html::a('
-					<span class="fa-stack fa-xl">
-					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
-					  <i class="fa fa-close fa-stack-1x" style="color:#0f39ab"></i>
-					</span>','',['title'=>'Running']);
-				} else if ($model->STATUS == 1) {
-				  return Html::a('<span class="fa-stack fa-xl">
-					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
-					  <i class="fa fa-check fa-stack-1x" style="color:#ee0b0b"></i>
-					</span>','',['title'=>'Finish']);
-				}
+				return sttMsg($model->STATUS);				 
 			},
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50',$bColor),
@@ -329,7 +323,7 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 				},
 				'payment' =>function($url, $model,$key){
 					//if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
-						return  tombolPayment($url, $model);
+						return  tombolPayment($model);
 					//}					
 				}
 			], 

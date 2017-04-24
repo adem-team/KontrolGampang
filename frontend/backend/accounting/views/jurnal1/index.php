@@ -40,7 +40,7 @@ echo $this->render('modal_item'); //echo difinition
 	$bColor='rgba(87,114,111, 1)';
 	$pageNm='<span class="fa-stack fa-xs text-right">				  
 				  <i class="fa fa-share fa-1x"></i>
-				</span> Outlet '.$outletNm.'
+				</span> Outlet ['.$dataProvider->getModels()[0]['OUTLET_CODE'].']
 	';
 	
 	$gvAttributeItem=[
@@ -52,23 +52,6 @@ echo $this->render('modal_item'); //echo difinition
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','30px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('center','30px',''),
 		],
-		//ITEM IMAGE
-		[	
-			'attribute'=>'itemsImage64',
-			'filterType'=>false,
-			'format'=>'raw', 
-			'value'=>function($model){
-				return Html::img('data:image/jpg;charset=utf-8;base64,'.$model->itemsImage64,['width'=>'30','height'=>'30']);
-			}, 
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>true,
-			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','30px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('center','30px',''),
-			
-		],	
 		//ITEM_ID
 		[
 			'attribute'=>'ITEM_ID',
@@ -180,7 +163,7 @@ echo $this->render('modal_item'); //echo difinition
 		]		
 	];
 
-	$gvItem=GridView::widget([
+$gvItem=GridView::widget([
 		'id'=>'gv-item',
 		'dataProvider' => $dataProvider,
 		'filterModel' => $searchModel,
@@ -204,7 +187,7 @@ echo $this->render('modal_item'); //echo difinition
 		'panel' => [
 			//'heading'=>false,
 			//'heading'=>tombolBack().'<div style="float:right"> '.tombolCreate().' '.tombolExportExcel().'</div>',  
-			'heading'=>tombolBack().' '.tombolCreate().' '.tombolExportExcel($paramUrl).' '.tombolFHarga($paramUrl).' ' .$pageNm,  
+			'heading'=>tombolBack().' '.tombolCreate().' '.tombolExportExcel().' '.$pageNm,  
 			'type'=>'info',
 			//'before'=> tombolBack().'<div style="float:right"> '.tombolCreate().' '.tombolExportExcel().'</div>',
 			'before'=>false,

@@ -4,15 +4,18 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model frontend\backend\transaksi\models\PenjualanDetailSearch */
+/* @var $model app\backend\master\models\ItemSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="penjualan-detail-search">
+<div class="item-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
+        'options' => [
+            'data-pjax' => 1
+        ],
     ]); ?>
 
     <?= $form->field($model, 'ID') ?>
@@ -27,29 +30,11 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'STATUS') ?>
 
-    <?php // echo $form->field($model, 'TRANS_ID') ?>
-
-    <?php // echo $form->field($model, 'ACCESS_UNIX') ?>
-
-    <?php // echo $form->field($model, 'TRANS_DATE') ?>
-
-    <?php // echo $form->field($model, 'OUTLET_ID') ?>
-
-    <?php // echo $form->field($model, 'OUTLET_NM') ?>
-
     <?php // echo $form->field($model, 'ITEM_ID') ?>
 
+    <?php // echo $form->field($model, 'OUTLET_CODE') ?>
+
     <?php // echo $form->field($model, 'ITEM_NM') ?>
-
-    <?php // echo $form->field($model, 'ITEM_QTY') ?>
-
-    <?php // echo $form->field($model, 'SATUAN') ?>
-
-    <?php // echo $form->field($model, 'HARGA') ?>
-
-    <?php // echo $form->field($model, 'DISCOUNT') ?>
-
-    <?php // echo $form->field($model, 'DISCOUNT_STT') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

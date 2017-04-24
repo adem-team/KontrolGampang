@@ -71,14 +71,16 @@ class Store extends \yii\db\ActiveRecord
             'UPDATE_BY' => Yii::t('app', 'UPDATE BY'),
             'UPDATE_AT' => Yii::t('app', 'UPDATE AT'),
             'STATUS' => Yii::t('app', 'STATUS'),           
-			'OUTLET_CODE' => Yii::t('app', 'CODE'),
+			'OUTLET_CODE' => Yii::t('app', 'STORE CODE'),
 			'OUTLET_NM' => Yii::t('app', 'OUTLET NAME'),
             'ProvinsiNm' => Yii::t('app', 'PROVINSI'),
             'KotaNm' => Yii::t('app', 'KOTA'),
 			'ALAMAT' => Yii::t('app', 'ALAMAT'),
 			'PIC' => Yii::t('app', 'PIC'),
 			'TLP' => Yii::t('app', 'TLP'),
-			'FAX' => Yii::t('app', 'FAX')
+			'FAX' => Yii::t('app', 'FAX'),
+			'ttltems' => Yii::t('app', 'Total Items'),
+			'Expired' => Yii::t('app', 'Expired')
         ];
     }
 	
@@ -105,6 +107,11 @@ class Store extends \yii\db\ActiveRecord
 	{
 		return '30';
 	}
+	public function getTtltems()
+	{
+		return '12';
+	}
+	
 	//FILTER COUNT - PROVINCE PER USER.
 	public function getCountProvinsi()
 	{
@@ -121,14 +128,23 @@ class Store extends \yii\db\ActiveRecord
 			return '0';
 		}
 	}
-	//FILTER COUNT - KOTA PER USER.
+	
+	//FILTER COUNT - Kota PER USER.
 	public function getCountKota()
 	{
-		return $this->provinsiTbl!=''?$this->provinsiTbl->PROVINCE:'none';
+		if (!Yii::$app->user->isGuest){
+			$rslt='';
+			$cntStoreKota=Store::find()->select('LOCATE_CITY')->asArray()->where('FIND_IN_SET("'.Yii::$app->getUserOpt->user()['ACCESS_UNIX'].'", ACCESS_UNIX)')->all();
+			foreach($cntStoreKota as $row){
+				$i=$row['LOCATE_CITY'];
+				$rslt=$rslt!=''?$rslt.','.$i:$i;
+			}
+			return $rslt;
+		}else{
+			return '0';
+		}
 	}
-	
-	
-	
+		
 	public function fields()
 	{
 		return [			

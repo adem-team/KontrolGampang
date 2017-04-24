@@ -1,29 +1,27 @@
 <?php
-use yii\helpers\Html;
+use kartik\helpers\Html;
 use kartik\widgets\Select2;
 use kartik\grid\GridView;
-use kartik\widgets\FileInput;
-use kartik\widgets\ActiveForm;
-use kartik\tabs\TabsX;
-use kartik\date\DatePicker;
 use yii\helpers\ArrayHelper;
 use yii\widgets\Breadcrumbs;
+use kartik\widgets\Spinner;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
+use kartik\widgets\FileInput;
 use yii\helpers\Json;
 use yii\web\Response;
 use yii\widgets\Pjax;
+use kartik\widgets\ActiveForm;
+use kartik\tabs\TabsX;
+use kartik\date\DatePicker;
 use yii\web\View;
-use kartik\tree\TreeView;
-use kartik\tree\TreeViewInput;
-use common\models\Locate;
-use common\models\Product;
-use common\models\UserLogin;
 
-$this->title = Yii::t('app', 'ESM - Marketing Dashboard');      /* title pada header page */
+$this->sideCorp = 'PT. Efenbi Sukses Makmur';                       	/* Title Select Company pada header pasa sidemenu/menu samping kiri */
+$this->sideMenu = 'efenbi_rasasayang';                                     		/* kd_menu untuk list menu pada sidemenu, get from table of database */
+$this->title = Yii::t('app', 'ESM - Marketing Dashboard');              /* title pada header page */
 $this->params['breadcrumbs'][] = $this->title;  
-// $this->registerJs($this->render('modal_store.js'),View::POS_READY);
-// echo $this->render('modal_store'); //echo difinition
+$this->registerJs($this->render('modal_item.js'),View::POS_READY);
+echo $this->render('modal_item'); //echo difinition
 
 	$aryStt= [
 		  ['STATUS' => 0, 'STT_NM' => 'DISABLE'],		  
@@ -31,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	];	
 	$valStt = ArrayHelper::map($aryStt, 'STATUS', 'STT_NM');
 	
-	$bColor='rgba(52, 235, 138, 1)';
+	$bColor='rgba(52, 203, 255, 1)';
 	$gvAttributeItem=[
 		[
 			'class'=>'kartik\grid\SerialColumn',
@@ -41,41 +39,29 @@ $this->params['breadcrumbs'][] = $this->title;
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','30px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('center','30px',''),
 		],
+		//ITEM NAME
+		[	
+			'attribute'=>'IMG64',
+			'filterType'=>false,
+			'format'=>'raw', 
+			'value'=>function($model){
+				$image64 ='data:image/jpg;charset=utf-8;base64,'.$model->IMG64;
+				return $model->IMG64!=''?Html::img($image64,['width'=>'30','height'=>'30']):Html::img('data:image/jpg;charset=utf-8;base64,'.$model->noimage,['width'=>'30','height'=>'30']);
+			},
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>true,
+			'noWrap'=>false,
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','30px',$bColor),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('center','30px',''),
+			
+		],	
 		//KD_BARCODE
 		[
-			'attribute'=>'OUTLET_CODE',
+			'attribute'=>'ITEM_ID',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','80px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','80px',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','80px',''),
-			
-		],
-		//CABANG LOCATE 
-		[
-			'attribute'=>'LOCATE_PROVINCE',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','150px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','150px',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','150px',''),
-			
-		],		
-		//SABANG LOCATE SUB
-		[
-			'attribute'=>'LOCATE_CITY',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
@@ -85,55 +71,9 @@ $this->params['breadcrumbs'][] = $this->title;
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
 			
 		],		
-		//STORE NAME
+		//ITEM NAME
 		[
-			'attribute'=>'OUTLET_NM',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','200px',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','200px',''),
-			
-		],		
-		//STORE PIC.
-		[
-			'attribute'=>'PIC',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','150px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','150px',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','150px',''),
-			
-		],		
-		//STORE TLP.
-		[
-			'attribute'=>'TLP',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
-			
-		],		
-		//STORE ALAMAT
-		[
-			'attribute'=>'ALAMAT',
-			//'label'=>'Cutomer',
+			'attribute'=>'ITEM_NM',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
 			'hAlign'=>'right',
@@ -146,7 +86,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			
 		],		
 		//CREATE_AT
-		/* [
+		[
 			'attribute'=>'CREATE_AT',
 			'filterType'=>GridView::FILTER_DATE,
 			'filterWidgetOptions'=>[
@@ -184,9 +124,9 @@ $this->params['breadcrumbs'][] = $this->title;
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
 			
-		],	 */	
+		],		
 		//UPDATE_BY
-	/* 	[
+		[
 			'attribute'=>'UPDATE_BY',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
@@ -198,7 +138,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
 			
-		], */
+		],
 		//'STATUS',
 		[
 			'attribute'=>'STATUS',
@@ -233,7 +173,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'contentOptions'=>Yii::$app->gv->gvContainBody('center','50','')			
 		],
 		//ACTION
-		/* [
+		[
 			'class' => 'kartik\grid\ActionColumn',
 			'template' => '{view}{edit}{reminder}{deny}',
 			'header'=>'Action',
@@ -252,9 +192,12 @@ $this->params['breadcrumbs'][] = $this->title;
 				  return  tombolView($url, $model);
 				},
 				'edit' =>function($url, $model,$key){
-					//if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
+					if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
 						return  tombolReview($url, $model);
-					//}					
+					}					
+				},
+				'reminder' =>function($url, $model,$key){
+					return  tombolRemainder($url, $model);
 				},
 				'deny' =>function($url, $model,$key){
 					return  tombolDeny($url, $model);
@@ -263,11 +206,11 @@ $this->params['breadcrumbs'][] = $this->title;
 			],
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('center','10px',''),
-		] */
+		]
 	];
 
-	$gvStore=GridView::widget([
-		'id'=>'gv-store',
+	$gvItem=GridView::widget([
+		'id'=>'gv-item',
 		'dataProvider' => $dataProvider,
 		'filterModel' => $searchModel,
 		'columns'=>$gvAttributeItem,				
@@ -275,7 +218,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		'pjaxSettings'=>[
 			'options'=>[
 				'enablePushState'=>false,
-				'id'=>'gv-store',
+				'id'=>'gv-item',
 		    ],						  
 		],
 		'hover'=>true, //cursor select
@@ -290,14 +233,14 @@ $this->params['breadcrumbs'][] = $this->title;
 			''
 		],
 		'panel' => [
-			//'heading'=>false,
-			'heading'=>'
-				<span class="fa-stack fa-sm">
-				  <i class="fa fa-circle-thin fa-stack-2x" style="color:#25ca4f"></i>
-				  <i class="fa fa-cubes fa-stack-1x"></i>
-				</span> CABANG - OUTLET',  
+			'heading'=>false,
+			// 'heading'=>'
+				// <span class="fa-stack fa-sm">
+				  // <i class="fa fa-circle-thin fa-stack-2x" style="color:#25ca4f"></i>
+				  // <i class="fa fa-cubes fa-stack-1x"></i>
+				// </span> Items',  
 			'type'=>'info',
-			//'before'=> tombolCreate().' '.tombolRefresh().' '.tombolExportExcel(),
+			'before'=> tombolCreate().' '.tombolRefresh().' '.tombolExportExcel(),
 			'showFooter'=>false,
 		],
 		'floatOverflowContainer'=>true,
@@ -308,62 +251,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;">
 		<div class="row">
-			<?php //$gvStore?>
-			</br>
-			<?php
-				//print_r(Yii::$app->getUserOpt->UserStore())
-			?>
-			
-			</br>
-			<?php
-				/* echo TreeViewInput::widget([
-					// single query fetch to render the tree
-					// use the Product model you have in the previous step
-					'query' => Product::find()->addOrderBy('root, lft'), 
-					'headingOptions'=>['label'=>'Categories'],
-					'name' => 'kv-product', // input name
-					'value' => '1,2,3',     // values selected (comma separated for multiple select)
-					'asDropdown' => true,   // will render the tree input widget as a dropdown.
-					'multiple' => true,     // set to false if you do not need multiple selection
-					'fontAwesome' => true,  // render font awesome icons
-					'rootOptions' => [
-						'label'=>'<i class="fa fa-tree"></i>',  // custom root label
-						'class'=>'text-success'
-					], 
-					//'options'=>['disabled' => true],
-				]); */
-				// $test=Product::find()->addOrderBy('id', 'lvl');
-				// print_r($test);
-				echo \kartik\tree\TreeView::widget([
-					'id'=>'xx1',
-					'query' => Product::find()->addOrderBy('ACCESS_UNIX', 'ACCESS_LEVEL'),
-					//'query' => Product::find()->addOrderBy('root', 'lvl'),
-					'headingOptions' => ['label' => 'Categories'],
-					//'rootOptions' => ['label'=>'<span class="text-primary">Root</span>'],
-					'rootOptions' => [
-						'label'=>'<i class="fa fa-tree">PT.Trial</i>',  // custom root label
-						'class'=>'text-success'
-					], 
-					// 'nodeAddlViews' => [
-						// Module::VIEW_PART_1 => '@frontend/frontend/backend/sistem/views/view1',
-					// ]
-					'fontAwesome' => false,
-					'isAdmin' => true,
-					'displayValue' => 1,
-					'iconEditSettings'=> [
-						'show' => 'list',
-						'listData' => [
-							'folder' => 'Folder',
-							'file' => 'File',
-							'mobile' => 'Phone',
-							'bell' => 'Bell',
-						]
-					],
-					//'softDelete' => false,
-					// 'cacheSettings' => ['enableCache' => true],
-					
-				]); 
-			?>
+			<?=$gvItem?>
 		</div>
 	</div>
 </div>

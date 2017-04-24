@@ -1,19 +1,18 @@
 <?php
 
-namespace frontend\backend\master\controllers;
+namespace frontend\backend\accounting\controllers;
 
 use Yii;
+use frontend\backend\accounting\models\Item;
+use frontend\backend\accounting\models\ItemSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-use common\models\Store;
-use frontend\backend\master\models\Item;
-use frontend\backend\master\models\ItemSearch;
 /**
  * ItemController implements the CRUD actions for Item model.
  */
-class ItemController extends Controller
+class JurnalController extends Controller
 {
     /**
      * @inheritdoc
@@ -36,24 +35,13 @@ class ItemController extends Controller
      */
     public function actionIndex()
     {
-		$paramCari=Yii::$app->getRequest()->getQueryParam('outlet_code');
-		//Get 
-		$modelOutlet=Store::find()->where(['OUTLET_CODE'=>$paramCari])->one();//->andWhere('FIND_IN_SET("'.$this->ACCESS_UNIX.'", ACCESS_UNIX)')->one();
-		if($modelOutlet){
-		    $searchModel = new ItemSearch(['OUTLET_CODE'=>$paramCari]);
-			$dataProvider = $searchModel->search(Yii::$app->request->queryParams);			
-		
-		///OUTLET ID.
-		
+        $searchModel = new ItemSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
         return $this->render('index', [
-			'outletNm'=>$modelOutlet!=''?$modelOutlet->OUTLET_NM:'none',
-            'searchModel' => $searchModel!=''?$searchModel:false,
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-			'paramUrl'=>$paramCari,
         ]);
-		}else{
-			$this->redirect(array('/site/alert'));
-		}
     }
 
     /**

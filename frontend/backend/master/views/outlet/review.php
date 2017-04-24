@@ -9,6 +9,9 @@ use kartik\widgets\FileInput;
 use kartik\widgets\ActiveField;
 use kartik\widgets\ActiveForm;
 
+use common\models\LocateProvince;
+use common\models\LocateKota;
+
 	//Difinition Status.
 	$aryStt= [
 	  ['STATUS' => 0, 'STT_NM' => 'Trial'],		  
@@ -43,7 +46,16 @@ use kartik\widgets\ActiveForm;
 		}
 	};	
 	
-	$attSroreData=[	
+	//Provinsi - Filter Map.
+	$aryProvinsi = ArrayHelper::map(LocateProvince::find()->all(), 'PROVINCE_ID', 'PROVINCE');
+	
+	//Provinsi - view result value.
+	$valProvinsi = LocateProvince::find()->where(['PROVINCE_ID'=>$model->LOCATE_PROVINCE])->one();
+	
+	//Kota - view result value.
+	$valKota = LocateKota::find()->where(['CITY_ID'=>$model->LOCATE_CITY])->one();
+	
+	$attReviewSroreData=[	
 		[
 			'attribute' =>'OUTLET_NM',
 			'type'=>DetailView::INPUT_TEXTAREA,
@@ -62,25 +74,27 @@ use kartik\widgets\ActiveForm;
 		],
 		
 		[		
-			'attribute' =>'ProvinsiNm',			
+			'attribute' =>'LOCATE_PROVINCE',			
+			'value'=>$valProvinsi->PROVINCE,
 			'format'=>'raw',
 			'type'=>DetailView::INPUT_SELECT2,
 			'widgetOptions'=>[
-				//'data'=>$aryLocate,
-				'options'=>['id'=>'locate-view-store-id','placeholder'=>'Select ...'],
+				'data'=>$aryProvinsi,
+				'options'=>['id'=>'provinsi-review-store-id','placeholder'=>'Select ...'],
 				'pluginOptions'=>['allowClear'=>true],
 			],	
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 		],
 		[	
-			'attribute' =>'KotaNm',			
+			'attribute' =>'LOCATE_CITY',	
+			'value'=>$valKota->CITY_NAME,
 			'format'=>'raw',
 			'type'=>DetailView::INPUT_DEPDROP,
 			'widgetOptions'=>[
-				'options'=>['id'=>'locate-viewsub-store-id','placeholder'=>'Select ...'],
+				'options'=>['id'=>'locate-review-kota-store-id','placeholder'=>'Select ...'],
 				'pluginOptions' => [
-					'depends'=>['locate-view-store-id'],
-					'url'=>Url::to(['/efenbi-rasasayang/store/locate-sub']),
+					'depends'=>['provinsi-review-store-id'],
+					'url'=>Url::to(['/master/outlet/kota-sub']),
 					//'initialize'=>true,
 					'loadingText' => 'Loading data ...',
 				],
@@ -105,7 +119,7 @@ use kartik\widgets\ActiveForm;
 		]		
 	];
 	
-	$attSroreInfo=[
+	$attReviewSroreInfo=[
 		[
 			'attribute' =>'OUTLET_CODE',
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
@@ -176,31 +190,30 @@ use kartik\widgets\ActiveForm;
 		
 	
 	
-	$dvStoreData=DetailView::widget([
-		'id'=>'dv-store-data',
+	$dvReviewStoreData=DetailView::widget([
+		'id'=>'dv-review-store-data',
 		'model' => $model,
-		'attributes'=>$attSroreData,
+		'attributes'=>$attReviewSroreData,
 		'condensed'=>true,
 		'hover'=>true,
 		'panel'=>[
-			'heading'=>'<b>Outlet Data </b>',
+			'heading'=>'Store Data',
 			'type'=>DetailView::TYPE_INFO,
 		],
 		'mode'=>DetailView::MODE_VIEW,
-		//'buttons1'=>'{update}',
-		'buttons1'=>'',
+		'buttons1'=>'{update}',
 		'buttons2'=>'{view}{save}',		
-		/* 'saveOptions'=>[ 
+		'saveOptions'=>[ 
 			'id' =>'editBtn1',
-			'value'=>'/marketing/sales-promo/review?id='.$model->ID,
+			'value'=>'/master/outlet/review?id='.$model->ID,
 			'params' => ['custom_param' => true],
-		],	 */	
+		],	
 	]);
 	
-	$dvStoreInfo=DetailView::widget([
-		'id'=>'dv-store-info',
+	$dvReviewStoreInfo=DetailView::widget([
+		'id'=>'dv-review-store-info',
 		'model' => $model,
-		'attributes'=>$attSroreInfo,
+		'attributes'=>$attReviewSroreInfo,
 		'condensed'=>true,
 		'hover'=>true,
 		'panel'=>[
@@ -218,8 +231,8 @@ use kartik\widgets\ActiveForm;
 <div style="height:100%;font-family: verdana, arial, sans-serif ;font-size: 8pt">
 	<div class="row" >
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<?=$dvStoreData ?>
-			<?=$dvStoreInfo ?>			
+			<?=$dvReviewStoreData ?>
+			<?=$dvReviewStoreInfo ?>			
 		</div>
 	</div>
 </div>

@@ -7,6 +7,8 @@ use yii\helpers\ArrayHelper;
 use yii\web\Request;
 use yii\web\View;
 use ptrnov\fusionchart\Chart;
+use frontend\assets\AppAssetBackendBorder;
+AppAssetBackendBorder::register($this);
 // $xaxis=0;
 // $canvasEndY=200;
 
@@ -216,7 +218,3 @@ $this->registerJs("
 	</div>
 	
 </div>
-
-<?php
-
-?>
