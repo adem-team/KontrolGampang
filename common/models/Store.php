@@ -71,14 +71,16 @@ class Store extends \yii\db\ActiveRecord
             'UPDATE_BY' => Yii::t('app', 'UPDATE BY'),
             'UPDATE_AT' => Yii::t('app', 'UPDATE AT'),
             'STATUS' => Yii::t('app', 'STATUS'),           
-			'OUTLET_CODE' => Yii::t('app', 'CODE'),
+			'OUTLET_CODE' => Yii::t('app', 'STORE CODE'),
 			'OUTLET_NM' => Yii::t('app', 'OUTLET NAME'),
             'ProvinsiNm' => Yii::t('app', 'PROVINSI'),
             'KotaNm' => Yii::t('app', 'KOTA'),
 			'ALAMAT' => Yii::t('app', 'ALAMAT'),
 			'PIC' => Yii::t('app', 'PIC'),
 			'TLP' => Yii::t('app', 'TLP'),
-			'FAX' => Yii::t('app', 'FAX')
+			'FAX' => Yii::t('app', 'FAX'),
+			'ttltems' => Yii::t('app', 'Total Items'),
+			'Expired' => Yii::t('app', 'Expired')
         ];
     }
 	
@@ -104,6 +106,10 @@ class Store extends \yii\db\ActiveRecord
 	public function getExpired()
 	{
 		return '30';
+	}
+	public function getTtltems()
+	{
+		return '12';
 	}
 	//FILTER COUNT - PROVINCE PER USER.
 	public function getCountProvinsi()

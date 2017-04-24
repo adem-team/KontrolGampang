@@ -62,7 +62,7 @@ use yii\helpers\Url;
 	}
 	
 	/*
-	 * Row Button - VIEW.
+	 * Button - VIEW.
 	*/
 	function tombolView($url, $model){
 		// if(getPermission()){
@@ -171,10 +171,7 @@ use yii\helpers\Url;
 			return $content;
 		//}
 	}
-	
-	/**
-	 * ITEM HEAD - Button => Link Button Refresh.
-	**/
+	//Link Button Refresh 
 	function tombolRefresh(){
 		$title = Yii::t('app', 'Refresh');
 		$url =  Url::toRoute(['/efenbi-rasasayang/item']);
@@ -188,9 +185,7 @@ use yii\helpers\Url;
 		return $content = Html::a($label,$url,$options);
 	}
 	
-	/**
-	 * ITEM HEAD - Button => Link Back To Store
-	**/
+	//Link Button Refresh 
 	function tombolBack(){
 		$title = Yii::t('app', 'Back');
 		$url =  Url::toRoute(['/master/outlet']);
@@ -203,33 +198,13 @@ use yii\helpers\Url;
 				<span class="fa-stack fa-sm text-left">
 				  <i class="fa fa-circle fa-stack-2x" style="color:#ffffff"></i>
 				  <i class="fa fa-history fa-stack-1x style="color:#ffffff"></i>
-				</span>		
+				</span>
+		
 		';
 		$label = $icon . ' ' . $title;
+
 		return $content = Html::a($label,$url,$options);
 	}
-	
-	/**
-	 * ITEM HEAD - Button => Link Item-FormulaHarga.
-	**/
-	function tombolFHarga($paramUrl){
-		$title = Yii::t('app', 'Formula Harga');
-		$url =  Url::toRoute(['/master/formula-harga','outlet_code'=>$paramUrl]);
-		$options = ['id'=>'item-harga-id',
-				  'data-pjax' => 0,
-				  'class'=>"btn btn-default btn-xs",
-				 // 'style'=>'margin-left:50px'
-				];
-		$icon = '
-				<span class="fa-stack fa-sm text-left">
-				  <i class="fa fa-circle fa-stack-2x" style="color:#ffffff"></i>
-				  <i class="fa fa-history fa-stack-1x style="color:#ffffff"></i>
-				</span>		
-		';
-		$label = $icon . ' ' . $title;
-		return $content = Html::a($label,$url,$options);
-	}
-	
 	
 	/*
 	 * Button - EXPORT EXCEL.

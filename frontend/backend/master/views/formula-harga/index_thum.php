@@ -1,5 +1,5 @@
 <?php
-use yii\helpers\Html;
+use kartik\helpers\Html;
 use kartik\widgets\Select2;
 use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;
@@ -15,19 +15,11 @@ use kartik\widgets\ActiveForm;
 use kartik\tabs\TabsX;
 use kartik\date\DatePicker;
 use yii\web\View;
-$this->registerCss("
-	:link {
-		color: #fdfdfd;
-	}
-	/* mouse over link */
-	a:hover {
-		color: #5a96e7;
-	}
-	/* selected link */
-	a:active {
-		color: blue;
-	}
-");
+
+$this->sideCorp = 'PT. Efenbi Sukses Makmur';                       	/* Title Select Company pada header pasa sidemenu/menu samping kiri */
+$this->sideMenu = 'efenbi_rasasayang';                                     		/* kd_menu untuk list menu pada sidemenu, get from table of database */
+$this->title = Yii::t('app', 'ESM - Marketing Dashboard');              /* title pada header page */
+$this->params['breadcrumbs'][] = $this->title;  
 $this->registerJs($this->render('modal_item.js'),View::POS_READY);
 echo $this->render('modal_item'); //echo difinition
 
@@ -37,39 +29,35 @@ echo $this->render('modal_item'); //echo difinition
 	];	
 	$valStt = ArrayHelper::map($aryStt, 'STATUS', 'STT_NM');
 	
-	$bColor='rgba(87,114,111, 1)';
-	$pageNm='<span class="fa-stack fa-xs text-right">				  
-				  <i class="fa fa-share fa-1x"></i>
-				</span> Outlet '.$outletNm.'
-	';
-	
+	$bColor='rgba(52, 203, 255, 1)';
 	$gvAttributeItem=[
 		[
 			'class'=>'kartik\grid\SerialColumn',
 			'contentOptions'=>['class'=>'kartik-sheet-style'],
 			'width'=>'10px',
 			'header'=>'No.',
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','30px',$bColor,'#ffffff'),
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','30px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('center','30px',''),
 		],
-		//ITEM IMAGE
+		//ITEM NAME
 		[	
-			'attribute'=>'itemsImage64',
+			'attribute'=>'IMG64',
 			'filterType'=>false,
 			'format'=>'raw', 
 			'value'=>function($model){
-				return Html::img('data:image/jpg;charset=utf-8;base64,'.$model->itemsImage64,['width'=>'30','height'=>'30']);
-			}, 
+				$image64 ='data:image/jpg;charset=utf-8;base64,'.$model->IMG64;
+				return $model->IMG64!=''?Html::img($image64,['width'=>'30','height'=>'30']):Html::img('data:image/jpg;charset=utf-8;base64,'.$model->noimage,['width'=>'30','height'=>'30']);
+			},
 			'hAlign'=>'right',
 			'vAlign'=>'middle',
 			'mergeHeader'=>true,
 			'noWrap'=>false,
 			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','30px',$bColor,'#ffffff'),
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','30px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('center','30px',''),
 			
 		],	
-		//ITEM_ID
+		//KD_BARCODE
 		[
 			'attribute'=>'ITEM_ID',
 			'filterType'=>true,
@@ -86,7 +74,6 @@ echo $this->render('modal_item'); //echo difinition
 		//ITEM NAME
 		[
 			'attribute'=>'ITEM_NM',
-			//'label'=>'Cutomer',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
 			'hAlign'=>'right',
@@ -98,19 +85,58 @@ echo $this->render('modal_item'); //echo difinition
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','200px',''),
 			
 		],		
-		//SATUAN
+		//CREATE_AT
 		[
-			'attribute'=>'SATUAN',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
+			'attribute'=>'CREATE_AT',
+			'filterType'=>GridView::FILTER_DATE,
+			'filterWidgetOptions'=>[
+				'pluginOptions' =>Yii::$app->gv->gvPliginDate(),
+				'layout'=>'{picker}{remove}{input}'
+			],
+			'filter'=>true,
+			'value'=>function($model){
+				if ($model->CREATE_AT!=''){
+					return $model->CREATE_AT;
+				}else{
+					return '';
+				}
+			},
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
 			'hAlign'=>'right',
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
 			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
+			
+		],
+		//CREATE_BY
+		[
+			'attribute'=>'CREATE_BY',
+			'filterType'=>true,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
+			
+		],		
+		//UPDATE_BY
+		[
+			'attribute'=>'UPDATE_BY',
+			'filterType'=>true,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
 			
 		],
 		//'STATUS',
@@ -145,39 +171,42 @@ echo $this->render('modal_item'); //echo difinition
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('center','50','')			
-		],	
+		],
 		//ACTION
 		[
 			'class' => 'kartik\grid\ActionColumn',
 			'template' => '{view}{edit}{reminder}{deny}',
-			'header'=>'ACTION',
+			'header'=>'Action',
 			'dropdown' => true,
 			'dropdownOptions'=>[
 				'class'=>'pull-right dropdown',
 				'style'=>'width:60px;background-color:#E6E6FA'				
 			],
 			'dropdownButton'=>[
-				'label'=>'ACTION',
+				'label'=>'Action',
 				'class'=>'btn btn-default btn-xs',
 				'style'=>'width:100%;'		
 			],
 			'buttons' => [
 				'view' =>function ($url, $model){
-				  //return  tombolView($url, $model);
+				  return  tombolView($url, $model);
 				},
 				'edit' =>function($url, $model,$key){
-					//if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
-						//return  tombolReview($url, $model);
-					//}					
+					if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
+						return  tombolReview($url, $model);
+					}					
+				},
+				'reminder' =>function($url, $model,$key){
+					return  tombolRemainder($url, $model);
 				},
 				'deny' =>function($url, $model,$key){
-					//return  tombolDeny($url, $model);
+					return  tombolDeny($url, $model);
 				}
 
 			],
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColor,'#ffffff'),
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('center','10px',''),
-		]		
+		]
 	];
 
 	$gvItem=GridView::widget([
@@ -200,21 +229,25 @@ echo $this->render('modal_item'); //echo difinition
 		'autoXlFormat'=>true,
 		'export' => false,
 		'panel'=>[''],
-		'toolbar' => false,
+		'toolbar' => [
+			''
+		],
 		'panel' => [
-			//'heading'=>false,
-			//'heading'=>tombolBack().'<div style="float:right"> '.tombolCreate().' '.tombolExportExcel().'</div>',  
-			'heading'=>tombolBack().' '.tombolCreate().' '.tombolExportExcel($paramUrl).' '.tombolFHarga($paramUrl).' ' .$pageNm,  
+			'heading'=>false,
+			// 'heading'=>'
+				// <span class="fa-stack fa-sm">
+				  // <i class="fa fa-circle-thin fa-stack-2x" style="color:#25ca4f"></i>
+				  // <i class="fa fa-cubes fa-stack-1x"></i>
+				// </span> Items',  
 			'type'=>'info',
-			//'before'=> tombolBack().'<div style="float:right"> '.tombolCreate().' '.tombolExportExcel().'</div>',
-			'before'=>false,
+			'before'=> tombolCreate().' '.tombolRefresh().' '.tombolExportExcel(),
 			'showFooter'=>false,
 		],
-		// 'floatOverflowContainer'=>true,
-		// 'floatHeader'=>true,
-	]); 	
+		'floatOverflowContainer'=>true,
+		'floatHeader'=>true,
+	]); 
+	
 ?>
-
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;">
 		<div class="row">
@@ -222,4 +255,3 @@ echo $this->render('modal_item'); //echo difinition
 		</div>
 	</div>
 </div>
-

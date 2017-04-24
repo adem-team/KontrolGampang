@@ -60,7 +60,7 @@ class ItemImage extends \yii\db\ActiveRecord
             'ACCESS_UNIX' => Yii::t('app', 'Access Unix'),
             'ITEM_ID' => Yii::t('app', 'Item  ID'),
             'OUTLET_CODE' => Yii::t('app', 'Outlet  Code'),
-            'IMG64' => Yii::t('app', 'Img64'),
+            'IMG64' => Yii::t('app', 'IMAGE'),
             'IMGNM' => Yii::t('app', 'Imgnm'),
         ];
     }

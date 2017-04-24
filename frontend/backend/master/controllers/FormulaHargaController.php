@@ -13,7 +13,7 @@ use frontend\backend\master\models\ItemSearch;
 /**
  * ItemController implements the CRUD actions for Item model.
  */
-class ItemController extends Controller
+class FormulaHargaController extends Controller
 {
     /**
      * @inheritdoc
@@ -49,7 +49,6 @@ class ItemController extends Controller
 			'outletNm'=>$modelOutlet!=''?$modelOutlet->OUTLET_NM:'none',
             'searchModel' => $searchModel!=''?$searchModel:false,
             'dataProvider' => $dataProvider,
-			'paramUrl'=>$paramCari,
         ]);
 		}else{
 			$this->redirect(array('/site/alert'));

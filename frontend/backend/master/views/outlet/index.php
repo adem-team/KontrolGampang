@@ -329,7 +329,7 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 				},
 				'payment' =>function($url, $model,$key){
 					//if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
-						return  tombolPayment($url, $model);
+						return  tombolPayment($model);
 					//}					
 				}
 			], 
