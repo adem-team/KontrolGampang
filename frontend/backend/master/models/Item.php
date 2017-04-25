@@ -22,7 +22,7 @@ class Item extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ACCESS_UNIX','CREATE_AT', 'UPDATE_AT'], 'safe'],
+            [['ACCESS_UNIX','DEFAULT_HARGA','DEFAULT_STOCK','CREATE_AT', 'UPDATE_AT'], 'safe'],
             [['STATUS'], 'integer'],
             [['CREATE_BY', 'UPDATE_BY', 'ITEM_ID', 'OUTLET_CODE'], 'string', 'max' => 50],
             [['ITEM_NM','SATUAN'], 'string', 'max' => 100],
@@ -46,6 +46,8 @@ class Item extends \yii\db\ActiveRecord
             'OUTLET_CODE' => Yii::t('app', 'OUTLET.CODE'),
             'ITEM_NM' => Yii::t('app', 'ITEM NAME'),
             'SATUAN' => Yii::t('app', 'SATUAN'),
+            'DEFAULT_STOCK' => Yii::t('app', 'STOCK'),
+            'DEFAULT_HARGA' => Yii::t('app', 'HARGA'),
             'itemsImage64' => Yii::t('app', 'IMAGE'),
         ];
     }

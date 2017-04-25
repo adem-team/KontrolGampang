@@ -42,7 +42,7 @@ class Item extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ACCESS_UNIX','CREATE_AT', 'UPDATE_AT'], 'safe'],
+            [['ACCESS_UNIX','DEFAULT_HARGA','DEFAULT_STOCK','CREATE_AT', 'UPDATE_AT'], 'safe'],
             [['STATUS'], 'integer'],
             [['CREATE_BY', 'UPDATE_BY', 'ITEM_ID', 'OUTLET_CODE'], 'string', 'max' => 50],
             [['ITEM_NM','SATUAN'], 'string', 'max' => 100],
@@ -66,6 +66,8 @@ class Item extends \yii\db\ActiveRecord
             'OUTLET_CODE' => Yii::t('app', 'OUTLET.CODE'),
             'ITEM_NM' => Yii::t('app', 'ITEM NAME'),
             'SATUAN' => Yii::t('app', 'SATUAN'),
+            'DEFAULT_STOCK' => Yii::t('app', 'STOCK'),
+            'DEFAULT_HARGA' => Yii::t('app', 'HARGA'),
         ];
     }
 	
@@ -87,12 +89,12 @@ class Item extends \yii\db\ActiveRecord
 			'UPDATE_AT'=>function($model){
 				return $model->UPDATE_AT;
 			},	
-			'DEFAULT_HARGA'=>function(){
+			'DEFAULT_HARGA'=>function($model){
 				return $this->DEFAULT_HARGA;
 				//HARGA DARI TABEL ITEM (KONDISI HARGA TODAK PAKAI FORMULA).
 			},
-			'DAFAULT_STOCK'=>function(){
-				return '100';
+			'DEFAULT_STOCK'=>function($model){
+				return $this->DEFAULT_STOCK; //'100';
 				//HARGA DARI TABEL ITEM (KONDISI HARGA TODAK PAKAI FORMULA).
 			},
 			'STOCK'=>function(){

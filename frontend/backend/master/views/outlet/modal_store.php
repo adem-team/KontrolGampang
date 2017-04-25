@@ -15,6 +15,7 @@ $this->registerCss("
 	.modal-content { 
 		border-radius: 5px;
 	}
+	
 ");
 
 /**
