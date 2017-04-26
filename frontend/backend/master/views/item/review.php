@@ -3,6 +3,7 @@ use kartik\helpers\Html;
 use kartik\detail\DetailView;
 use kartik\widgets\DepDrop;
 use yii\helpers\Url;
+use yii\bootstrap\Modal;
 use kartik\widgets\Select2;
 use yii\helpers\ArrayHelper;
 use kartik\widgets\FileInput;
@@ -15,7 +16,7 @@ use kartik\widgets\ActiveForm;
 	  ['STATUS' => 1, 'STT_NM' => 'Enable']
 	];
 	$valStt = ArrayHelper::map($aryStt, 'STATUS', 'STT_NM');
-	
+	$valSatuan = ArrayHelper::map($model->satuanFilter, 'SATUAN_NM', 'SATUAN_NM');
 	//Result Status value.
 	function sttMsg($stt){
 		if($stt==0){
@@ -36,7 +37,7 @@ use kartik\widgets\ActiveForm;
 		}
 	};	
 	
-	$attItemViewData=[	
+	$attItemReviewData=[	
 		[
 			'attribute' =>'ITEM_NM',
 			'type'=>DetailView::INPUT_TEXTAREA,
@@ -50,22 +51,23 @@ use kartik\widgets\ActiveForm;
 			'format'=>'raw',
 			'type'=>DetailView::INPUT_SELECT2,
 			'widgetOptions'=>[
-				//'data'=>$aryLocate,
-				'options'=>['id'=>'locate-view-store-id','placeholder'=>'Select ...'],
+				'data'=>$valSatuan,
+				'options'=>['id'=>'provinsi-review-store-id','placeholder'=>'Select ...'],
 				'pluginOptions'=>['allowClear'=>true],
 			],	
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
+			
 		],
 		[
 			'attribute' =>'DEFAULT_STOCK',
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
-			'displayOnly'=>true,	
+			'displayOnly'=>false,	
 			'format'=>'raw', 
 		],
 		[
 			'attribute' =>'DEFAULT_HARGA',
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
-			'displayOnly'=>true,	
+			'displayOnly'=>false,	
 			'format'=>'raw', 
 		],
 		[
@@ -83,7 +85,7 @@ use kartik\widgets\ActiveForm;
 		]		
 	];
 	
-	$attItemViewInfo=[
+	$attItemReviewInfo=[
 		[
 			'attribute' =>'OUTLET_CODE',
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
@@ -132,75 +134,33 @@ use kartik\widgets\ActiveForm;
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%']
 		]		
 	];
-	
-	$attributeImage = [		
-		[
-			'attribute' =>'itemsImage64',
-			'label'=>false,
-			'value'=>Html::img('data:image/jpg;charset=utf-8;base64,'.$model->itemsImage64,['width'=>'100','height'=>'120']),
-			'format'=>['raw',['width'=>'100','height'=>'170']],
-			'type' => DetailView::INPUT_FILEINPUT,
-			'widgetOptions'=>[
-				'pluginOptions' => [
-					'showPreview' => true,
-					'showCaption' => false,
-					'showRemove' => false,
-					'showUpload' => false
-				],
-
-			],
-			//'labelColOptions' => ['style' => 'text-align:right;width: 3%']
-			//'inputWidth'=>'100%',
-			//'inputContainer' => ['class'=>'col-lg-5'],
-		],
-	];
-	
-	$dvItemViewImage=DetailView::widget([
-			'id'=>'dv-items-view-image',
-			'model' => $model,
-			'attributes'=>$attributeImage,
-			'condensed'=>true,
-			'hover'=>true,
-			'panel'=>[
-				'heading'=>false,
-				'type'=>DetailView::TYPE_INFO,
-			],
-			'mode'=>DetailView::MODE_VIEW,
-			'buttons1'=>'{update}',
-			'buttons2'=>'{view}{save}',		
-			'saveOptions'=>[ 
-				'id' =>'editBtn2',
-				'value'=>'/efenbi-rasasayang/item/view?id='.$model->ITEM_ID,
-				'params' => ['custom_param' => true],
-			],	
-		]);
+		
 	
 	
-	$dvItemDataView=DetailView::widget([
-		'id'=>'dv-item-data-view',
+	$dvItemDataReview=DetailView::widget([
+		'id'=>'dv-item-data-review',
 		'model' => $model,
-		'attributes'=>$attItemViewData,
+		'attributes'=>$attItemReviewData,
 		'condensed'=>true,
 		'hover'=>true,
 		'panel'=>[
-			'heading'=>'<b>Item Data </b>',
+			'heading'=>'<b>Item Data </b>'.' '.tombolSatuan($model),
 			'type'=>DetailView::TYPE_INFO,
 		],
 		'mode'=>DetailView::MODE_VIEW,
-		//'buttons1'=>'{update}',
-		'buttons1'=>'',
+		'buttons1'=>'{update}',
 		'buttons2'=>'{view}{save}',		
-		/* 'saveOptions'=>[ 
+		'saveOptions'=>[ 
 			'id' =>'editBtn1',
-			'value'=>'/marketing/sales-promo/review?id='.$model->ID,
+			'value'=>'/master/item/review?id='.$model->ID,
 			'params' => ['custom_param' => true],
-		],	 */	
+		],	 
 	]);
 	
-	$dvItemInfoView=DetailView::widget([
-		'id'=>'dv-item-info-view',
+	$dvItemInfoReview=DetailView::widget([
+		'id'=>'dv-item-info-review',
 		'model' => $model,
-		'attributes'=>$attItemViewInfo,
+		'attributes'=>$attItemReviewInfo,
 		'condensed'=>true,
 		'hover'=>true,
 		'panel'=>[
@@ -218,15 +178,36 @@ use kartik\widgets\ActiveForm;
 <div style="height:100%;font-family: verdana, arial, sans-serif ;font-size: 8pt">
 	<div class="row" >
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
-				<?=$dvItemInfoView ?>		
-			</div>
-			<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-				<?=$dvItemViewImage ?>
-			</div>
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<?=$dvItemDataView ?>			
+			<?=$dvItemInfoReview ?>
+			
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<?=$dvItemDataReview ?>			
 		</div>
 	</div>
 </div>
+<?php
+
+	function tombolSatuan($data){
+		$title1 = Yii::t('app',' Add Satuan');
+		$options1 = [
+			'value'=>url::to(['/master/item/create-satuan','id'=>$data->OUTLET_CODE]),
+			'id'=>'item-button-satuan-add',					
+			'class'=>"btn btn-info btn-xs",      
+			'style'=>['text-align'=>'left','width'=>'100px', 'height'=>'30px','border'=> 1],
+		];
+		$icon1 = '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle fa-stack-2x " style="color:#ffffff"></i>
+				<i class="fa fa-eye fa-stack-1x" style="color:#000000"></i>
+			</span>
+		';      
+		$label1 = $icon1 . '  ' . $title1;
+		$content = Html::button($label1,$options1);		
+		//return '<li>'.$content.'</li>';
+		return $content;
+	}	
+?>
+
 

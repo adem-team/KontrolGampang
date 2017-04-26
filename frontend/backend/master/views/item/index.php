@@ -160,16 +160,15 @@ echo $this->render('modal_item'); //echo difinition
 			'format' => 'raw',	
 			'value'=>function($model){
 				 if ($model->STATUS == 0) {
-				  return Html::a('
-					<span class="fa-stack fa-xl">
-					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
-					  <i class="fa fa-close fa-stack-1x" style="color:#0f39ab"></i>
-					</span>','',['title'=>'Running']);
+				   return Html::decode('<span class="fa-stack fa-xl">
+							  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+							  <i class="fa fa-remove fa-stack-1x" style="color:#ee0b0b"></i>
+							</span> Disable','',['title'=>'Disable']);
 				} else if ($model->STATUS == 1) {
-				  return Html::a('<span class="fa-stack fa-xl">
-					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
-					  <i class="fa fa-check fa-stack-1x" style="color:#ee0b0b"></i>
-					</span>','',['title'=>'Finish']);
+					return Html::decode('<span class="fa-stack fa-xl">
+							  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+							  <i class="fa fa-check fa-stack-1x" style="color:#01190d"></i>
+							</span> Enable','',['title'=>'Enable']);
 				}
 			},
 			//gvContainHeader($align,$width,$bColor)
@@ -193,11 +192,11 @@ echo $this->render('modal_item'); //echo difinition
 			],
 			'buttons' => [
 				'view' =>function ($url, $model){
-				  //return  tombolView($url, $model);
+				  return  tombolView($url, $model);
 				},
 				'edit' =>function($url, $model,$key){
 					//if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
-						//return  tombolReview($url, $model);
+						return  tombolReview($url, $model);
 					//}					
 				},
 				'deny' =>function($url, $model,$key){

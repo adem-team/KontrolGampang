@@ -195,7 +195,7 @@ $this->registerCss("
 			// if(getPermission()->BTN_VIEW==1 OR getPermission()->BTN_CREATE==1){
 				$title1 = Yii::t('app',' View');
 				$options1 = [
-					'value'=>url::to(['/efenbi-rasasayang/item/view','id'=>$model->ID]),
+					'value'=>url::to(['/master/item/view','id'=>$model->ID]),
 					'id'=>'item-button-view',
 					'class'=>"btn btn-default btn-xs",      
 					'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
@@ -208,7 +208,7 @@ $this->registerCss("
 				';      
 				$label1 = $icon1 . '  ' . $title1;
 				$content = Html::button($label1,$options1);		
-				return $content;
+				return '<li>'.$content.'</li>';
 			// }
 		// }
 	}
@@ -222,7 +222,7 @@ $this->registerCss("
 			// if(getPermission()->BTN_REVIEW==1){
 				$title1 = Yii::t('app',' Review');
 				$options1 = [
-					'value'=>url::to(['/efenbi-rasasayang/item/review','id'=>$model->ID]),
+					'value'=>url::to(['/master/item/review','id'=>$model->ID]),
 					'id'=>'item-button-review',
 					'class'=>"btn btn-default btn-xs",      
 					'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
@@ -236,38 +236,11 @@ $this->registerCss("
 				';      
 				$label1 = $icon1 . '  ' . $title1;
 				$content = Html::button($label1,$options1);		
-				return $content;
+				return '<li>'.$content.'</li>';
 			// }
 		// }
 	}
 	
-	/*
-	 * Button - REMAINDER.
-	 * BTN_PROCESS1.
-	*/	
-	function tombolRemainder($url, $model){
-		// if(getPermission()){
-			// if(getPermission()->BTN_PROCESS1==1){
-				$title1 = Yii::t('app',' Remainder');
-				$url = url::to(['/efenbi-rasasayang/item/remainder','id'=>$model->ID]);
-				$options1 = [
-					'value'=>$url,
-					'id'=>'item-button-remainder',
-					'class'=>"btn btn-default btn-xs",      
-					'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
-				];
-				$icon1 = '
-					<span class="fa-stack fa-xs">																	
-						<i class="fa fa-circle fa-stack-2x " style="color:'.bgIconColor().'"></i>
-						<i class="fa fa-clock-o fa-stack-1x" style="color:#fbfbfb"></i>
-					</span>
-				';      
-				$label1 = $icon1 . '  ' . $title1;
-				$content = Html::button($label1,$options1);		
-				 return $content;
-			// }
-		// }
-	}
 	
 	/*
 	 * Button - DENY.
@@ -325,6 +298,10 @@ $this->registerCss("
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
 		],
+		'clientOptions' => [
+			'backdrop' => FALSE, //Static=disable, false=enable
+			'keyboard' => TRUE,	// Kyboard 
+		]
 	]);
 	echo "<div id='item-modal-content-create'></div>";
 	Modal::end();
@@ -340,10 +317,14 @@ $this->registerCss("
 				<i class="fa fa-eye fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> VIEW ITEM</b>
 		',		
-		'size' => Modal::SIZE_LARGE,
+		'size' => 'modal-dm',
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
 		],
+		'clientOptions' => [
+			'backdrop' => FALSE, //Static=disable, false=enable
+			'keyboard' => TRUE,	// Kyboard 
+		]
 	]);
 	echo "<div id='item-modal-content-view'></div>";
 	Modal::end();
@@ -359,33 +340,19 @@ $this->registerCss("
 				<i class="fa fa-edit fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> REVIEW ITEMS</b>
 		',		
-		'size' => Modal::SIZE_LARGE,
+		'size' =>'modal-dm',
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
 		],
+		'clientOptions' => [
+			'backdrop' => FALSE, //Static=disable, false=enable
+			'keyboard' => TRUE,	// Kyboard 
+		]
 	]);
 	echo "<div id='item-modal-content-review'></div>";
 	Modal::end();
 	
-	/*
-	 * item - Remainder.
-	*/
-	Modal::begin([
-		'id' => 'item-modal-remainder',
-		'header' => '
-			<span class="fa-stack fa-xs">																	
-				<i class="fa fa-circle fa-stack-2x " style="color:'.bgIconColor().'"></i>
-				<i class="fa fa-clock-o fa-stack-1x" style="color:#fbfbfb"></i>
-			</span><b> REMAINDER SETTING</b>
-		',		
-		'size' => Modal::SIZE_LARGE,
-		'headerOptions'=>[
-			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
-		],
-	]);
-	echo "<div id='item-modal-content-remainder'></div>";
-	Modal::end();
-	
+		
 	/*
 	 * item - EXPORT EXCEL.
 	*/
@@ -402,7 +369,32 @@ $this->registerCss("
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
 		],
+		'clientOptions' => [
+			'backdrop' => FALSE, //Static=disable, false=enable
+			'keyboard' => TRUE,	// Kyboard 
+		]
 	]);
 	echo "<div id='item-modal-content-export-excel'></div>";
+	Modal::end();
+	
+	Modal::begin([
+		'id' => 'item-modal-satuan-add',		
+		'header' => '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle fa-stack-2x " style="color:#1eaac2"></i>
+				<i class="fa fa-edit fa-stack-1x" style="color:#fbfbfb"></i>
+			</span><b> ADD SATUAN</b>
+		',//. '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>',		
+		'size' =>Modal::SIZE_SMALL,		
+		'headerOptions'=>[
+			'style'=> 'border-radius:5px; background-color:rgba(239, 205, 93, 0.48)',
+			'data-focus-on'=>'input:first',
+		],
+		'clientOptions' => [
+			'backdrop' => FALSE, //Static=disable, false=enable
+			'keyboard' => TRUE,	// Kyboard 
+		]
+	]);
+	echo "<div id='item-content-satuan-add'  ></div>";
 	Modal::end();
 ?>
