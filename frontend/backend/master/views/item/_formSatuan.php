@@ -47,7 +47,7 @@ use kartik\widgets\ActiveForm;
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		
 			<?php $form = ActiveForm::begin([
-				'id'=>$model->formName(),
+				'id'=>$model->formName().'input',
 				'enableClientValidation' => false,
 				//'action'=>'/master/item/create-satuan?id='.$paramStore,
 				'options' => ['data-pjax' => true],
@@ -65,31 +65,39 @@ use kartik\widgets\ActiveForm;
 </div>
 <?php
 $this->registerJs("
-	$(document).on('submit',".$model->formName().",function(event){      
-        var form = $(".$model->formName().");
-        $.ajax(
-        {
-            url : '/master/item/create-satuan?id=".$paramStore."',
-            type: 'POST',
-            data: form.serialize(),
-            // contentType: false,
-            // processData: false,
-            success:function(output) 
-            {
-               
-				$('#status-area').fadeIn();
-				$('#status-area').html('');
-				$('#status-area').append('Added successfully');
-				$('#status-area').fadeOut(3000);
-            },
-            error: function(jqXHR, textStatus, errorThrown) 
-            {
-                alert('gagal');      
-            }
-        });
-       event.preventDefault(); // make stay modal.
-       //event.unbind(); //untuk mencegah berkali kali submit
-	   return false;
-    });
+	//$.fn.preventDoubleSubmission = function () {
+		$.fn.modal.Constructor.prototype.enforceFocus = function(){};	
+		$(document).on('submit',".$model->formName()."input,function(event){      
+			var form = $(".$model->formName()."input);
+			$.ajax(
+			{
+				url : '/master/item/create-satuan?id=".$paramStore."',
+				type: 'POST',
+				data: form.serialize(),
+				// contentType: false,
+				// processData: false,
+				success:function(output) 
+				{
+				   
+					$('#status-area').fadeIn();
+					$('#status-area').html('');
+					$('#status-area').append('Added successfully');
+					$('#status-area').fadeOut(3000);
+					
+					$('#item-modal-satuan-add').modal('hide');
+					//$('#modal-view_cus-customer').modal('show')
+				},
+				error: function(jqXHR, textStatus, errorThrown) 
+				{
+					alert('gagal');      
+				}
+			});
+			return false;
+			event.preventDefault(); // make stay modal.
+		   //$(self).unbind();
+		   //event.unbind(); //untuk mencegah berkali kali submit
+		   //
+		});
+	//};
 ",$this::POS_READY);	 
 ?>

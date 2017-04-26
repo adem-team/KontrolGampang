@@ -9,6 +9,7 @@ use yii\helpers\ArrayHelper;
 use kartik\widgets\FileInput;
 use kartik\widgets\ActiveField;
 use kartik\widgets\ActiveForm;
+use yii\web\JsExpression;
 
 	//Difinition Status.
 	$aryStt= [
@@ -37,6 +38,7 @@ use kartik\widgets\ActiveForm;
 		}
 	};	
 	
+	$urlx = \yii\helpers\Url::to(['/master/satuan-select']);
 	$attItemReviewData=[	
 		[
 			'attribute' =>'ITEM_NM',
@@ -48,12 +50,27 @@ use kartik\widgets\ActiveForm;
 		],
 		[		
 			'attribute' =>'SATUAN',			
-			'format'=>'raw',
+			//'format'=>'raw',
 			'type'=>DetailView::INPUT_SELECT2,
 			'widgetOptions'=>[
-				'data'=>$valSatuan,
-				'options'=>['id'=>'provinsi-review-store-id','placeholder'=>'Select ...'],
-				'pluginOptions'=>['allowClear'=>true],
+				// 'data'=>$valSatuan,
+				//'initValueText' =>'',
+				'options'=>['placeholder'=>'Select ...'],
+				'pluginOptions'=>[
+					'allowClear'=>true,
+					// 'initialize'=>true,
+					'ajax' => [
+						'url' =>$urlx,
+						'dataType' => 'json',
+						'data' => new JsExpression('function(params) { 
+								return {q:params.term}; 
+							}
+						')
+					],
+					 // 'templateResult' => new JsExpression('function(SATUAN) { return SATUAN.text; }'),
+					 // 'templateSelection' => new JsExpression('function (SATUAN) { return SATUAN.text; }'),
+				],
+				//'pluginLoading'=>true,
 			],	
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			
