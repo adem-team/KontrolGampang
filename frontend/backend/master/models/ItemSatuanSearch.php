@@ -1,16 +1,13 @@
 <?php
 
-namespace frontend\backend\hris\models;
+namespace frontend\backend\master\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\backend\hris\models\EmployeAbsen;
+use frontend\backend\master\models\ItemSatuan;
 
-/**
- * EmployeAbsenSearch represents the model behind the search form of `frontend\backend\hris\models\EmployeAbsen`.
- */
-class EmployeAbsenSearch extends EmployeAbsen
+class ItemSatuanSearch extends ItemSatuan
 {
     /**
      * @inheritdoc
@@ -19,29 +16,13 @@ class EmployeAbsenSearch extends EmployeAbsen
     {
         return [
             [['ID', 'STATUS'], 'integer'],
-            [['OUTLET_CODE','CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'EMP_ID', 'TGL', 'TIME'], 'safe'],
+            [['ACCESS_UNIX','CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT','OUTLET_CODE', 'SATUAN_NM'], 'safe'],
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function scenarios()
-    {
-        // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
-    }
-
-    /**
-     * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
-     */
     public function search($params)
     {
-        $query = EmployeAbsen::find();
+        $query = ItemSatuan::find();
 
         // add conditions that should always apply here
 
@@ -63,14 +44,13 @@ class EmployeAbsenSearch extends EmployeAbsen
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
             'STATUS' => $this->STATUS,
-            'TGL' => $this->TGL,
-            'TIME' => $this->TIME,
+            'ACCESS_UNIX' => $this->ACCESS_UNIX,
         ]);
 
         $query->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
-            ->andFilterWhere(['like', 'EMP_ID', $this->EMP_ID])
-            ->andFilterWhere(['like', 'OUTLET_CODE', $this->OUTLET_CODE]);
+            ->andFilterWhere(['like', 'OUTLET_CODE', $this->OUTLET_CODE])
+            ->andFilterWhere(['like', 'SATUAN_NM', $this->SATUAN_NM]);
 
         return $dataProvider;
     }

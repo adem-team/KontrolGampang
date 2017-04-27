@@ -94,6 +94,9 @@ return [
 		'afiliasi' => [
             'class' => 'frontend\backend\afiliasi\Modul',
         ],
+		'sales' => [
+            'class' => 'frontend\backend\sales\Modul',
+        ],
 	],
     'components' => [
 		'view' => [

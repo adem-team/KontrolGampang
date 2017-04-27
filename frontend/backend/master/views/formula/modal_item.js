@@ -11,9 +11,9 @@
  * item-Create.
 */
 $.fn.modal.Constructor.prototype.enforceFocus = function(){};	
-$(document).on('click','#item-index-button-create', function(ehead){ 			  
-	$('#item-modal-index-create').modal('show')
-	.find('#item-modal-content-form-create').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+$(document).on('click','#item-button-create', function(ehead){ 			  
+	$('#item-modal-create').modal('show')
+	.find('#item-modal-content-create').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
 	.load(ehead.target.value);
 });
 
@@ -57,15 +57,7 @@ $(document).on('click','#item-button-export-excel', function(ehead){
 	.load(ehead.target.value);
 });
 
-/*
- * item-satuan.
-*/
-$.fn.modal.Constructor.prototype.enforceFocus = function(){};	
-$(document).on('click','#item-button-satuan-add', function(ehead){ 			  
-	$('#item-modal-satuan-add').modal('show')
-	.find('#item-content-satuan-add').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
-	.load(ehead.target.value);
-});	
+
 /**
  * ======================================== TIPS ========================================
  * HELPER INCLUDE FILE

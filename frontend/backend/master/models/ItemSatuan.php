@@ -3,14 +3,23 @@
 namespace frontend\backend\master\models;
 
 use Yii;
-use yii\web\UploadedFile;
 
-Yii::$app->params['uploadPath'] = Yii::$app->basePath . '/backend/master/image/';
- 
-class ItemImage extends \yii\db\ActiveRecord
+/**
+ * This is the model class for table "item_64".
+ *
+ * @property string $ID
+ * @property string $CREATE_BY USER CREATED
+ * @property string $CREATE_AT Tanggal dibuat
+ * @property string $UPDATE_BY USER UPDATE
+ * @property string $UPDATE_AT Tanggal di update
+ * @property int $STATUS
+ * @property string $ITEM_ID
+ * @property string $OUTLET_CODE
+ * @property string $IMG64
+ * @property string $IMGNM
+ */
+class ItemSatuan extends \yii\db\ActiveRecord
 {
-	public $imageTmp;
-	
 	public static function getDb()
     {
         return Yii::$app->get('api_dbkg');
@@ -20,7 +29,7 @@ class ItemImage extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'item_64';
+        return 'item_satuan';
     }
 
     /**
@@ -29,10 +38,9 @@ class ItemImage extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ACCESS_UNIX','CREATE_AT', 'UPDATE_AT','imageTmp'], 'safe'],
+            [['ACCESS_UNIX','CREATE_AT', 'UPDATE_AT','SATUAN_NM'], 'safe'],
             [['STATUS'], 'integer'],
-            [['IMG64', 'IMGNM'], 'string'],
-            [['CREATE_BY', 'UPDATE_BY', 'ITEM_ID', 'OUTLET_CODE'], 'string', 'max' => 50],
+            [['CREATE_BY', 'UPDATE_BY','OUTLET_CODE'], 'string', 'max' => 50],
         ];
     }
 
@@ -49,10 +57,8 @@ class ItemImage extends \yii\db\ActiveRecord
             'UPDATE_AT' => Yii::t('app', 'Update  At'),
             'STATUS' => Yii::t('app', 'Status'),
             'ACCESS_UNIX' => Yii::t('app', 'Access Unix'),
-            'ITEM_ID' => Yii::t('app', 'Item  ID'),
             'OUTLET_CODE' => Yii::t('app', 'Outlet  Code'),
-            'IMG64' => Yii::t('app', 'IMAGE'),
-            'IMGNM' => Yii::t('app', 'Imgnm'),
+            'SATUAN_NM' => Yii::t('app', 'SATUAN_NM')
         ];
     }
 	public function fields()
@@ -64,13 +70,10 @@ class ItemImage extends \yii\db\ActiveRecord
 			'UPDATE_AT'=>function($model){
 				return $model->UPDATE_AT;
 			},					
-			'IMG64'=>function($model){
-				return $model->IMG64!=''?$model->IMG64:$this->blankImage;
+			'SATUAN_NM'=>function($model){
+				return $model->SATUAN_NM;
 			}	
 		];
 	}
-	
-	
-	
 }
 

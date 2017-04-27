@@ -3,24 +3,6 @@ use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->registerCss("
-	/**
-	 * CSS - Border radius Sudut.
-	 * piter novian [ptr.nov@gmail.com].
-	 * 'clientOptions' => [
-	 *		'backdrop' => FALSE, //Static=disable, false=enable
-	 *		'keyboard' => TRUE,	// Kyboard 
-	 *	]
-	*/
-	.modal-content { 
-		border-radius: 5px;
-	}
-	button span {
-	  pointer-events: none;  //Disable Span in Button.
-	}
-");
-
-
 /**
 * ===============================
  * Button Permission.
@@ -30,6 +12,29 @@ $this->registerCss("
  * Version	: 2.1
  * ===============================
 */
+	//Link Button BACK
+	function tombolBack(){
+		$title = Yii::t('app', 'Back');
+		$url =  Url::toRoute(['/master/item','outlet_code'=>'0001']);
+		$options = ['id'=>'item-formula-back',
+				  'data-pjax' => 0,
+				  'class'=>"btn btn-default btn-xs",
+				 // 'style'=>'margin-left:50px'
+				];
+		$icon = '
+				<span class="fa-stack fa-sm text-left">
+				  <i class="fa fa-circle fa-stack-2x" style="color:#ffffff"></i>
+				  <i class="fa fa-history fa-stack-1x style="color:#ffffff"></i>
+				</span>
+		
+		';
+		$label = $icon . ' ' . $title;
+
+		return $content = Html::a($label,$url,$options);
+	}
+	
+	
+	
 	function getPermission(){
 		if (Yii::$app->getUserOpt->Modul_akses('12')){
 			return Yii::$app->getUserOpt->Modul_akses('12');
@@ -54,144 +59,33 @@ $this->registerCss("
  * Version	: 2.1
  * ===============================
 */
-	/**
-	 * HEADER BUTTON => Items Link Back To Store
-	**/
-	function tombolBack(){
-		$title = Yii::t('app', 'Back');
-		$url =  Url::toRoute(['/master/outlet']);
-		$options = ['id'=>'item-id-back',
-				  'data-pjax' => 0,
-				  'class'=>"btn btn-default btn-xs",
-				 // 'style'=>'margin-left:50px'
-				];
-		$icon = '
-				<span class="fa-stack fa-sm text-left">
-				  <i class="fa fa-circle fa-stack-2x" style="color:#ffffff"></i>
-				  <i class="fa fa-mail-reply fa-stack-1x" style="color:#CA0605"></i>
-				</span>		
-		';
-		$label = $icon . ' ' . $title;
-		return $content = Html::a($label,$url,$options);
-	}
-	
 	/*
-	 * HEADER BUTTON : ITEMS Button - CREATE.
+	 * Button - CREATE.
 	*/
 	function tombolCreate(){
 		// if(getPermission()){
 			// if(getPermission()->BTN_CREATE==1){
 				$title1 = Yii::t('app', ' New');
-				$url = Url::toRoute(['/master/item/create']);
+				$url = Url::toRoute(['/efenbi-rasasayang/item/create']);
 				$options1 = ['value'=>$url,
-							'id'=>'item-index-button-create',
-							'data-pjax' => 1,
+							'id'=>'item-button-create',
 							'class'=>"btn btn-default btn-xs"  
 				];
 				$icon1 = '
-						<span class="fa-stack fa-sm text-left">
-						  <b class="fa fa-circle fa-stack-2x" style="color:#ffffff"></b>
-						  <b class="fa fa-plus fa-stack-1x" style="color:#000000"></b>
-						</span>			
-				';
-				$label1 = $icon1 . ' ' . $title1;
-				$content = Html::button($label1,$options1);
-				return $content;
-			// }
-		// }
-	}
-	
-	/**
-	 *HEADER BUTTON => Items Link Button Refresh.
-	**/
-	function tombolRefresh($paramUrl){
-		$title = Yii::t('app', 'Refresh');
-		$url =  Url::toRoute(['/master/item','outlet_code'=>$paramUrl]);
-		$options = ['id'=>'item-id-refresh',
-				  'data-pjax' => 0,
-				  'class'=>"btn btn-default btn-xs",
-				];
-		$icon = '
 						<span class="fa-stack fa-sm text-justify">
 						  <i class="fa fa-circle fa-stack-2x" style="color:#ffffff"></i>
-						  <i class="fa fa-history fa-stack-1x" style="color:#13c354"></i>
+						  <i class="fa fa-plus fa-stack-1x style="color:red"></i>
 						</span>			
-				';
-		$label = $icon . ' ' . $title;
-
-		return $content = Html::a($label,$url,$options);
-	}
-	
-	
-	/**
-	 * ITEM HEAD - Button => Link Item-FormulaHarga.
-	**/
-	function tombolFHargaDiscount($paramUrl){
-		$title = Yii::t('app', 'F-Harga/Discount');
-		$url =  Url::toRoute(['/master/formula','outlet_code'=>$paramUrl]);
-		$options = ['id'=>'item-harga-id',
-				  'data-pjax' => 0,
-				  'class'=>"btn btn-default btn-xs",
-				 // 'style'=>'margin-left:50px'
-				];
-		$icon = '
-				<span class="fa-stack fa-sm text-left">
-				  <i class="fa fa-circle fa-stack-2x" " style="color:#ffffff"></i>
-				  <i class="fa fa-list-ol fa-stack-1x "style="color:#000000"></i>
-				</span>		
-		';
-		$label = $icon . ' ' . $title;
-		return $content = Html::a($label,$url,$options);
-	}
-	
-	/**
-	 * ITEM HEAD - Button => Link Item-Formula Discount.
-	**/
-	function tombolFDiscount($paramUrl){
-		$title = Yii::t('app', 'F-Discount');
-		$url =  Url::toRoute(['/master/formula-discount','outlet_code'=>$paramUrl]);
-		$options = ['id'=>'item-fdiscount-id',
-				  'data-pjax' => 0,
-				  'class'=>"btn btn-default btn-xs",
-				 // 'style'=>'margin-left:50px'
-				];
-		$icon = '
-				<span class="fa-stack fa-sm text-left">
-				  <i class="fa fa-circle fa-stack-2x" " style="color:#ffffff"></i>
-				  <i class="fa fa-list-ol fa-stack-1x "style="color:#000000"></i>
-				</span>		
-		';
-		$label = $icon . ' ' . $title;
-		return $content = Html::a($label,$url,$options);
-	}
-	
-	/*
-	 * Button - EXPORT EXCEL.
-	*/
-	function tombolExportExcel(){
-		// if(getPermission()){
-			// if(getPermission()->BTN_PROCESS1==1){
-				$title1 = Yii::t('app', ' Export Excel');
-				$url = Url::toRoute(['/master/item/export-excel']);
-				$options1 = ['value'=>$url,
-							'id'=>'item-button-export-excel',
-							'class'=>"btn btn-default btn-xs"  
-				];
-				$icon1 = '
-						<span class="fa-stack fa-sm text-left">
-						  <i class="fa fa-circle fa-stack-2x" style="color:#ffffff"></i>
-						  <i class="fa fa-file-excel-o fa-stack-1x" style="color:#4b84fe"></i>
-						</span>		
 				';
 				$label1 = $icon1 . ' ' . $title1;
 				$content = Html::button($label1,$options1);
 				return $content;
 			// }
 		// }
-	}	
+	}
 	
 	/*
-	 * Row Button - VIEW.
+	 * Button - VIEW.
 	*/
 	function tombolView($url, $model){
 		// if(getPermission()){
@@ -199,7 +93,7 @@ $this->registerCss("
 			// if(getPermission()->BTN_VIEW==1 OR getPermission()->BTN_CREATE==1){
 				$title1 = Yii::t('app',' View');
 				$options1 = [
-					'value'=>url::to(['/master/item/view','id'=>$model->ID]),
+					'value'=>url::to(['/efenbi-rasasayang/item/view','id'=>$model->ID]),
 					'id'=>'item-button-view',
 					'class'=>"btn btn-default btn-xs",      
 					'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
@@ -212,7 +106,7 @@ $this->registerCss("
 				';      
 				$label1 = $icon1 . '  ' . $title1;
 				$content = Html::button($label1,$options1);		
-				return '<li>'.$content.'</li>';
+				return $content;
 			// }
 		// }
 	}
@@ -226,7 +120,7 @@ $this->registerCss("
 			// if(getPermission()->BTN_REVIEW==1){
 				$title1 = Yii::t('app',' Review');
 				$options1 = [
-					'value'=>url::to(['/master/item/review','id'=>$model->ID]),
+					'value'=>url::to(['/efenbi-rasasayang/item/review','id'=>$model->ID]),
 					'id'=>'item-button-review',
 					'class'=>"btn btn-default btn-xs",      
 					'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
@@ -240,11 +134,38 @@ $this->registerCss("
 				';      
 				$label1 = $icon1 . '  ' . $title1;
 				$content = Html::button($label1,$options1);		
-				return '<li>'.$content.'</li>';
+				return $content;
 			// }
 		// }
 	}
 	
+	/*
+	 * Button - REMAINDER.
+	 * BTN_PROCESS1.
+	*/	
+	function tombolRemainder($url, $model){
+		// if(getPermission()){
+			// if(getPermission()->BTN_PROCESS1==1){
+				$title1 = Yii::t('app',' Remainder');
+				$url = url::to(['/efenbi-rasasayang/item/remainder','id'=>$model->ID]);
+				$options1 = [
+					'value'=>$url,
+					'id'=>'item-button-remainder',
+					'class'=>"btn btn-default btn-xs",      
+					'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+				];
+				$icon1 = '
+					<span class="fa-stack fa-xs">																	
+						<i class="fa fa-circle fa-stack-2x " style="color:'.bgIconColor().'"></i>
+						<i class="fa fa-clock-o fa-stack-1x" style="color:#fbfbfb"></i>
+					</span>
+				';      
+				$label1 = $icon1 . '  ' . $title1;
+				$content = Html::button($label1,$options1);		
+				 return $content;
+			// }
+		// }
+	}
 	
 	/*
 	 * Button - DENY.
@@ -273,10 +194,45 @@ $this->registerCss("
 			return $content;
 		//}
 	}
+	//Link Button Refresh 
+	function tombolRefresh(){
+		$title = Yii::t('app', 'Refresh');
+		$url =  Url::toRoute(['/efenbi-rasasayang/item']);
+		$options = ['id'=>'item-id-refresh',
+				  'data-pjax' => 0,
+				  'class'=>"btn btn-info btn-xs",
+				];
+		$icon = '<span class="fa fa-history fa-lg"></span>';
+		$label = $icon . ' ' . $title;
+
+		return $content = Html::a($label,$url,$options);
+	}
 	
 	
 	
-	
+	/*
+	 * Button - EXPORT EXCEL.
+	*/
+	function tombolExportExcel(){
+		// if(getPermission()){
+			// if(getPermission()->BTN_PROCESS1==1){
+				$title1 = Yii::t('app', ' Export Excel');
+				$url = Url::toRoute(['/efenbi-rasasayang/item/export-excel']);
+				$options1 = ['value'=>$url,
+							'id'=>'item-button-export-excel',
+							'class'=>"btn btn-default btn-xs"  
+				];
+				$icon1 = '
+						<span class="fa-stack fa-sm text-justify">
+						  <i class="fa fa-circle fa-stack-2x" style="color:#ffffff"></i>
+						  <i class="fa fa-file-excel-o fa-stack-1x style="color:#ffffff"></i>
+						</span>';
+				$label1 = $icon1 . ' ' . $title1;
+				$content = Html::button($label1,$options1);
+				return $content;
+			// }
+		// }
+	}	
 	
 /**
  * ===============================
@@ -291,7 +247,7 @@ $this->registerCss("
 	*/
 	$modalHeaderColor='#fbfbfb';//' rgba(74, 206, 231, 1)';
 	Modal::begin([
-		'id' => 'item-modal-index-create',
+		'id' => 'item-modal-create',
 		'header' => '
 			<span class="fa-stack fa-xs">																	
 				<i class="fa fa-circle fa-stack-2x " style="color:'.bgIconColor().'"></i>
@@ -302,12 +258,8 @@ $this->registerCss("
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
 		],
-		'clientOptions' => [
-			'backdrop' => FALSE, //Static=disable, false=enable
-			'keyboard' => TRUE,	// Kyboard 
-		]
 	]);
-	echo "<div id='item-modal-content-form-create'></div>";
+	echo "<div id='item-modal-content-create'></div>";
 	Modal::end();
 	
 	/*
@@ -321,14 +273,10 @@ $this->registerCss("
 				<i class="fa fa-eye fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> VIEW ITEM</b>
 		',		
-		'size' => 'modal-dm',
+		'size' => Modal::SIZE_LARGE,
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
 		],
-		'clientOptions' => [
-			'backdrop' => FALSE, //Static=disable, false=enable
-			'keyboard' => TRUE,	// Kyboard 
-		]
 	]);
 	echo "<div id='item-modal-content-view'></div>";
 	Modal::end();
@@ -344,19 +292,33 @@ $this->registerCss("
 				<i class="fa fa-edit fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> REVIEW ITEMS</b>
 		',		
-		'size' =>'modal-dm',
+		'size' => Modal::SIZE_LARGE,
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
 		],
-		'clientOptions' => [
-			'backdrop' => FALSE, //Static=disable, false=enable
-			'keyboard' => TRUE,	// Kyboard 
-		]
 	]);
 	echo "<div id='item-modal-content-review'></div>";
 	Modal::end();
 	
-		
+	/*
+	 * item - Remainder.
+	*/
+	Modal::begin([
+		'id' => 'item-modal-remainder',
+		'header' => '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle fa-stack-2x " style="color:'.bgIconColor().'"></i>
+				<i class="fa fa-clock-o fa-stack-1x" style="color:#fbfbfb"></i>
+			</span><b> REMAINDER SETTING</b>
+		',		
+		'size' => Modal::SIZE_LARGE,
+		'headerOptions'=>[
+			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
+		],
+	]);
+	echo "<div id='item-modal-content-remainder'></div>";
+	Modal::end();
+	
 	/*
 	 * item - EXPORT EXCEL.
 	*/
@@ -373,32 +335,7 @@ $this->registerCss("
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
 		],
-		'clientOptions' => [
-			'backdrop' => FALSE, //Static=disable, false=enable
-			'keyboard' => TRUE,	// Kyboard 
-		]
 	]);
 	echo "<div id='item-modal-content-export-excel'></div>";
-	Modal::end();
-	
-	Modal::begin([
-		'id' => 'item-modal-satuan-add',		
-		'header' => '
-			<span class="fa-stack fa-xs">																	
-				<i class="fa fa-circle fa-stack-2x " style="color:#1eaac2"></i>
-				<i class="fa fa-edit fa-stack-1x" style="color:#fbfbfb"></i>
-			</span><b> ADD SATUAN</b>
-		',//. '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>',		
-		'size' =>Modal::SIZE_SMALL,		
-		'headerOptions'=>[
-			'style'=> 'border-radius:5px; background-color:rgba(239, 205, 93, 0.48)',
-			'data-focus-on'=>'input:first',
-		],
-		'clientOptions' => [
-			'backdrop' => FALSE, //Static=disable, false=enable
-			'keyboard' => TRUE,	// Kyboard 
-		]
-	]);
-	echo "<div id='item-content-satuan-add'  ></div>";
 	Modal::end();
 ?>

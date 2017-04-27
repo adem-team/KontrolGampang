@@ -341,6 +341,9 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 			//$urlDestination=Url::to(['/efenbi-rasasayang/item-group/index', 'id' => $model->ID]);
 			$urlDestination=Url::to(['/master/item', 'outlet_code' => $model->OUTLET_CODE]);
 			return ['id'=>	[$model->ID],'ondblclick' =>'location.href="'.$urlDestination.'"'];
+			// return ['id'=>	[$model->ID],'ondblclick' =>function(){				
+				// return 'location.href="'.$urlDestination.'"';
+			// }];
 		},		
 		'pjax'=>true,
 		'pjaxSettings'=>[
