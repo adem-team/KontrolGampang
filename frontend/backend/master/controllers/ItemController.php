@@ -8,6 +8,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
 use yii\web\Session;
+use yii\widgets\ActiveForm;
+
 
 use common\models\Store;
 use frontend\backend\master\models\Item;
@@ -19,7 +21,11 @@ use frontend\backend\master\models\ItemImage;
  */
 class ItemController extends Controller
 {
-	public $store_idx='0';
+	public $identifyItem_ACCESS_UNIX;
+	public $identifyItem_ACCESS_GROUP;
+	public $identifyItem_STORE_ID='0'; //Session.
+	
+
     /**
      * @inheritdoc
      */
@@ -46,11 +52,15 @@ class ItemController extends Controller
 				Yii::$app->user->logout();
 				return $this->goHome(); 
 			} else {	
-				//add Session.
+				//add Session user login.
 				Yii::$app->session->set('userSessionTimeout', time() + Yii::$app->params['sessionTimeoutSeconds']);
-				//Session Stored.
+				
+				//ITENTIFY CTR- Session Stored.
 				$session = Yii::$app->session;
-				$this->store_idx=$session['STORE_ID'];
+				$this->identifyItem_STORE_ID=$session['identifyItem_STORE_ID'];
+				$this->identifyItem_ACCESS_UNIX=(!Yii::$app->user->isGuest)?Yii::$app->getUserOpt->user()['ACCESS_UNIX']:'';
+				$this->identifyItem_ACCESS_GROUP=(!Yii::$app->user->isGuest)?Yii::$app->getUserOpt->user()['ACCESS_GROUP']:'';
+	
 				//check validation [access/url].
 				$checkAccess=Yii::$app->getUserOpt->UserMenuPermission($modulIndentify);
 				if($checkAccess['modulMenu']['MODUL_STS']==0 OR $checkAccess['ModulPermission']['STATUS']==0){				
@@ -78,22 +88,20 @@ class ItemController extends Controller
 		$paramCari=Yii::$app->getRequest()->getQueryParam('outlet_code');
 		$session = new Session;
 		$session->remove('STORE_ID');
-		$session['STORE_ID'] = $paramCari;
-		$this->store_idx=$session['STORE_ID'];
+		$session['identifyItem_STORE_ID'] = $paramCari;
+		$this->identifyItem_STORE_ID=$session['identifyItem_STORE_ID'];
 		//Get 
 		$modelOutlet=Store::find()->where(['OUTLET_CODE'=>$paramCari])->one();//->andWhere('FIND_IN_SET("'.$this->ACCESS_UNIX.'", ACCESS_UNIX)')->one();
 		if($modelOutlet){
 		    $searchModel = new ItemSearch(['OUTLET_CODE'=>$paramCari]);
 			$dataProvider = $searchModel->search(Yii::$app->request->queryParams);			
-		
-		///OUTLET ID.
-		
-        return $this->render('index', [
-			'outletNm'=>$modelOutlet!=''?$modelOutlet->OUTLET_NM:'none',
-            'searchModel' => $searchModel!=''?$searchModel:false,
-            'dataProvider' => $dataProvider,
-			'paramUrl'=>$paramCari,
-        ]);
+			///OUTLET ID.		
+			return $this->render('index', [
+				'outletNm'=>$modelOutlet!=''?$modelOutlet->OUTLET_NM:'none',
+				'searchModel' => $searchModel!=''?$searchModel:false,
+				'dataProvider' => $dataProvider,
+				'paramUrl'=>$paramCari,
+			]);
 		}else{
 			$this->redirect(array('/site/alert'));
 		}
@@ -158,22 +166,57 @@ class ItemController extends Controller
      */
     public function actionCreate()
     {
-		// $session = new Session;
-		// $session->open();
-		// $store_id=$session['STORE_ID'];
+		//Generate Code.
+		$maxID=Item::find()->where(['ACCESS_UNIX'=>$this->identifyItem_ACCESS_GROUP,'OUTLET_CODE'=>$this->identifyItem_STORE_ID]);
+		$newID=str_pad(($maxID->max('ITEM_ID'))+1,4,"0",STR_PAD_LEFT);
 		
-        $model = new Item();
+		$model = new Item();
 		//$maxID=Item::find()->max('ITEM_ID')->where(['ACCESS_UNIX'=>$model->ACCESS_UNIX,'OUTLET_CODE'=>$model->OUTLET_CODE,'ITEM_ID'=>$model->ITEM_ID]);
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->ID]);
+        if ($model->load(Yii::$app->request->post())) {
+			//Image Base64
+			$ambilUploadImage = $model->uploadImage();
+			$image64=$ambilUploadImage != ''? $this->convertBase64(file_get_contents($ambilUploadImage->tempName)): '';			
+			
+			
+			
+			//Attribute -Save-
+			$model->ACCESS_UNIX =$this->identifyItem_ACCESS_GROUP;
+			$model->OUTLET_CODE =$this->identifyItem_STORE_ID;
+			$model->ITEM_ID =$newID;
+			$model->STATUS = 1;	
+			$model->CREATE_BY = $this->identifyItem_ACCESS_UNIX;
+			$model->CREATE_AT = date("Y-m-d H:i:s");							
+			if($model->save()){
+					$modelImage=new ItemImage();
+					$modelImage->ACCESS_UNIX =$this->identifyItem_ACCESS_GROUP;
+					$modelImage->OUTLET_CODE =$this->identifyItem_STORE_ID;
+					$modelImage->ITEM_ID = $newID;
+					$modelImage->CREATE_BY = $this->identifyItem_ACCESS_UNIX;;
+					$modelImage->CREATE_AT = date("Y-m-d H:i:s");
+					$modelImage->STATUS = 1;					
+					$modelImage->save();
+			}
+			return $this->redirect(['index', 'outlet_code' => $this->identifyItem_STORE_ID,'id'=>$newID]);
         } else {
             return $this->renderAjax('_form', [
                 'model' => $model,
-				'store_id'=>$this->store_idx,
+				'store_id'=>$newID,//this->identifyItem_ACCESS_UNIX,
             ]);
         }
     }
 	
+	public function actionValidItem()
+    {
+		$model = new Item();
+		$model->scenario = "create";
+		if(Yii::$app->request->isAjax && $model->load($_POST))
+		{
+			Yii::$app->response->format = 'json';
+			return ActiveForm::validate($model);
+		}
+		return false;
+    }
+
 	/**
      * CREATE - ITEM SATUAN 
      */

@@ -31,6 +31,7 @@ class Item extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+			[['ITEM_NM','STATUS'], 'required','on'=>'create'],
             [['ACCESS_UNIX','DEFAULT_HARGA','DEFAULT_STOCK','CREATE_AT', 'UPDATE_AT','satuanStt','image','imageNmTmp'], 'safe'],
             [['STATUS'], 'integer'],
             [['CREATE_BY', 'UPDATE_BY', 'ITEM_ID', 'OUTLET_CODE'], 'string', 'max' => 50],

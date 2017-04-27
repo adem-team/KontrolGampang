@@ -35,7 +35,7 @@ class EmployeAbsen extends \yii\db\ActiveRecord
         return [
             [['CREATE_AT', 'UPDATE_AT', 'TGL', 'TIME'], 'safe'],
             [['STATUS'], 'integer'],
-            [['CREATE_BY', 'UPDATE_BY', 'EMP_ID'], 'string', 'max' => 50],
+            [['CREATE_BY', 'UPDATE_BY', 'EMP_ID','OUTLET_CODE'], 'string', 'max' => 50],
         ];
     }
 
@@ -52,6 +52,7 @@ class EmployeAbsen extends \yii\db\ActiveRecord
             'UPDATE_AT' => Yii::t('app', 'Update  At'),
             'STATUS' => Yii::t('app', 'Status'),
             'EMP_ID' => Yii::t('app', 'Emp  ID'),
+            'OUTLET_CODE' => Yii::t('app', 'Outlet Code'),
             'TGL' => Yii::t('app', 'Tgl'),
             'TIME' => Yii::t('app', 'Time'),
         ];

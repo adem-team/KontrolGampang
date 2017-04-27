@@ -19,7 +19,7 @@ class EmployeAbsenImageSearch extends EmployeAbsenImage
     {
         return [
             [['ID', 'STATUS'], 'integer'],
-            [['CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'EMP_ID', 'TGL', 'IMG_MASUK', 'IMG_KELUAR'], 'safe'],
+            [['OUTLET_CODE','CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'EMP_ID', 'TGL', 'IMG_MASUK', 'IMG_KELUAR'], 'safe'],
         ];
     }
 
@@ -68,6 +68,7 @@ class EmployeAbsenImageSearch extends EmployeAbsenImage
 
         $query->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
+            ->andFilterWhere(['like', 'OUTLET_CODE', $this->OUTLET_CODE])
             ->andFilterWhere(['like', 'EMP_ID', $this->EMP_ID])
             ->andFilterWhere(['like', 'IMG_MASUK', $this->IMG_MASUK])
             ->andFilterWhere(['like', 'IMG_KELUAR', $this->IMG_KELUAR]);

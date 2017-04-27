@@ -37,7 +37,7 @@ class EmployeAbsenImage extends \yii\db\ActiveRecord
             [['CREATE_AT', 'UPDATE_AT', 'TGL'], 'safe'],
             [['STATUS'], 'integer'],
             [['IMG_MASUK', 'IMG_KELUAR'], 'string'],
-            [['CREATE_BY', 'UPDATE_BY', 'EMP_ID'], 'string', 'max' => 50],
+            [['CREATE_BY', 'UPDATE_BY', 'EMP_ID','OUTLET_CODE'], 'string', 'max' => 50],
         ];
     }
 
@@ -54,6 +54,7 @@ class EmployeAbsenImage extends \yii\db\ActiveRecord
             'UPDATE_AT' => Yii::t('app', 'Update  At'),
             'STATUS' => Yii::t('app', 'Status'),
             'EMP_ID' => Yii::t('app', 'Emp  ID'),
+            'OUTLET_CODE' => Yii::t('app', 'Outlet Code'),
             'TGL' => Yii::t('app', 'Tgl'),
             'IMG_MASUK' => Yii::t('app', 'Img  Masuk'),
             'IMG_KELUAR' => Yii::t('app', 'Img  Keluar'),

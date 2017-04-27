@@ -67,7 +67,8 @@ use kartik\widgets\ActiveForm;
 $this->registerJs("
 	//$.fn.preventDoubleSubmission = function () {
 		$.fn.modal.Constructor.prototype.enforceFocus = function(){};	
-		$(document).on('submit',".$model->formName()."input,function(event){      
+		$(document).on('submit',".$model->formName()."input,function(event){   
+			
 			var form = $(".$model->formName()."input);
 			$.ajax(
 			{
@@ -78,14 +79,19 @@ $this->registerJs("
 				// processData: false,
 				success:function(output) 
 				{
-				   
+					//$('#resultForm').replaceWith(data);
 					$('#status-area').fadeIn();
 					$('#status-area').html('');
 					$('#status-area').append('Added successfully');
 					$('#status-area').fadeOut(3000);
 					
-					$('#item-modal-satuan-add').modal('hide');
+					//$('#item-modal-satuan-add').modal('hide');
 					//$('#modal-view_cus-customer').modal('show')
+					// if (this.beenSubmitted)
+					   return true;
+					// else
+					  // this.beenSubmitted = true;
+					// });
 				},
 				error: function(jqXHR, textStatus, errorThrown) 
 				{
