@@ -3,23 +3,14 @@
 namespace frontend\backend\master\models;
 
 use Yii;
+use yii\web\UploadedFile;
 
-/**
- * This is the model class for table "item_64".
- *
- * @property string $ID
- * @property string $CREATE_BY USER CREATED
- * @property string $CREATE_AT Tanggal dibuat
- * @property string $UPDATE_BY USER UPDATE
- * @property string $UPDATE_AT Tanggal di update
- * @property int $STATUS
- * @property string $ITEM_ID
- * @property string $OUTLET_CODE
- * @property string $IMG64
- * @property string $IMGNM
- */
+Yii::$app->params['uploadPath'] = Yii::$app->basePath . '/backend/master/image/';
+ 
 class ItemImage extends \yii\db\ActiveRecord
 {
+	public $imageTmp;
+	
 	public static function getDb()
     {
         return Yii::$app->get('api_dbkg');
@@ -38,7 +29,7 @@ class ItemImage extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ACCESS_UNIX','CREATE_AT', 'UPDATE_AT'], 'safe'],
+            [['ACCESS_UNIX','CREATE_AT', 'UPDATE_AT','imageTmp'], 'safe'],
             [['STATUS'], 'integer'],
             [['IMG64', 'IMGNM'], 'string'],
             [['CREATE_BY', 'UPDATE_BY', 'ITEM_ID', 'OUTLET_CODE'], 'string', 'max' => 50],
@@ -74,9 +65,12 @@ class ItemImage extends \yii\db\ActiveRecord
 				return $model->UPDATE_AT;
 			},					
 			'IMG64'=>function($model){
-				return $model->IMG64;
+				return $model->IMG64!=''?$model->IMG64:$this->blankImage;
 			}	
 		];
 	}
+	
+	
+	
 }
 

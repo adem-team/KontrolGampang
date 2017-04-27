@@ -28,8 +28,9 @@ $this->registerCss("
 		color: blue;
 	}
 ");
-$this->registerJs($this->render('modal_item.js'),View::POS_READY);
 echo $this->render('modal_item'); //echo difinition
+$this->registerJs($this->render('modal_item.js'),View::POS_END);
+
 
 	$aryStt= [
 		  ['STATUS' => 0, 'STT_NM' => 'DISABLE'],		  

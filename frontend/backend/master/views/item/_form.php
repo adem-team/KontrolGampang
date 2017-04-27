@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 /* @var $model app\backend\master\models\Item */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
+<?php echo 'asd='.$store_id;?>
 <div class="item-form">
 
     <?php $form = ActiveForm::begin(); ?>

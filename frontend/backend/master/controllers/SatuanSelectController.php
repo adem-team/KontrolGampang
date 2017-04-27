@@ -33,11 +33,12 @@ class SatuanSelectController extends Controller
     public function actionIndex()
     {	
 		 $params     = isset($_REQUEST['q'])?$_REQUEST['q']:'';
+		 $store_code     = isset($_REQUEST['store_code'])?$_REQUEST['store_code']:'';
 		 $searchModel = new SatuanSelect();
 		// return $searchModel->search($param['q']);
 		 //$param=["PenjualanHeaderSearch"=>'text=erma'];
 		 //$data=$searchModel->search(Yii::$app->request->queryParams);
-		 $data=$searchModel->search(['SatuanSelect'=>['text'=>$params]]);
+		 $data=$searchModel->search(['SatuanSelect'=>['store_code'=>$store_code,'text'=>$params]]);
 		// return $data;
 		 return ['results'=>$data];
 		// print_r($data);

@@ -63,7 +63,7 @@ use yii\web\JsExpression;
 						'url' =>$urlx,
 						'dataType' => 'json',
 						'data' => new JsExpression('function(params) { 
-								return {q:params.term}; 
+								return {q:params.term,outlet_code:"'.$model->OUTLET_CODE.'"}; 
 							}
 						')
 					],
@@ -102,6 +102,49 @@ use yii\web\JsExpression;
 		]		
 	];
 	
+	$attReviewImage = [		
+		[
+			'attribute' =>'image',
+			'label'=>false,
+			'value'=>Html::img('data:image/jpg;charset=utf-8;base64,'.$model->itemsImage64,['width'=>'100','height'=>'120']),
+			'format'=>['raw',['width'=>'100','height'=>'120']],
+			'type' => DetailView::INPUT_FILEINPUT,
+			'widgetOptions'=>[
+				'pluginOptions' => [
+					'showPreview' => true,
+					'showCaption' => false,
+					'showRemove' => false,
+					'showUpload' => false
+				],
+
+			],
+			//'labelColOptions' => ['style' => 'text-align:right;width: 3%']
+			//'inputWidth'=>'100%',
+			//'inputContainer' => ['class'=>'col-lg-5'],
+		],
+	];
+	
+	$dvItemReviewImage=DetailView::widget([
+		'id'=>'dv-items-review-image',
+		'model' => $model,
+		'attributes'=>$attReviewImage,
+		'condensed'=>true,
+		'hover'=>true,
+		'panel'=>[
+			'heading'=>true,
+			'type'=>DetailView::TYPE_INFO,
+		],
+		'mode'=>DetailView::MODE_VIEW,
+		'buttons1'=>'{update}',
+		'buttons2'=>'{view}{save}',		
+		'saveOptions'=>[ 
+			'id' =>'editBtnImage',
+			//'value'=>'/master/item/image-save?id='.$model->ITEM_ID,
+			'value'=>'/master/item/review?id='.$model->ID,
+			'params' => ['custom_param' => true],
+		],	
+	]);
+		
 	$attItemReviewInfo=[
 		[
 			'attribute' =>'OUTLET_CODE',
@@ -195,10 +238,20 @@ use yii\web\JsExpression;
 <div style="height:100%;font-family: verdana, arial, sans-serif ;font-size: 8pt">
 	<div class="row" >
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<?=$dvItemInfoReview ?>
-			
-		</div>
+			<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+				<?=$dvItemInfoReview ?>		
+			</div>
+			<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+				<?php
+					$form = ActiveForm::begin(['type'=>ActiveForm::TYPE_VERTICAL,
+						'id'=>'viewedit-image',
+						'enableClientValidation' => true,
+						'options'=>['enctype'=>'multipart/form-data']
+					]);
+						echo $dvItemReviewImage;
+					ActiveForm::end();
+				?>
+			</div>
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<?=$dvItemDataReview ?>			
 		</div>

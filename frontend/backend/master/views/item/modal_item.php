@@ -15,6 +15,9 @@ $this->registerCss("
 	.modal-content { 
 		border-radius: 5px;
 	}
+	button span {
+	  pointer-events: none;  //Disable Span in Button.
+	}
 ");
 
 
@@ -81,13 +84,14 @@ $this->registerCss("
 				$title1 = Yii::t('app', ' New');
 				$url = Url::toRoute(['/master/item/create']);
 				$options1 = ['value'=>$url,
-							'id'=>'item-button-create',
+							'id'=>'item-index-button-create',
+							'data-pjax' => 1,
 							'class'=>"btn btn-default btn-xs"  
 				];
 				$icon1 = '
 						<span class="fa-stack fa-sm text-left">
-						  <i class="fa fa-circle fa-stack-2x" style="color:#ffffff"></i>
-						  <i class="fa fa-plus fa-stack-1x" style="color:#000000"></i>
+						  <b class="fa fa-circle fa-stack-2x" style="color:#ffffff"></b>
+						  <b class="fa fa-plus fa-stack-1x" style="color:#000000"></b>
 						</span>			
 				';
 				$label1 = $icon1 . ' ' . $title1;
@@ -287,7 +291,7 @@ $this->registerCss("
 	*/
 	$modalHeaderColor='#fbfbfb';//' rgba(74, 206, 231, 1)';
 	Modal::begin([
-		'id' => 'item-modal-create',
+		'id' => 'item-modal-index-create',
 		'header' => '
 			<span class="fa-stack fa-xs">																	
 				<i class="fa fa-circle fa-stack-2x " style="color:'.bgIconColor().'"></i>
@@ -303,7 +307,7 @@ $this->registerCss("
 			'keyboard' => TRUE,	// Kyboard 
 		]
 	]);
-	echo "<div id='item-modal-content-create'></div>";
+	echo "<div id='item-modal-content-form-create'></div>";
 	Modal::end();
 	
 	/*

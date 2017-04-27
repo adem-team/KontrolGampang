@@ -9,6 +9,8 @@ use yii\filters\VerbFilter;
 use yii\web\Response;
 use yii\helpers\Json;
 use yii\helpers\ArrayHelper;
+use yii\web\Cookie;
+use yii\web\Request;
 
 use common\models\Store;
 use common\models\StoreSearch;
@@ -60,6 +62,7 @@ class OutletController extends Controller
 
 	public function actionIndex()
     {
+		
 		$searchModel = new StoreSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 

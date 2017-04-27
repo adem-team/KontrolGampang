@@ -5,13 +5,18 @@ namespace frontend\backend\master\models;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
+use yii\web\UploadedFile;
+
 
 use frontend\backend\master\models\ItemImage;
 use frontend\backend\master\models\ItemSatuan;
 
+//Yii::$app->params['uploadPath'] = Yii::$app->basePath . '/backend/master/image/';
 class Item extends \yii\db\ActiveRecord
 {
 	public $satuanStt=0;
+	public $image;
+	public $imageNmTmp;
     /**
      * @inheritdoc
      */
@@ -26,7 +31,7 @@ class Item extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ACCESS_UNIX','DEFAULT_HARGA','DEFAULT_STOCK','CREATE_AT', 'UPDATE_AT','satuanStt'], 'safe'],
+            [['ACCESS_UNIX','DEFAULT_HARGA','DEFAULT_STOCK','CREATE_AT', 'UPDATE_AT','satuanStt','image','imageNmTmp'], 'safe'],
             [['STATUS'], 'integer'],
             [['CREATE_BY', 'UPDATE_BY', 'ITEM_ID', 'OUTLET_CODE'], 'string', 'max' => 50],
             [['ITEM_NM','SATUAN'], 'string', 'max' => 100],
@@ -90,5 +95,23 @@ class Item extends \yii\db\ActiveRecord
 		return $satuanFilter;
 	}
 	
-	
+	//IMG BASE64.	
+	//SAVE FISIK GAMBAR
+	// public function pathImage()
+    // {
+		// $pic = isset($this->SATUAN) ? $this->SATUAN : 'default.jpg';
+		// return Yii::$app->params['uploadPath'].$pic;
+    // }
+	public function uploadImage(){
+		$imageRslt=UploadedFile::getInstance($this,'image');
+		if (empty($imageRslt)) {
+            return false;
+        }
+		//Extend split.
+		//$ext = end((explode(".", $image1->name)));	
+		//$nmItem=$this->SATUAN;
+       // generate a unique file name
+		//$this->SATUAN = "{$nmItem}" ."-".date('ymdHis').".{$ext}";		
+		return $imageRslt;
+	}
 }
