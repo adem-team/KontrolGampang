@@ -48,7 +48,7 @@ class AllStoreItemSearch extends Model
 		
 		//$this->OUTLET_CODE='0001';
 		$this->ACCESS_UNIX_ITEM='20170404081601';
-		$qryAllStoreItems= Yii::$app->db->createCommand("select * from VwStoreItem where ACCESS_UNIX_ITEM='".$this->ACCESS_UNIX_ITEM."'")->queryAll();
+		$qryAllStoreItems= Yii::$app->api_dbkg->createCommand("select * from VwStoreItem where ACCESS_UNIX_ITEM='".$this->ACCESS_UNIX_ITEM."'")->queryAll();
 		// $qryAllStoreItems= Yii::$app->db->createCommand("select * from VwStoreItem where ACCESS_UNIX_ITEM='".$this->ACCESS_UNIX_ITEM."' AND OUTLET_CODE='".$this->OUTLET_CODE."'")->queryAll();
 		
 		$dataProvider= new ArrayDataProvider([
