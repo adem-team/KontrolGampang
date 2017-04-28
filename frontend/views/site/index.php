@@ -14,7 +14,7 @@ AppAsset::register($this);
 
 
 <div class="container-fluid" style="padding-left: 20px; padding-right: 20px" >
-<?php echo "twst";?>
+<?php echo "index";?>
 </div>
 <?php
 
