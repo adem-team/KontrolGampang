@@ -76,14 +76,18 @@ class SiteController extends Controller
 		 ->setTo('piter@lukison.com')
 		 ->setSubject('Minggu - Email sent from Yii2-Swiftmailer')
 		 ->send(); */
+		 
 		if (\Yii::$app->user->isGuest) {
             $model = new LoginForm();
             return $this->render('indexNoLogin', [
                 'model' => $model,
             ]);
         } else {
-			return $this->render('index');
+			//return $this->render('index');
+			$this->redirect(array('/dashboard'));
 		}
+		
+		
     }
 
 	public function beforeAction($action)
@@ -130,7 +134,8 @@ class SiteController extends Controller
     }
 
 	protected  function afterLogin(){
-		Yii::$app->session->set('userSessionTimeout', time() + Yii::$app->params['sessionTimeoutSeconds']);
+		//Yii::$app->session->set('userSessionTimeout', time() + Yii::$app->params['sessionTimeoutSeconds']);
+		
 	} 
 	
 	public function actionAlert(){
