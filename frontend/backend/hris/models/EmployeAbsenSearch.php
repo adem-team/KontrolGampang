@@ -19,7 +19,7 @@ class EmployeAbsenSearch extends EmployeAbsen
     {
         return [
             [['ID', 'STATUS'], 'integer'],
-            [['OUTLET_CODE','CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'EMP_ID', 'TGL', 'TIME'], 'safe'],
+            [['OUTLET_CODE','CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'EMP_ID', 'TGL', 'WAKTU'], 'safe'],
         ];
     }
 
@@ -64,7 +64,7 @@ class EmployeAbsenSearch extends EmployeAbsen
             'UPDATE_AT' => $this->UPDATE_AT,
             'STATUS' => $this->STATUS,
             'TGL' => $this->TGL,
-            'TIME' => $this->TIME,
+            'WAKTU' => $this->WAKTU,
         ]);
 
         $query->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
