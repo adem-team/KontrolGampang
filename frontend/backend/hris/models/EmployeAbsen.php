@@ -4,19 +4,8 @@ namespace frontend\backend\hris\models;
 
 use Yii;
 
-/**
- * This is the model class for table "hrd_absen".
- *
- * @property string $ID
- * @property string $CREATE_BY USER CREATED
- * @property string $CREATE_AT Tanggal dibuat
- * @property string $UPDATE_BY USER UPDATE
- * @property string $UPDATE_AT Tanggal di update
- * @property int $STATUS
- * @property string $EMP_ID
- * @property string $TGL
- * @property string $TIME 0=masuk 1=keluar
- */
+use frontend\backend\hris\models\EmployeData;
+
 class EmployeAbsen extends \yii\db\ActiveRecord
 {
     /**
@@ -33,7 +22,7 @@ class EmployeAbsen extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['CREATE_AT', 'UPDATE_AT', 'TGL', 'TIME'], 'safe'],
+            [['CREATE_AT', 'UPDATE_AT', 'TGL', 'WAKTU'], 'safe'],
             [['STATUS'], 'integer'],
             [['CREATE_BY', 'UPDATE_BY', 'EMP_ID','OUTLET_CODE'], 'string', 'max' => 50],
         ];
@@ -54,7 +43,14 @@ class EmployeAbsen extends \yii\db\ActiveRecord
             'EMP_ID' => Yii::t('app', 'Emp  ID'),
             'OUTLET_CODE' => Yii::t('app', 'Outlet Code'),
             'TGL' => Yii::t('app', 'Tgl'),
-            'TIME' => Yii::t('app', 'Time'),
+            'WAKTU' => Yii::t('app', 'WAKTU'),
         ];
     }
+	
+	public function getEmployeTbl(){
+		return $this->hasOne(EmployeData::ClassName(),['EMP_ID'=>'EMP_ID']);
+	}
+	public function getEmployeNM(){
+		return $this->employeTbl!=''?$this->employeTbl->EMP_NM_DPN .' '.$this->employeTbl->EMP_NM_TGH. ' '.$this->employeTbl->EMP_NM_BLK:'None';
+	}
 }
