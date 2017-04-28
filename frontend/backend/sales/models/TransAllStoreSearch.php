@@ -29,7 +29,7 @@ class TransAllStoreSearch extends Model
 		
 		$this->OUTLET_ID='0001';
 		$this->ACCESS_UNIX='20170404081601';
-		$qryAllStoreItems= Yii::$app->db->createCommand("select * from VwDataTransaksi where ACCESS_UNIX='".$this->ACCESS_UNIX."' AND OUTLET_ID='".$this->OUTLET_ID."'")->queryAll();
+		$qryAllStoreItems= Yii::$app->api_dbkg->createCommand("select * from VwDataTransaksi where ACCESS_UNIX='".$this->ACCESS_UNIX."' AND OUTLET_ID='".$this->OUTLET_ID."'")->queryAll();
 		
 		$dataProvider= new ArrayDataProvider([
 			'allModels'=>$qryAllStoreItems	,			
