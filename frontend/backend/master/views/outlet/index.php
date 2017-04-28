@@ -300,7 +300,7 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 		//ACTION
 		[
 			'class' => 'kartik\grid\ActionColumn',
-			'template' => '{view}{review}{payment}',
+			'template' => '{item}{view}{review}{payment}',
 			'header'=>'ACTION',
 			'dropdown' => true,
 			'dropdownOptions'=>[
@@ -313,6 +313,9 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 				//'style'=>'width:100%;'		
 			],
 			'buttons' => [
+				'item' =>function ($url, $model){
+				  return  tombolItems($url, $model);
+				},
 				'view' =>function ($url, $model){
 				  return  tombolView($url, $model);
 				},
