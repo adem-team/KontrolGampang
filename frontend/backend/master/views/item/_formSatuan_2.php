@@ -48,9 +48,8 @@ use kartik\widgets\ActiveForm;
 		
 			<?php $form = ActiveForm::begin([
 				'id'=>$model->formName().'input',
-				'enableClientValidation' => true,
-				'action'=>'/master/item/create-satuan?id='.$paramStore,
-				//'enableAjaxValidation'=>true, 	
+				'enableClientValidation' => false,
+				//'action'=>'/master/item/create-satuan?id='.$paramStore,
 				'options' => ['data-pjax' => false],
 			]); ?>
 				<?= $form->field($model, 'SATUAN_NM')->textInput(['maxlength' => true]) ?>
@@ -65,33 +64,48 @@ use kartik\widgets\ActiveForm;
 	</div>
 </div>
 <?php
-
-
 $this->registerJs("
-	$('form#".$model->formName()."input').on('beforeSubmit',function(e){
-		var \$form=$(this);
-		$.post(
-			\$form.attr('action'),
-			\$form.serialize()
-		)
-		.done(function(result){
-			//console.log(result);
-			if(result==1){
-				//RESET FORM
-				\$form.trigger('reset');
-				//MESSAGE NOTIFY
+	/* $.fn.modal.Constructor.prototype.enforceFocus = function(){};	
+	$(document).on('beforeSubmit',".$model->formName()."input,function(event){   
+		
+		var form = $(".$model->formName()."input);
+		$.ajax(
+		{
+			url : '/master/item/create-satuan?id=".$paramStore."',
+			type: 'POST',
+			data: form.serialize(),
+			// contentType: false,
+			// processData: false,
+			success:function(output) 
+			{
+				$(".$model->formName()."input).trigger('reset');
+				$('#message').html(output.meesage);
+				//$('#resultForm').replaceWith(data);
 				$('#status-area').fadeIn();
 				$('#status-area').html('');
 				$('#status-area').append('Added successfully');
 				$('#status-area').fadeOut(3000);
-			}else{
-				$('#message').html(result.message);
+				
+	
+			},
+			error: function(jqXHR, textStatus, errorThrown) 
+			{
+				alert('gagal');      
 			}
-			
-		}).fail(function(){
-			console.log('Server Error');
-		});		
+		});
 		return false;
+		//event.preventDefault(); // make stay modal.
+	   //$(self).unbind();
+	   //event.unbind(); //untuk mencegah berkali kali submit
+	   //
+	}); */
+",$this::POS_READY);
+
+$this->registerJs("
+	$('form#".$model->formName()."input')on('beforeSubmit',function(e){
+		var \$form=$(this);
+		
+		
 	});
 ",$this::POS_READY);	 
 ?>

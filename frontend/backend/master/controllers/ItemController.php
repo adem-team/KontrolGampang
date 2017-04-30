@@ -226,6 +226,7 @@ class ItemController extends Controller
 		$paramACCESS_GROUP=Yii::$app->getUserOpt->user()['ACCESS_GROUP'];
 			
         $model = new ItemSatuan();
+		$model->scenario = "create";
 		if($model->load(Yii::$app->request->post())){
 			if (Yii::$app->request->isAjax) {			
 					$model->ACCESS_UNIX=Yii::$app->getUserOpt->user()['ACCESS_GROUP'];
@@ -235,11 +236,15 @@ class ItemController extends Controller
 					$model->CREATE_AT=date('Y:m:d H:i:s');
 					$model->STATUS=1;
 					$model->save();			
-					//if($model->save()){				
+					if($model->save()){				
 					   ///return $this->redirect(['index','outlet_code'=>$model->OUTLET_CODE]);
-					   $out = Json::encode(['output'=>$model->save(), 'message'=>'suksess']);
+					  // $out = Json::encode(['output'=>$model->save(), 'message'=>'suksess']);
 					   // Yii::$app->session->setFlash('error', 'There was an error sending your message.');
-					   return $out;
+					   //return $out;
+					   return 1;
+					}else{
+						return 0;
+					}
 			}else{
 				return $this->renderAjax('_formSatuan', [
 					'model' => $model,

@@ -131,7 +131,7 @@ use yii\web\JsExpression;
 		'condensed'=>true,
 		'hover'=>true,
 		'panel'=>[
-			'heading'=>true,
+			'heading'=>'<b>Tambah Gambar <b>',
 			'type'=>DetailView::TYPE_INFO,
 		],
 		'mode'=>DetailView::MODE_VIEW,

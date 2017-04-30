@@ -38,6 +38,7 @@ class ItemSatuan extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+			[['SATUAN_NM'], 'required','on'=>'create'],
             [['ACCESS_UNIX','CREATE_AT', 'UPDATE_AT','SATUAN_NM'], 'safe'],
             [['STATUS'], 'integer'],
             [['CREATE_BY', 'UPDATE_BY','OUTLET_CODE'], 'string', 'max' => 50],
