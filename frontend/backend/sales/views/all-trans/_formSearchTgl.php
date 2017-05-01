@@ -7,14 +7,14 @@ use kartik\widgets\DatePicker;
 <div class="col-lg-12" style="padding-top:10px;margin-button:0px; height:35px; float:left">
 <!--<div class="col-lg-3">!-->
 	<?php $form = ActiveForm::begin([
-			'id' => $model->formName(),
+			'id' => $model->formName().'tgl',
 			'action'=>'/sales/all-trans',
 			'options' => ['data-pjax' => true ]	
 		]); ?>
 	 
 		<?php //=$form->field($model, 'TGL')->textInput([]) ?>
 		<?=$form->field($model, 'TGL')->widget(DatePicker::classname(), [
-						'options' => ['placeholder' => 'Cari Tanggal'],
+						'options' => ['id'=>'form-tgl','placeholder' => 'Cari Tanggal'],
 						'type' => DatePicker::TYPE_BUTTON,
 							'pluginOptions' => [
 								'todayHighlight' => true,
@@ -36,7 +36,7 @@ use kartik\widgets\DatePicker;
 
 <?php
 $this->registerJs("
-	$('form#".$model->formName()."').on('change',function(e){
+	$('form#".$model->formName()."tgl').on('change',function(e){
 		var \$form=$(this);
 		$.post(
 			\$form.attr('action'),
