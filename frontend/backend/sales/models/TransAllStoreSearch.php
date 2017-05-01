@@ -14,6 +14,8 @@ class TransAllStoreSearch extends Model
 	public $OUTLET_ID;
 	public $ACCESS_UNIX;
 	public $ITEM_ID;
+	public $TGL;
+	public $ITEM_NM;
 	
     /**
      * @inheritdoc	
@@ -21,7 +23,7 @@ class TransAllStoreSearch extends Model
     public function rules()
     {
         return [
-            [['OTLET_CODE','ACCESS_UNIX_ITEM','ITEM_ID'], 'safe'],
+            [['OTLET_CODE','ACCESS_UNIX','ITEM_ID','ITEM_NM'], 'safe'],
         ];
     }
 
@@ -29,12 +31,22 @@ class TransAllStoreSearch extends Model
 		
 		$this->OUTLET_ID='0001';
 		$this->ACCESS_UNIX='20170404081601';
-		$qryAllStoreItems= Yii::$app->api_dbkg->createCommand("select * from VwDataTransaksi where ACCESS_UNIX='".$this->ACCESS_UNIX."' AND OUTLET_ID='".$this->OUTLET_ID."'")->queryAll();
+		// $qryAllStoreItems= Yii::$app->api_dbkg->createCommand("
+			// select * from VwDataTransaksi 
+			// where ACCESS_UNIX='".$this->ACCESS_UNIX."' AND OUTLET_ID='".$this->OUTLET_ID."'
+			// AND TGL='".$this->TGL."'
+		// ")->queryAll();
+		
+		$qryAllStoreItems= Yii::$app->api_dbkg->createCommand("
+			select * from VwDataTransaksi 
+			where ACCESS_UNIX='".$this->ACCESS_UNIX."' AND OUTLET_ID='".$this->OUTLET_ID."'
+			AND TGL='".$this->TGL."'
+		")->queryAll();
 		
 		$dataProvider= new ArrayDataProvider([
 			'allModels'=>$qryAllStoreItems	,			
 			'pagination' => [
-				'pageSize' => 500,
+				'pageSize' => 1000,
 			]
 		]);
 		if (!($this->load($params) && $this->validate())) {
@@ -44,10 +56,12 @@ class TransAllStoreSearch extends Model
 		$filter = new Filter();
  		$this->addCondition($filter, 'ACCESS_UNIX', true);
  		$this->addCondition($filter, 'OUTLET_ID', true);	
+ 		$this->addCondition($filter, 'ITEM_NM', true);	
  		$this->addCondition($filter, 'ITEM_ID', true);	
+ 		$this->addCondition($filter, 'TGL', true);	
  		$dataProvider->allModels = $filter->filter($qryAllStoreItems);
 		
-		return $dataProvider->getModels();
+		return $dataProvider;
 	}
 	
 	public function addCondition(Filter $filter, $attribute, $partial = false)

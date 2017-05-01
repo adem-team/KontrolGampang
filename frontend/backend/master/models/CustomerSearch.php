@@ -1,16 +1,13 @@
 <?php
 
-namespace api\modules\master\models;
+namespace frontend\backend\master\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use api\modules\master\models\Item;
+use frontend\backend\master\models\Customer;
 
-/**
- * ItemSearch represents the model behind the search form of `app\backend\master\models\Item`.
- */
-class ItemSearch extends Item
+class CustomerSearch extends Customer
 {
     /**
      * @inheritdoc
@@ -19,29 +16,13 @@ class ItemSearch extends Item
     {
         return [
             [['ID', 'STATUS'], 'integer'],
-            [['ACCESS_UNIX','DEFAULT_HARGA','DEFAULT_STOCK','CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'ITEM_ID', 'OUTLET_CODE', 'ITEM_NM','SATUAN','ITEMGRP','ITEM_QR'], 'safe'],
+            [['ACCESS_UNIX','CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT','OUTLET_CODE', 'NAME','EMAIL','PHONE'], 'safe'],
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function scenarios()
-    {
-        // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
-    }
-
-    /**
-     * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
-     */
     public function search($params)
     {
-        $query = Item::find();
+        $query = Customer::find();
 
         // add conditions that should always apply here
 
@@ -60,19 +41,18 @@ class ItemSearch extends Item
         // grid filtering conditions
         $query->andFilterWhere([
             'ID' => $this->ID,
-			'ACCESS_UNIX' => $this->ACCESS_UNIX,
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
             'STATUS' => $this->STATUS,
-            'OUTLET_CODE' => $this->OUTLET_CODE,
-            'ITEM_QR' => $this->ITEM_QR,
-            'ITEM_ID' => $this->ITEM_ID,
+			'ACCESS_UNIX' => $this->ACCESS_UNIX,
+            'OUTLET_CODE' => $this->OUTLET_CODE
         ]);
 
         $query->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
-			->andFilterWhere(['like', 'ITEMGRP', $this->ITEMGRP])
-            ->andFilterWhere(['like', 'ITEM_NM', $this->ITEM_NM]);
+            ->andFilterWhere(['like', 'NAME', $this->NAME])
+            ->andFilterWhere(['like', 'EMAIL', $this->EMAIL])
+            ->andFilterWhere(['like', 'PHONE', $this->PHONE]);
 
         return $dataProvider;
     }

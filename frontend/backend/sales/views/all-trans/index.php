@@ -29,6 +29,13 @@ $this->registerCss("
 		color: blue;
 	}
 ");
+	/**
+	 * DATE SEARCH GridView.
+	*/
+	 $tglCari=$this->render('_indexFormSearch', [
+				'model' => $model,
+			]);
+			
 	$bColor='rgba(87,114,111, 1)';
 	$pageNm='<span class="fa-stack fa-xs text-right">				  
 				  <i class="fa fa-share fa-1x"></i>
@@ -211,7 +218,7 @@ $this->registerCss("
 		'panel'=>[''],
 		'toolbar' => false,
 		'panel' => [
-			//'heading'=>false,
+			'heading'=>'',//$tglCari,
 			//'heading'=>tombolBack().'<div style="float:right"> '.tombolCreate().' '.tombolExportExcel().'</div>',  
 			//'heading'=>tombolBack().' '.tombolCreate().' '.tombolExportExcel($paramUrl).' '.tombolFHargaDiscount($paramUrl).' ' .tombolFDiscount($paramUrl).' '.tombolRefresh($paramUrl).' '.$pageNm,  
 			'type'=>'info',
@@ -227,6 +234,7 @@ $this->registerCss("
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;">
 		<div class="row">
+			<?=$tglCari?>
 			<?=$gvSalesRpt?>
 		</div>
 	</div>

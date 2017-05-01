@@ -110,6 +110,8 @@ class StoreSearch extends Store
 		
 		//$query->Where('FIND_IN_SET("20170404081601", ACCESS_UNIX)');
 		$query->Where('FIND_IN_SET("'.$this->ACCESS_UNIX.'", ACCESS_UNIX)');
+		$query->andFilterWhere(['like', 'OUTLET_CODE', $this->OUTLET_CODE]);
+		
 		//$query->asArray();
 		
         return $dataProvider;

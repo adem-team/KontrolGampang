@@ -99,7 +99,8 @@ return [
                         'controller' =>[
 							'master/store',
 							'master/storetest',
-							'master/item-image'
+							'master/item-image',
+							'master/customer',							
 						],
 						'patterns' => [
 							'PUT,PATCH {id}' => 'update',

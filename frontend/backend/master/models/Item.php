@@ -32,7 +32,7 @@ class Item extends \yii\db\ActiveRecord
     {
         return [
 			[['ITEM_NM','STATUS'], 'required','on'=>'create'],
-            [['ACCESS_UNIX','DEFAULT_HARGA','DEFAULT_STOCK','CREATE_AT', 'UPDATE_AT','satuanStt','image','imageNmTmp'], 'safe'],
+            [['ACCESS_UNIX','DEFAULT_HARGA','DEFAULT_STOCK','CREATE_AT', 'UPDATE_AT','satuanStt','image','imageNmTmp','ITEMGRP','ITEM_QR'], 'safe'],
             [['STATUS'], 'integer'],
             [['CREATE_BY', 'UPDATE_BY', 'ITEM_ID', 'OUTLET_CODE'], 'string', 'max' => 50],
             [['ITEM_NM','SATUAN'], 'string', 'max' => 100],
@@ -52,10 +52,12 @@ class Item extends \yii\db\ActiveRecord
             'UPDATE_AT' => Yii::t('app', 'Update  At'),
             'STATUS' => Yii::t('app', 'STATUS'),
 			'ACCESS_UNIX' => Yii::t('app', 'Access Unix'),
+			'OUTLET_CODE' => Yii::t('app', 'OUTLET.CODE'),
             'ITEM_ID' => Yii::t('app', 'ITEM.ID'),
-            'OUTLET_CODE' => Yii::t('app', 'OUTLET.CODE'),
+            'ITEM_QR' => Yii::t('app', 'ITEM_QR'),            
             'ITEM_NM' => Yii::t('app', 'ITEM NAME'),
             'SATUAN' => Yii::t('app', 'SATUAN'),
+            'ITEMGRP' => Yii::t('app', 'ITEMGRP'),
             'DEFAULT_STOCK' => Yii::t('app', 'DEFAULT_STOCK'),
             'DEFAULT_HARGA' => Yii::t('app', 'DEFAULT_HARGA'),
             'itemsImage64' => Yii::t('app', 'IMAGE'),
