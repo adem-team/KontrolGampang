@@ -19,7 +19,7 @@ class ItemSearch extends Item
     {
         return [
             [['ID', 'STATUS'], 'integer'],
-            [['ACCESS_UNIX','DEFAULT_HARGA','DEFAULT_STOCK','CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'ITEM_ID', 'OUTLET_CODE', 'ITEM_NM','SATUAN'], 'safe'],
+            [['ACCESS_UNIX','DEFAULT_HARGA','DEFAULT_STOCK','CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'ITEM_ID', 'OUTLET_CODE', 'ITEM_NM','SATUAN','ITEMGRP','ITEM_QR'], 'safe'],
         ];
     }
 
@@ -64,12 +64,14 @@ class ItemSearch extends Item
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
             'STATUS' => $this->STATUS,
+            'OUTLET_CODE' => $this->OUTLET_CODE,
+            'ITEM_QR' => $this->ITEM_QR,
+            'ITEM_ID' => $this->ITEM_ID,
         ]);
 
         $query->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
-            ->andFilterWhere(['like', 'ITEM_ID', $this->ITEM_ID])
-            ->andFilterWhere(['like', 'OUTLET_CODE', $this->OUTLET_CODE])
+			->andFilterWhere(['like', 'ITEMGRP', $this->ITEMGRP])
             ->andFilterWhere(['like', 'ITEM_NM', $this->ITEM_NM]);
 
         return $dataProvider;

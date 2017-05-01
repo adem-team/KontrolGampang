@@ -16,7 +16,7 @@ class CustomerSearch extends Customer
     {
         return [
             [['ID', 'STATUS'], 'integer'],
-            [['CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT','OUTLET_CODE', 'NAME','EMAIL','PHONE'], 'safe'],
+            [['ACCESS_UNIX','CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT','OUTLET_CODE', 'NAME','EMAIL','PHONE'], 'safe'],
         ];
     }
 
@@ -43,12 +43,13 @@ class CustomerSearch extends Customer
             'ID' => $this->ID,
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
-            'STATUS' => $this->STATUS
+            'STATUS' => $this->STATUS,
+			'ACCESS_UNIX' => $this->ACCESS_UNIX,
+            'OUTLET_CODE' => $this->OUTLET_CODE
         ]);
 
         $query->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
-            ->andFilterWhere(['like', 'OUTLET_CODE', $this->OUTLET_CODE])
             ->andFilterWhere(['like', 'NAME', $this->NAME])
             ->andFilterWhere(['like', 'EMAIL', $this->EMAIL])
             ->andFilterWhere(['like', 'PHONE', $this->PHONE]);

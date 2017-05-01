@@ -7,19 +7,7 @@ use yii\helpers\Json;
 use api\modules\master\models\ItemJual;
 use api\modules\master\models\ItemImage;
 use api\modules\master\models\ItemFdiscount;
-/**
- * This is the model class for table "item".
- *
- * @property string $ID
- * @property string $CREATE_BY USER CREATED
- * @property string $CREATE_AT Tanggal dibuat
- * @property string $UPDATE_BY USER UPDATE
- * @property string $UPDATE_AT Tanggal di update
- * @property int $STATUS 0=disable 1=Normal (one table items).      (Android No Stock) 2=Detail (Join Itm Hpp)     (Android USED Stock)
- * @property string $ITEM_ID
- * @property string $OUTLET_CODE
- * @property string $ITEM_NM
- */
+
 class Item extends \yii\db\ActiveRecord
 {
 
@@ -42,7 +30,7 @@ class Item extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ACCESS_UNIX','DEFAULT_HARGA','DEFAULT_STOCK','CREATE_AT', 'UPDATE_AT'], 'safe'],
+            [['ACCESS_UNIX','DEFAULT_HARGA','DEFAULT_STOCK','CREATE_AT', 'UPDATE_AT','ITEMGRP','ITEM_QR'], 'safe'],
             [['STATUS'], 'integer'],
             [['CREATE_BY', 'UPDATE_BY', 'ITEM_ID', 'OUTLET_CODE'], 'string', 'max' => 50],
             [['ITEM_NM','SATUAN'], 'string', 'max' => 100],
@@ -62,10 +50,12 @@ class Item extends \yii\db\ActiveRecord
             'UPDATE_AT' => Yii::t('app', 'Update  At'),
             'STATUS' => Yii::t('app', 'STATUS'),
             'ACCESS_UNIX' => Yii::t('app', 'Access Unix'),
-            'ITEM_ID' => Yii::t('app', 'ITEM.ID'),
-            'OUTLET_CODE' => Yii::t('app', 'OUTLET.CODE'),
+			'OUTLET_CODE' => Yii::t('app', 'OUTLET.CODE'),
+            'ITEM_ID' => Yii::t('app', 'ITEM.ID'),            
+            'ITEM_QR' => Yii::t('app', 'ITEM_QR'),
             'ITEM_NM' => Yii::t('app', 'ITEM NAME'),
             'SATUAN' => Yii::t('app', 'SATUAN'),
+            'ITEMGRP' => Yii::t('app', 'ITEMGRP'),
             'DEFAULT_STOCK' => Yii::t('app', 'STOCK'),
             'DEFAULT_HARGA' => Yii::t('app', 'HARGA'),
         ];
@@ -80,11 +70,17 @@ class Item extends \yii\db\ActiveRecord
 			'ITEM_ID'=>function($model){
 				return $model->ITEM_ID;
 			},					
+			'ITEM_QR'=>function($model){
+				return $model->ITEM_QR;
+			},					
 			'ITEM_NM'=>function($model){
 				return $model->ITEM_NM;
 			},	
 			'SATUAN'=>function($model){
 				return $model->SATUAN;
+			},				
+			'ITEMGRP'=>function($model){
+				return $model->ITEMGRP;
 			},				
 			'UPDATE_AT'=>function($model){
 				return $model->UPDATE_AT;

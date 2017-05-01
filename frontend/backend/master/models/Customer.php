@@ -26,7 +26,7 @@ class Customer extends \yii\db\ActiveRecord
     {
         return [
 			[['SATUAN_NM'], 'required','on'=>'create'],
-            [['CREATE_AT', 'UPDATE_AT', 'NAME','EMAIL','PHONE'], 'safe'],
+            [['ACCESS_UNIX','CREATE_AT', 'UPDATE_AT', 'NAME','EMAIL','PHONE'], 'safe'],
             [['STATUS'], 'integer'],
             [['CREATE_BY', 'UPDATE_BY','OUTLET_CODE'], 'string', 'max' => 50],
         ];
@@ -44,6 +44,7 @@ class Customer extends \yii\db\ActiveRecord
             'UPDATE_BY' => Yii::t('app', 'Update  By'),
             'UPDATE_AT' => Yii::t('app', 'Update  At'),
             'STATUS' => Yii::t('app', 'Status'),
+            'ACCESS_UNIX' => Yii::t('app', 'ACCESS_UNIX'),
             'OUTLET_CODE' => Yii::t('app', 'OUTLET_CODE'),
             'NAME' => Yii::t('app', 'NAME'),
             'EMAIL' => Yii::t('app', 'EMAIL'),
@@ -59,6 +60,9 @@ class Customer extends \yii\db\ActiveRecord
 			'UPDATE_AT'=>function($model){
 				return $model->UPDATE_AT;
 			},					
+			'ACCESS_UNIX'=>function($model){
+				return $model->ACCESS_UNIX;
+			},
 			'OUTLET_CODE'=>function($model){
 				return $model->OUTLET_CODE;
 			},
