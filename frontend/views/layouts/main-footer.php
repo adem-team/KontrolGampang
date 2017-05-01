@@ -1,8 +1,8 @@
 <!--<footer class="footer">
 	<div class="container">
-		<p class="pull-left">&copy; My Company1 <?= date('Y') ?></p>
+		<p class="pull-left">&copy; My Company1 <?php//= date('Y') ?></p>
 
-		<p class="pull-right"><?= Yii::powered() ?></p>
+		<p class="pull-right"><?php//= Yii::powered() ?></p>
 	</div>
 </footer>
 !-->
@@ -13,8 +13,10 @@
 			<div class="row">
 				<div class="footer-col col-md-4">
 					<h3>Location</h3>
-					<p>3481 Melrose Place
-						<br>Beverly Hills, CA 90210</p>
+					<p>Ruko De mansion C12
+						<br>Alam Sutra - Tangerang - Banten</p>
+				</div>
+				<div class="footer-col col-md-4">
 				</div>
 				<div class="footer-col col-md-4">
 					<h3>Around the Web</h3>
@@ -36,10 +38,10 @@
 						</li>
 					</ul>
 				</div>
-				<div class="footer-col col-md-4">
+				<!--<div class="footer-col col-md-4">
 					<h3>help Freelancer</h3>
 					<p>Freelance is a free to use, open source Bootstrap theme created by <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
-				</div>
+				</div> !-->
 			</div>
 		</div>
 	</div>
@@ -47,7 +49,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
-					Copyright &copy; Your Website 2016
+					Copyright &copy; KG 2016/2017
 				</div>
 			</div>
 		</div>

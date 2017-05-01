@@ -67,10 +67,11 @@ $this->registerCss("
 
 		return $content = Html::a($label,$url,$options);
 	}
+	
 	//HEADER BUTTON : Link Button Refresh 
 	function tombolRefresh(){
 		$title = Yii::t('app', 'Refresh');
-		$url =  Url::toRoute(['/efenbi-rasasayang/store']);
+		$url =  Url::toRoute(['/master/outlet']);
 		$options = ['id'=>'store-id-refresh',
 				  'data-pjax' => 0,
 				  'class'=>"btn btn-info btn-xs",
@@ -125,6 +126,34 @@ $this->registerCss("
 				$label1 = $icon1 . '  ' . $title1;
 				$content = Html::button($label1,$options1);		
 				return '<li>'.$content.'</li>';
+			// }
+		// }
+	}
+	
+	/*
+	 *  ROWS BUTTON : Store - VIEW.
+	*/
+	function tombolItems($url, $model){
+		// if(getPermission()){
+			//Jika BTN_CREATE Show maka BTN_CVIEW Show.
+			// if(getPermission()->BTN_VIEW==1 OR getPermission()->BTN_CREATE==1){
+				$title1 = Yii::t('app',' Items');
+				$url = url::to(['/master/item','outlet_code'=>$model->OUTLET_CODE]);
+				$options1 = [
+					//'value'=>url::to(['/master/item','outlet_code'=>$model->OUTLET_CODE]),
+					'id'=>'store-button-item',
+					'class'=>"btn btn-default btn-xs",    
+					'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'28px','border'=> 'none'],
+				];
+				$icon1 = '
+					<span class="fa-stack fa-xs">																	
+						<i class="fa fa-circle-thin fa-stack-2x " style="color:'.bgIconColor().'"></i>
+						<i class="fa fa-eye fa-stack-1x" style="color:black"></i>
+					</span>
+				';      
+				$label1 = $icon1 . '  ' . $title1;
+				$content = Html::a($label1,$url,$options1);		
+				return $content;
 			// }
 		// }
 	}
@@ -267,5 +296,4 @@ $this->registerCss("
 	]);
 	echo "<div id='store-modal-content-review'></div>";
 	Modal::end();
-	
 ?>
