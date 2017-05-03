@@ -16,16 +16,16 @@ use yii\web\Response;
 use yii\helpers\ArrayHelper;
 use yii\web\HttpException;
 use api\modules\login\models\UserTokenSearch;
-use api\modules\login\models\User;
+use common\models\User;
 
 /**
-  * LOGIN AND CHECK TOKEN USER.
+  * logintest AND CHECK TOKEN USER.
   * auth_key		: Token Primary.
-  * access_token 	: Token Access, after login for Access Api data POST,GET,PUT.
+  * access_token 	: Token Access, after logintest for Access Api data POST,GET,PUT.
   * @author ptrnov  <piter@lukison.com>
   * @since 1.2
-  * CMD : curl -u username:password http://api.kontrolgampang.int/login/user-tokens?username=trial1
-  * CMD : curl -u trial1:semangat2016 http://api.kontrolgampang.int/login/user-tokens?username=trial1
+  * CMD : curl -u username:password http://api.kontrolgampang.int/logintest/user-tokens?username=trial1
+  * CMD : curl -u trial1:semangat2016 http://api.kontrolgampang.int/logintest/user-tokens?username=trial1
  */
 class UserTokenController extends ActiveController
 {	
@@ -44,9 +44,9 @@ class UserTokenController extends ActiveController
 	/**
      * Behaviors
 	 * Mengunakan Auth HttpBasicAuth.
-	 * Chacking Login.
+	 * Chacking logintest.
      */
-     public function behaviors()    {
+    public function behaviors()    {
         return ArrayHelper::merge(parent::behaviors(), [
             'authenticator' => 
             [
