@@ -37,7 +37,7 @@ class UserToken extends \yii\db\ActiveRecord
         return [
 			[['username','auth_key','password_hash','POSITION_ACCESS'], 'required','on' => self::SCENARIO_USER],		
 			[['username','auth_key','password_hash','password_reset_token'], 'string'],
-			[['update_at'],'safe'],
+			[['updated_at'],'safe'],
 			[['ACCESS_UNIX','ACCESS_GROUP','UUID'], 'safe'],
 		];
     }
