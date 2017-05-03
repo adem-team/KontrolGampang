@@ -48,25 +48,17 @@ class UserTokenController extends ActiveController
      */
     public function behaviors()    {
         return ArrayHelper::merge(parent::behaviors(), [
-            /* 'authenticator' => 
+            'authenticator' => 
             [
                 'class' => CompositeAuth::className(),
 				'authMethods' => 
                 [
-                    ['class' => HttpBasicAuth::className()
-					,'auth' => function ($username, $password) {							
-							$user = User::find()->where(['username' => $username])->one();
-							if($user){
-								if ($user->username==$username && $user->validatePassword($password)) {
-									$user->findResetAccessToken($user->username);								
-									return $user;
-								}
-								return null;
-							}
-						},
-					], 
-                ]
-            ], */
+                    #Hapus Tanda Komentar Untuk Autentifikasi Dengan Token               
+                   // ['class' => HttpBearerAuth::className()],
+                   // ['class' => QueryParamAuth::className(), 'tokenParam' => 'access-token'],
+                ],
+                'except' => ['options']
+            ],
 			'bootstrap'=> 
             [
 				'class' => ContentNegotiator::className(),
@@ -81,18 +73,16 @@ class UserTokenController extends ActiveController
 					// restrict access to
 					//'Origin' => ['http://lukisongroup.com', 'http://lukisongroup.int','http://localhost','http://103.19.111.1','http://202.53.354.82'],
 					'Origin' => ['*'],
-					'Access-Control-Request-Method' => ['POST', 'PUT','GET'],
-					// Allow only POST and PUT methods
-					'Access-Control-Request-Headers' => ['X-Wsse'],
-					'Access-Control-Allow-Headers' => ['X-Requested-With','Content-Type'],
+					'Access-Control-Request-Method' => ['POST', 'GET', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
+					//'Access-Control-Request-Headers' => ['*'],
+					'Access-Control-Request-Headers' => ['*'],
 					// Allow only headers 'X-Wsse'
-					'Access-Control-Allow-Credentials' => true,
+					'Access-Control-Allow-Credentials' => false,
 					// Allow OPTIONS caching
 					'Access-Control-Max-Age' => 3600,
-					// Allow the X-Pagination-Current-Page header to be exposed to the browser.
-					'Access-Control-Expose-Headers' => ['X-Pagination-Current-Page'],
-				]		
-			],
+
+					]		 
+			]
         ]);		
     }
 
