@@ -28,13 +28,21 @@ $this->registerCss("
 	a:active {
 		color: blue;
 	}
+	.kv-grid-wrapper {
+		position: relative;
+		overflow: auto;
+		height: 450px;
+	}
 ");
 	/**
 	 * DATE SEARCH GridView.
 	*/
-	 $tglCari=$this->render('_indexFormSearch', [
-				'model' => $model,
-			]);
+	$cariTgl=$this->render('_formSearchTgl', [
+		'model' => $model,
+	]);
+	$cariStore=$this->render('_formSearchStore', [
+		'model' => $model,
+	]);
 			
 	$bColor='rgba(87,114,111, 1)';
 	$pageNm='<span class="fa-stack fa-xs text-right">				  
@@ -199,7 +207,7 @@ $this->registerCss("
 	$gvSalesRpt=GridView::widget([
 		'id'=>'gv-sales-rpt',
 		'dataProvider' => $dataProvider,
-		'filterModel' => $searchModel,
+		//'filterModel' => $searchModel,
 		'columns'=>$gvAttSalesRpt,				
 		'pjax'=>true,
 		'pjaxSettings'=>[
@@ -234,7 +242,12 @@ $this->registerCss("
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;">
 		<div class="row">
-			<?=$tglCari?>
+			<div style="width:45px;float:left">
+				<?=$cariTgl?>
+			</div>
+			<div style="float:left">
+				<?=$cariStore?>
+			</div>
 			<?=$gvSalesRpt?>
 		</div>
 	</div>
