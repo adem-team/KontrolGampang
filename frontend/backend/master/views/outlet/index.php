@@ -391,5 +391,4 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 			<?=$gvStore?>
 		</div>		
 	</div>
->>>>>>> 22f6a38bf7088602c3463ab825a0aa204772851f
 </div>

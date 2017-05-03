@@ -296,4 +296,5 @@ $this->registerCss("
 	]);
 	echo "<div id='store-modal-content-review'></div>";
 	Modal::end();
+	
 ?>

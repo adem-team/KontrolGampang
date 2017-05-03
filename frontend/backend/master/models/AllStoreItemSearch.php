@@ -48,7 +48,7 @@ class AllStoreItemSearch extends Model
 		
 		//$this->OUTLET_CODE='0001';
 		$this->ACCESS_UNIX_ITEM='20170404081601';
-		$qryAllStoreItems= Yii::$app->dbkg->createCommand("select * from VwStoreItem where ACCESS_UNIX_ITEM='".$this->ACCESS_UNIX_ITEM."'")->queryAll();
+		$qryAllStoreItems= Yii::$app->api_dbkg->createCommand("select * from VwStoreItem where ACCESS_UNIX_ITEM='".$this->ACCESS_UNIX_ITEM."'")->queryAll();
 		// $qryAllStoreItems= Yii::$app->db->createCommand("select * from VwStoreItem where ACCESS_UNIX_ITEM='".$this->ACCESS_UNIX_ITEM."' AND OUTLET_CODE='".$this->OUTLET_CODE."'")->queryAll();
 		
 		$dataProvider= new ArrayDataProvider([
@@ -87,4 +87,31 @@ class AllStoreItemSearch extends Model
             $filter->addMatcher($attribute, new matchers\SameAs(['value' => $value, 'partial' => $partial]));
         }
     }
+	
+	public function addConditionX(Filter $filter, $attribute, $partial = false)
+    {
+        $value = $this->$attribute;
+
+        if (mb_strpos($value, '>') !== false) {
+            $value = intval(str_replace('>', '', $value));
+            $filter->addMatcher($attribute, new matchers\GreaterThan(['value' => $value]));
+
+        } elseif (mb_strpos($value, '<') !== false) {
+            $value = intval(str_replace('<', '', $value));
+            $filter->addMatcher($attribute, new matchers\LowerThan(['value' => $value]));
+        } else {
+            $filter->addMatcher($attribute, new matchers\SameAs(['value' => $value, 'partial' => $partial]));
+        }
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
