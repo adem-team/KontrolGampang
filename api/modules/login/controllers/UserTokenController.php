@@ -46,7 +46,7 @@ class UserTokenController extends ActiveController
 	 * Mengunakan Auth HttpBasicAuth.
 	 * Chacking Login.
      */
-    public function behaviors()    {
+     public function behaviors()    {
         return ArrayHelper::merge(parent::behaviors(), [
             'authenticator' => 
             [
@@ -82,7 +82,19 @@ class UserTokenController extends ActiveController
 					'Access-Control-Max-Age' => 3600,
 
 					]		 
-			]
+			],
+			/* 'corsFilter' => [
+				'class' => \yii\filters\Cors::className(),
+				'cors' => [
+					'Origin' => ['*'],
+					'Access-Control-Allow-Headers' => ['X-Requested-With','Content-Type'],
+					'Access-Control-Request-Method' => ['POST', 'GET', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
+					//'Access-Control-Request-Headers' => ['*'],					
+					'Access-Control-Allow-Credentials' => true,
+					'Access-Control-Max-Age' => 3600,
+					'Access-Control-Expose-Headers' => ['X-Pagination-Current-Page']
+					]		 
+			], */
         ]);		
     }
 
