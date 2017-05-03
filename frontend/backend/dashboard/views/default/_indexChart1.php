@@ -17,7 +17,7 @@ AppAssetBackendBorder::register($this);
 
 
 	$hourly3DaysTafik= Chart::Widget([
-		'urlSource'=> url::base().'/dashboard/data/chart1',
+		'urlSource'=>'/dashboard/data/chart1',
 		'userid'=>'piter@lukison.com',
 		'dataArray'=>'[]',//$actionChartGrantPilotproject,				//array scource model or manual array or sqlquery
 		'dataField'=>'[]',//['label','value'],							//field['label','value'], normaly value is numeric
