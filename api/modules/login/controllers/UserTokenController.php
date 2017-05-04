@@ -71,7 +71,7 @@ class UserTokenController extends ActiveController
 				'class' => \yii\filters\Cors::className(),
 				'cors' => [
 					// restrict access to
-					'Origin' => ['*'],
+					'Origin' => ['*','http://localhost:810'],
 					'Access-Control-Request-Method' => ['POST', 'PUT','GET'],
 					// Allow only POST and PUT methods
 					'Access-Control-Request-Headers' => ['X-Wsse'],
