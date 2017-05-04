@@ -46,67 +46,58 @@ class UserTokenController extends ActiveController
 	 * Mengunakan Auth HttpBasicAuth.
 	 * Chacking logintest.
      */
-    public function behaviors()    {
+
+public function behaviors() {
         return ArrayHelper::merge(parent::behaviors(), [
-            'authenticator' => 
-            [
+            /* 'authenticator' => [
                 'class' => CompositeAuth::className(),
-				'authMethods' => 
-                [
-                    #Hapus Tanda Komentar Untuk Autentifikasi Dengan Token               
-                   // ['class' => HttpBearerAuth::className()],
-                   // ['class' => QueryParamAuth::className(), 'tokenParam' => 'access-token'],
+                'authMethods' => [
+                    ['class' => HttpBearerAuth::className()],
+                    // ['class' => QueryParamAuth::className(), 'tokenParam' => 'access-token'],
                 ],
                 'except' => ['options']
-            ],
-			'bootstrap'=> 
-            [
+            ], */
+			'bootstrap'=> [
 				'class' => ContentNegotiator::className(),
-				'formats' => 
-                [
+				'formats' => [
 					'application/json' => Response::FORMAT_JSON,
 				],
 			],
-			'corsFilter' => [
-				'class' => \yii\filters\Cors::className(),
-				'cors' => [
-					// restrict access to
-					//'Origin' => ['http://lukisongroup.com', 'http://lukisongroup.int','http://localhost','http://103.19.111.1','http://202.53.354.82'],
-					'Origin' => ['*'],
-					'Access-Control-Request-Method' => ['POST', 'GET', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
-					//'Access-Control-Request-Headers' => ['*'],
-					'Access-Control-Request-Headers' => ['*'],
-					// Allow only headers 'X-Wsse'
-					'Access-Control-Allow-Credentials' => false,
-					// Allow OPTIONS caching
-					'Access-Control-Max-Age' => 3600,
+			'corsFilter' =>
+            [
+                'class' => \yii\filters\Cors::className(),
+                'cors' =>
+                [
+                    // restrict access to
+                    'Origin' =>['*'],// ['http://ptrnov-erp.dev', 'https://ptrnov-erp.dev'],
+                    'Access-Control-Request-Method' => ['GET','POST', 'PUT','OPTIONS'],
+                    // Allow only POST and PUT methods
+                    'Access-Control-Request-Headers' => ['*'],
+                    // Allow only headers 'X-Wsse'
+                    'Access-Control-Allow-Credentials' => true,
+                    // Allow OPTIONS caching
+                    'Access-Control-Max-Age' => 3600,
+                    // Allow the X-Pagination-Current-Page header to be exposed to the browser.
+                    'Access-Control-Expose-Headers' => ['X-Pagination-Current-Page'],
+                ],
+	]
+	]
+}
 
-					]		 
-			],
-			/* 'corsFilter' => [
-				'class' => \yii\filters\Cors::className(),
-				'cors' => [
-					'Origin' => ['*'],
-					'Access-Control-Allow-Headers' => ['X-Requested-With','Content-Type'],
-					'Access-Control-Request-Method' => ['POST', 'GET', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
-					//'Access-Control-Request-Headers' => ['*'],					
-					'Access-Control-Allow-Credentials' => true,
-					'Access-Control-Max-Age' => 3600,
-					'Access-Control-Expose-Headers' => ['X-Pagination-Current-Page']
-					]		 
-			], */
-        ]);		
-    }
 
-	/**
-     * Model Search Data.
-     */
-	public function actions()
-    {		
-        return [
-            'index' => [
-                'class' => 'yii\rest\IndexAction',
-                'modelClass' => $this->modelClass,
+
+
+
+
+
+
+
+public function actions()
+            ], ], {
+		] //'exceptionFilter' => [ return [
+    }            // 'class' => ErrorToExceptionFilter::className() ], 'index' => [
+        ]); 'class' => 'yii\rest\IndexAction',
+    }                'modelClass' => $this->modelClass,
                 'prepareDataProvider' => function () {					
 					$param=["UserTokenSearch"=>Yii::$app->request->queryParams];
 					//return $param;
