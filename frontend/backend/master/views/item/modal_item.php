@@ -168,13 +168,14 @@ $this->registerCss("
 	/*
 	 * Button - EXPORT EXCEL.
 	*/
-	function tombolExportExcel(){
+	function tombolExportExcel($paramUrl){
 		// if(getPermission()){
 			// if(getPermission()->BTN_PROCESS1==1){
 				$title1 = Yii::t('app', ' Export Excel');
-				$url = Url::toRoute(['/master/item/export-excel']);
-				$options1 = ['value'=>$url,
-							'id'=>'item-button-export-excel',
+				$url = Url::toRoute(['/master/item/export-data','outlet_code'=>$paramUrl]);
+				$options1 = [
+							'data-pjax' => true,
+							'id'=>'item-button-export-data-excel',
 							'class'=>"btn btn-default btn-xs"  
 				];
 				$icon1 = '
@@ -184,7 +185,7 @@ $this->registerCss("
 						</span>		
 				';
 				$label1 = $icon1 . ' ' . $title1;
-				$content = Html::button($label1,$options1);
+				$content = Html::a($label1,$url,$options1);
 				return $content;
 			// }
 		// }
