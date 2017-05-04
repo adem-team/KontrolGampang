@@ -44,28 +44,29 @@ class UserTokenController extends ActiveController
 	/**
      * Behaviors
 	 * Mengunakan Auth HttpBasicAuth.
-	 * Chacking logintest.
+	 * Chacking kontrolgampang\login.
      */
-
-	public function behaviors()    {
+    public function behaviors()    {
         return ArrayHelper::merge(parent::behaviors(), [
-            'authenticator' => [
+            'authenticator' => 
+            [
                 'class' => CompositeAuth::className(),
-                'authMethods' => [
-                 // ['class' => HttpBearerAuth::className()],
-                 // ['class' => QueryParamAuth::className()],//, 'tokenParam' => 'access-token'],
-                ]
-            ], 
-			'bootstrap'=> [
+				'authMethods' => 
+                [
+                    #Hapus Tanda Komentar Untuk Autentifikasi Dengan Token               
+                   // ['class' => HttpBearerAuth::className()],
+                   // ['class' => QueryParamAuth::className(), 'tokenParam' => 'access-token'],
+                ],
+                'except' => ['options']
+            ],
+			'bootstrap'=> 
+            [
 				'class' => ContentNegotiator::className(),
-				'formats' => [
-					'application/json' => Response::FORMAT_JSON,'charset' => 'UTF-8',
+				'formats' => 
+                [
+					'application/json' => Response::FORMAT_JSON,
 				],
-				'languages' => [
-					'en',
-					'de',
-				],
-			],			
+			],
 			'corsFilter' => [
 				'class' => \yii\filters\Cors::className(),
 				'cors' => [
@@ -82,22 +83,35 @@ class UserTokenController extends ActiveController
 					'Access-Control-Expose-Headers' => ['X-Pagination-Current-Page'],
 				]		
 			],
-        ]);
-		
+			/* 'corsFilter' => [
+				'class' => \yii\filters\Cors::className(),
+				'cors' => [
+					'Origin' => ['*'],
+					'Access-Control-Allow-Headers' => ['X-Requested-With','Content-Type'],
+					'Access-Control-Request-Method' => ['POST', 'GET', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
+					//'Access-Control-Request-Headers' => ['*'],					
+					'Access-Control-Allow-Credentials' => true,
+					'Access-Control-Max-Age' => 3600,
+					'Access-Control-Expose-Headers' => ['X-Pagination-Current-Page']
+					]		 
+			], */
+        ]);		
     }
 
-
-	public function actions(){
-	{		
+	/**
+     * Model Search Data.
+     */
+	public function actions()
+    {		
         return [
-            'index' => [		
-				'class' => 'yii\rest\IndexAction',
-				'modelClass' => $this->modelClass,
-				'prepareDataProvider' => function () {					
+            'index' => [
+                'class' => 'yii\rest\IndexAction',
+                'modelClass' => $this->modelClass,
+                'prepareDataProvider' => function () {					
 					$param=["UserTokenSearch"=>Yii::$app->request->queryParams];
 					//return $param;
-					$searchModel = new UserTokenSearch();
-					if($searchModel){
+                    $searchModel = new UserTokenSearch();
+                    if($searchModel){
 						return $searchModel->search($param);
 					}else{
 						$nodata=[
@@ -106,7 +120,7 @@ class UserTokenController extends ActiveController
 						];
 						return $nodata;
 					}					
-				},
+                },
             ],
         ];
     }	 
