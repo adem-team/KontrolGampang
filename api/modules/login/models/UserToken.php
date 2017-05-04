@@ -14,19 +14,17 @@ use api\modules\login\models\UserProfil;
 use api\modules\login\models\Corp;
 
 class UserToken extends \yii\db\ActiveRecord
-//class Userlogin extends ActiveRecord implements IdentityInterface
+//class Userlogintest extends ActiveRecord implements IdentityInterface
 {
 	
 	const SCENARIO_USER = 'createuser';
-	
+	public static function getDb()
+	{
+		/* Author -ptr.nov- : HRD | Dashboard I */
+		return \Yii::$app->dbkg;
+	}
 	public $new_pass;
     
-	
-	public static function getDb()
-    {
-        return Yii::$app->get('api_dbkg');
-    }
-	
 	public static function tableName()
     {
         return '{{user}}';
@@ -37,8 +35,8 @@ class UserToken extends \yii\db\ActiveRecord
         return [
 			[['username','auth_key','password_hash','POSITION_ACCESS'], 'required','on' => self::SCENARIO_USER],		
 			[['username','auth_key','password_hash','password_reset_token'], 'string'],
-			[['update_at'],'safe'],
-			[['ACCESS_UNIX','ACCESS_GROUP','UUID'], 'safe'],
+			[['updated_at'],'safe'],
+			[['ACCESS_UNIX','UUID'], 'safe'],
 		];
     }
 
@@ -48,7 +46,6 @@ class UserToken extends \yii\db\ActiveRecord
             'username' => Yii::t('app', 'User Name'),
 			'password_hash' => Yii::t('app', 'Password Hash'),
 			'ACCESS_UNIX' => Yii::t('app', 'ACCESS_UNIX'),
-			'ACCESS_GROUP' => Yii::t('app', 'ACCESS_GROUP'),
 			'UUID' => Yii::t('app', 'UUID')			
         ];
     }

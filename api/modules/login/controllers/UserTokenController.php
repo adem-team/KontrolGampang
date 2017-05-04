@@ -16,16 +16,16 @@ use yii\web\Response;
 use yii\helpers\ArrayHelper;
 use yii\web\HttpException;
 use api\modules\login\models\UserTokenSearch;
-use api\modules\login\models\User;
+use common\models\User;
 
 /**
-  * LOGIN AND CHECK TOKEN USER.
+  * logintest AND CHECK TOKEN USER.
   * auth_key		: Token Primary.
-  * access_token 	: Token Access, after login for Access Api data POST,GET,PUT.
+  * access_token 	: Token Access, after logintest for Access Api data POST,GET,PUT.
   * @author ptrnov  <piter@lukison.com>
   * @since 1.2
-  * CMD : curl -u username:password http://api.kontrolgampang.int/login/user-tokens?username=trial1
-  * CMD : curl -u trial1:semangat2016 http://api.kontrolgampang.int/login/user-tokens?username=trial1
+  * CMD : curl -u username:password http://api.kontrolgampang.int/logintest/user-tokens?username=trial1
+  * CMD : curl -u trial1:semangat2016 http://api.kontrolgampang.int/logintest/user-tokens?username=trial1
  */
 class UserTokenController extends ActiveController
 {	
@@ -44,57 +44,60 @@ class UserTokenController extends ActiveController
 	/**
      * Behaviors
 	 * Mengunakan Auth HttpBasicAuth.
-	 * Chacking Login.
+	 * Chacking logintest.
      */
-    public function behaviors()    {
+
+public function behaviors() {
         return ArrayHelper::merge(parent::behaviors(), [
-            'authenticator' => 
-            [
+            /* 'authenticator' => [
                 'class' => CompositeAuth::className(),
-				'authMethods' => 
-                [
-                    #Hapus Tanda Komentar Untuk Autentifikasi Dengan Token               
-                   // ['class' => HttpBearerAuth::className()],
-                   // ['class' => QueryParamAuth::className(), 'tokenParam' => 'access-token'],
+                'authMethods' => [
+                    ['class' => HttpBearerAuth::className()],
+                    // ['class' => QueryParamAuth::className(), 'tokenParam' => 'access-token'],
                 ],
                 'except' => ['options']
-            ],
-			'bootstrap'=> 
-            [
+            ], */
+			'bootstrap'=> [
 				'class' => ContentNegotiator::className(),
-				'formats' => 
-                [
+				'formats' => [
 					'application/json' => Response::FORMAT_JSON,
 				],
 			],
-			'corsFilter' => [
-				'class' => \yii\filters\Cors::className(),
-				'cors' => [
-					// restrict access to
-					//'Origin' => ['http://lukisongroup.com', 'http://lukisongroup.int','http://localhost','http://103.19.111.1','http://202.53.354.82'],
-					'Origin' => ['*'],
-					'Access-Control-Request-Method' => ['POST', 'GET', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
-					//'Access-Control-Request-Headers' => ['*'],
-					'Access-Control-Request-Headers' => ['*'],
-					// Allow only headers 'X-Wsse'
-					'Access-Control-Allow-Credentials' => false,
-					// Allow OPTIONS caching
-					'Access-Control-Max-Age' => 3600,
+			'corsFilter' =>
+            [
+                'class' => \yii\filters\Cors::className(),
+                'cors' =>
+                [
+                    // restrict access to
+                    'Origin' =>['*'],// ['http://ptrnov-erp.dev', 'https://ptrnov-erp.dev'],
+                    'Access-Control-Request-Method' => ['GET','POST', 'PUT','OPTIONS'],
+                    // Allow only POST and PUT methods
+                    'Access-Control-Request-Headers' => ['*'],
+                    // Allow only headers 'X-Wsse'
+                    'Access-Control-Allow-Credentials' => true,
+                    // Allow OPTIONS caching
+                    'Access-Control-Max-Age' => 3600,
+                    // Allow the X-Pagination-Current-Page header to be exposed to the browser.
+                    'Access-Control-Expose-Headers' => ['X-Pagination-Current-Page'],
+                ],
+	]
+	]
+}
 
-					]		 
-			]
-        ]);		
-    }
 
-	/**
-     * Model Search Data.
-     */
-	public function actions()
-    {		
-        return [
-            'index' => [
-                'class' => 'yii\rest\IndexAction',
-                'modelClass' => $this->modelClass,
+
+
+
+
+
+
+
+public function actions()
+            ], ], {
+		] //'exceptionFilter' => [ return [
+    }            // 'class' => ErrorToExceptionFilter::className() ], 'index' => [
+        ]); 'class' => 'yii\rest\IndexAction',
+    }                'modelClass' => $this->modelClass,
                 'prepareDataProvider' => function () {					
 					$param=["UserTokenSearch"=>Yii::$app->request->queryParams];
 					//return $param;

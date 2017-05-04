@@ -76,7 +76,7 @@ return [
                         'controller' =>[
 							'login/user-token',
 							'login/user'
-						],
+						],						
 						'patterns' => [
 							'PUT,PATCH {id}' => 'update',
 							'DELETE {id}' => 'delete',
