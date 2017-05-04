@@ -9,13 +9,15 @@ use yii\filters\VerbFilter;
 use yii\helpers\Json;
 use yii\web\Session;
 use yii\widgets\ActiveForm;
-
+use yii\data\ArrayDataProvider;
+use yii\helpers\ArrayHelper;
 
 use common\models\Store;
 use frontend\backend\master\models\Item;
 use frontend\backend\master\models\ItemSearch;
 use frontend\backend\master\models\ItemSatuan;
 use frontend\backend\master\models\ItemImage;
+use ptrnov\postman4excel\Postman4ExcelBehavior;
 /**
  * ItemController implements the CRUD actions for Item model.
  */
@@ -29,19 +31,41 @@ class ItemController extends Controller
     /**
      * @inheritdoc
      */
-    public function behaviors()
+     public function behaviors()
     {
-        return [
+		 return ArrayHelper::merge(parent::behaviors(), [
+			/* 'export4excel' => [
+				'class' => Postman4ExcelBehavior::className(),
+				//'downloadPath'=>Yii::getAlias('@lukisongroup').'/cronjob/',
+				//'downloadPath'=>'/var/www/backup/ExternalData/',
+				//'widgetType'=>'download',
+			],  */
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => ['post'],
                 ],
             ],
-        ];
+		 
+		 ]);
+        /* return [
+			//EXCEl IMPORT
+			'export4excel' => [
+				'class' => Postman4ExcelBehavior::className(),
+				//'downloadPath'=>Yii::getAlias('@lukisongroup').'/cronjob/',
+				//'downloadPath'=>'/var/www/backup/ExternalData/',
+				//'widgetType'=>'download',
+			], 
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['post'],
+                ],
+            ],
+        ]; */
     }
 	
-	public function beforeAction($action){
+	/* public function beforeAction($action){
 		 $modulIndentify=4; //OUTLET
 		// Check only when the user is logged in.
 		// Author piter Novian [ptr.nov@gmail.com].
@@ -77,7 +101,7 @@ class ItemController extends Controller
 			Yii::$app->user->logout();
 			return $this->goHome(); 
 		}
-	}
+	} */
 	
     /**
      * Lists all Item models.
@@ -301,7 +325,117 @@ class ItemController extends Controller
       return $base64;
 
     }
-    /**
+   
+	
+	/**====================================
+     * EXPORT DATA GUDANG
+     * @return mixed
+	 * @author piter [ptr.nov@gmail.com]
+	 * @since 1.2
+	 * ====================================
+     */
+	public function actionExportData($outlet_code){
+		
+		$sqlDataProvider= new ArrayDataProvider([
+			'allModels'=>\Yii::$app->db->createCommand("	
+				SELECT 
+					OUTLET_CODE,
+					ITEM_ID,
+					ITEM_QR,
+					ITEM_NM,
+					SATUAN,
+					ITEMGRP,
+					DEFAULT_STOCK,
+					DEFAULT_HARGA
+					FROM item;	
+			")->queryAll(), 
+		]);	
+		$arySqlDataProvider=$sqlDataProvider->allModels;
+		
+		// $searchModel = new ItemSearch(['OUTLET_CODE'=>$outlet_code]);
+		// $dataProvider = $searchModel->search(Yii::$app->request->queryParams);	
+		
+		//$dpItems=$dataProvider->getModels();
+		$aryData=[];
+		foreach ($arySqlDataProvider as $key => $value){
+				$aryData[]=[
+					'OUTLET_CODE'=>$value['OUTLET_CODE'],
+					'ITEM_ID'=>$value['ITEM_ID'],
+					'ITEM_QR'=>$value['ITEM_QR'],
+					'ITEM_NM'=>$value['ITEM_NM'],
+					'SATUAN'=>$value['SATUAN'],
+					'ITEMGRP'=>$value['ITEMGRP'],
+					'DEFAULT_STOCK'=>$value['DEFAULT_STOCK'],
+					'DEFAULT_HARGA'=>$value['DEFAULT_HARGA']
+				];
+		};
+		$dataProviderAllDataImport= new ArrayDataProvider([
+			'allModels'=>$aryData,
+			'pagination' => [
+				'pageSize' => 100,
+			]
+		 ]);
+		$modelDataExport=$dataProviderAllDataImport->getModels();
+		$aryFieldPlaning=ArrayHelper::toArray($arySqlDataProvider);
+		
+		
+		// $searchModelCurrent = new ItemSearch(['OUTLET_CODE'=>$outlet_code]);		
+		// $dataProviderCurrent = $searchModelCurrent->search(Yii::$app->request->queryParams);
+		// $modelFieldClassCurrent=$dataProviderCurrent->getModels();		
+		// $aryFieldCurrent=ArrayHelper::toArray($modelFieldClassCurrent);
+		//$aryFieldPlaning=ArrayHelper::toArray($dpItems);
+		
+		// print_r($aryFieldPlaning);
+		// die();
+		// $excel_data = Postman4ExcelBehavior::excelDataFormat($modelDataExport);
+        // $excel_title = $excel_data['excel_title'];
+        // $excel_ceils = $excel_data['excel_ceils'];
+		$excel_content = [
+			[
+				'sheet_name' => 'ITEMS-DATA',
+                'sheet_title' => [
+					['OUTLET_CODE','ITEM_ID','ITEM_QR','ITEM_NM','SATUAN','ITEMGRP','DEFAULT_STOCK','DEFAULT_HARGA']
+				],
+			    'ceils' => $aryFieldPlaning,
+                'freezePane' => 'A2',
+				'columnGroup'=>'',
+				'autoSize'=>true,
+                'headerColor' => Postman4ExcelBehavior::getCssClass("header"),
+                'headerStyle'=>[						
+					[
+						'OUTLET_CODE' =>['align'=>'center'],
+						'ITEM_ID' =>['align'=>'center'],
+						'ITEM_QR' => ['align'=>'center'],
+						'ITEM_NM' => ['align'=>'center'],
+						'SATUAN' => ['align'=>'center'],
+						'ITEMGRP' =>['align'=>'center'],
+						'DEFAULT_STOCK' => ['align'=>'center'],
+						'DEFAULT_HARGA' => ['align'=>'center']
+					]						
+				],
+				'contentStyle'=>[
+					[
+						'OUTLET_CODE' =>['align'=>'center'],
+						'ITEM_ID' =>['align'=>'left'],
+						'ITEM_QR' => ['align'=>'center'],
+						'ITEM_NM' => ['align'=>'right'],
+						'SATUAN' =>['align'=>'right'],
+						'ITEMGRP' => ['align'=>'right'],
+						'DEFAULT_STOCK' => ['align'=>'right'],
+						'DEFAULT_HARGA' => ['align'=>'right']
+					]
+				],
+               'oddCssClass' => Postman4ExcelBehavior::getCssClass("odd"),
+               'evenCssClass' => Postman4ExcelBehavior::getCssClass("even"),
+			]
+		];
+		$tglIn=date("Y-m-d");
+		$excel_file = "items";
+		Postman4ExcelBehavior::export4excel($excel_content, $excel_file,0); 
+		
+	}
+	
+	 /**
      * Finds the Item model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id

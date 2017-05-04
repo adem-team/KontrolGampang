@@ -47,62 +47,57 @@ class UserTokenController extends ActiveController
 	 * Chacking logintest.
      */
 
-public function behaviors() {
+	public function behaviors()    {
         return ArrayHelper::merge(parent::behaviors(), [
-            /* 'authenticator' => [
+            'authenticator' => [
                 'class' => CompositeAuth::className(),
                 'authMethods' => [
-                    ['class' => HttpBearerAuth::className()],
-                    // ['class' => QueryParamAuth::className(), 'tokenParam' => 'access-token'],
-                ],
-                'except' => ['options']
-            ], */
+                 // ['class' => HttpBearerAuth::className()],
+                 // ['class' => QueryParamAuth::className()],//, 'tokenParam' => 'access-token'],
+                ]
+            ], 
 			'bootstrap'=> [
 				'class' => ContentNegotiator::className(),
 				'formats' => [
-					'application/json' => Response::FORMAT_JSON,
+					'application/json' => Response::FORMAT_JSON,'charset' => 'UTF-8',
 				],
+				'languages' => [
+					'en',
+					'de',
+				],
+			],			
+			'corsFilter' => [
+				'class' => \yii\filters\Cors::className(),
+				'cors' => [
+					// restrict access to
+					'Origin' => ['*'],
+					'Access-Control-Request-Method' => ['POST', 'PUT','GET'],
+					// Allow only POST and PUT methods
+					'Access-Control-Request-Headers' => ['X-Wsse'],
+					// Allow only headers 'X-Wsse'
+					'Access-Control-Allow-Credentials' => true,
+					// Allow OPTIONS caching
+					'Access-Control-Max-Age' => 3600,
+					// Allow the X-Pagination-Current-Page header to be exposed to the browser.
+					'Access-Control-Expose-Headers' => ['X-Pagination-Current-Page'],
+				]		
 			],
-			'corsFilter' =>
-            [
-                'class' => \yii\filters\Cors::className(),
-                'cors' =>
-                [
-                    // restrict access to
-                    'Origin' =>['*'],// ['http://ptrnov-erp.dev', 'https://ptrnov-erp.dev'],
-                    'Access-Control-Request-Method' => ['GET','POST', 'PUT','OPTIONS'],
-                    // Allow only POST and PUT methods
-                    'Access-Control-Request-Headers' => ['*'],
-                    // Allow only headers 'X-Wsse'
-                    'Access-Control-Allow-Credentials' => true,
-                    // Allow OPTIONS caching
-                    'Access-Control-Max-Age' => 3600,
-                    // Allow the X-Pagination-Current-Page header to be exposed to the browser.
-                    'Access-Control-Expose-Headers' => ['X-Pagination-Current-Page'],
-                ],
-	]
-	]
-}
+        ]);
+		
+    }
 
 
-
-
-
-
-
-
-
-public function actions()
-            ], ], {
-		] //'exceptionFilter' => [ return [
-    }            // 'class' => ErrorToExceptionFilter::className() ], 'index' => [
-        ]); 'class' => 'yii\rest\IndexAction',
-    }                'modelClass' => $this->modelClass,
-                'prepareDataProvider' => function () {					
+	public function actions(){
+	{		
+        return [
+            'index' => [		
+				'class' => 'yii\rest\IndexAction',
+				'modelClass' => $this->modelClass,
+				'prepareDataProvider' => function () {					
 					$param=["UserTokenSearch"=>Yii::$app->request->queryParams];
 					//return $param;
-                    $searchModel = new UserTokenSearch();
-                    if($searchModel){
+					$searchModel = new UserTokenSearch();
+					if($searchModel){
 						return $searchModel->search($param);
 					}else{
 						$nodata=[
@@ -111,7 +106,7 @@ public function actions()
 						];
 						return $nodata;
 					}					
-                },
+				},
             ],
         ];
     }	 
