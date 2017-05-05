@@ -18,6 +18,7 @@ use frontend\backend\master\models\ItemSearch;
 use frontend\backend\master\models\ItemSatuan;
 use frontend\backend\master\models\ItemImage;
 use ptrnov\postman4excel\Postman4ExcelBehavior;
+
 /**
  * ItemController implements the CRUD actions for Item model.
  */
@@ -33,13 +34,30 @@ class ItemController extends Controller
      */
      public function behaviors()
     {
-		 return ArrayHelper::merge(parent::behaviors(), [
-			/* 'export4excel' => [
+		 return [
+            // 'export2excel' => [
+                // 'class' => Postman4ExcelBehavior::className(),
+            // ],
+			'export4excel' => [
+				'class' => Postman4ExcelBehavior::className(),
+				//'downloadPath'=>Yii::getAlias('@lukisongroup').'/export/tmp/',
+				'widgetType'=>'download'
+			], 
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['post'],
+                ],
+            ]
+        ];
+		 /* return ArrayHelper::merge(parent::behaviors(), [
+			'export4excel' => [
 				'class' => Postman4ExcelBehavior::className(),
 				//'downloadPath'=>Yii::getAlias('@lukisongroup').'/cronjob/',
 				//'downloadPath'=>'/var/www/backup/ExternalData/',
-				//'widgetType'=>'download',
-			],  */
+				'widgetType'=>'download',
+				//'columnAutoSize'=>false
+			],  
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -47,7 +65,7 @@ class ItemController extends Controller
                 ],
             ],
 		 
-		 ]);
+		 ]); */
         /* return [
 			//EXCEl IMPORT
 			'export4excel' => [
@@ -356,7 +374,7 @@ class ItemController extends Controller
 		// $dataProvider = $searchModel->search(Yii::$app->request->queryParams);	
 		
 		//$dpItems=$dataProvider->getModels();
-		$aryData=[];
+		/* $aryData=[];
 		foreach ($arySqlDataProvider as $key => $value){
 				$aryData[]=[
 					'OUTLET_CODE'=>$value['OUTLET_CODE'],
@@ -374,10 +392,13 @@ class ItemController extends Controller
 			'pagination' => [
 				'pageSize' => 100,
 			]
-		 ]);
-		$modelDataExport=$dataProviderAllDataImport->getModels();
-		$aryFieldPlaning=ArrayHelper::toArray($arySqlDataProvider);
+		 ]); */
+		//$modelDataExport=$dataProviderAllDataImport->getModels();
+		//$aryFieldPlaning=ArrayHelper::toArray($arySqlDataProvider);
 		
+		$excel_data = Postman4ExcelBehavior::excelDataFormat($arySqlDataProvider);     
+		$excel_title = $excel_data['excel_title'];		
+        $excel_ceils = $excel_data['excel_ceils'];
 		
 		// $searchModelCurrent = new ItemSearch(['OUTLET_CODE'=>$outlet_code]);		
 		// $dataProviderCurrent = $searchModelCurrent->search(Yii::$app->request->queryParams);
@@ -385,7 +406,7 @@ class ItemController extends Controller
 		// $aryFieldCurrent=ArrayHelper::toArray($modelFieldClassCurrent);
 		//$aryFieldPlaning=ArrayHelper::toArray($dpItems);
 		
-		// print_r($aryFieldPlaning);
+		// print_r($excel_title);
 		// die();
 		// $excel_data = Postman4ExcelBehavior::excelDataFormat($modelDataExport);
         // $excel_title = $excel_data['excel_title'];
@@ -393,36 +414,38 @@ class ItemController extends Controller
 		$excel_content = [
 			[
 				'sheet_name' => 'ITEMS-DATA',
-                'sheet_title' => [
-					['OUTLET_CODE','ITEM_ID','ITEM_QR','ITEM_NM','SATUAN','ITEMGRP','DEFAULT_STOCK','DEFAULT_HARGA']
-				],
-			    'ceils' => $aryFieldPlaning,
+                'sheet_title'=>//$excel_title
+					[
+						['OUTLET_CODE','ITEM_ID','ITEM_QR','ITEM_NM','SATUAN','ITEMGRP','DEFAULT_STOCK','DEFAULT_HARGA'],
+					]
+				,
+			    'ceils' => $excel_ceils,
                 'freezePane' => 'A2',
-				'columnGroup'=>'',
+				'columnGroup'=>[''],
 				'autoSize'=>true,
                 'headerColor' => Postman4ExcelBehavior::getCssClass("header"),
                 'headerStyle'=>[						
 					[
-						'OUTLET_CODE' =>['align'=>'center'],
-						'ITEM_ID' =>['align'=>'center'],
-						'ITEM_QR' => ['align'=>'center'],
-						'ITEM_NM' => ['align'=>'center'],
-						'SATUAN' => ['align'=>'center'],
-						'ITEMGRP' =>['align'=>'center'],
-						'DEFAULT_STOCK' => ['align'=>'center'],
-						'DEFAULT_HARGA' => ['align'=>'center']
+						'OUTLET_CODE' =>['font-size'=>'8','width'=>'13','valign'=>'center','align'=>'center'],
+						'ITEM_ID' =>['font-size'=>'8','width'=>'13','valign'=>'center','align'=>'center'],
+						'ITEM_QR' => ['font-size'=>'8','width'=>'13','valign'=>'center','align'=>'center'],
+						'ITEM_NM' => ['font-size'=>'8','width'=>'13','valign'=>'center','align'=>'center'],
+						'SATUAN' => ['font-size'=>'8','width'=>'13','valign'=>'center','align'=>'center'],
+						'ITEMGRP' =>['font-size'=>'8','width'=>'13','valign'=>'center','align'=>'center'],
+						'DEFAULT_STOCK' => ['font-size'=>'8','width'=>'13','valign'=>'center','align'=>'center'],
+						'DEFAULT_HARGA' => ['font-size'=>'8','width'=>'13','valign'=>'center','align'=>'center'],
 					]						
 				],
 				'contentStyle'=>[
 					[
-						'OUTLET_CODE' =>['align'=>'center'],
-						'ITEM_ID' =>['align'=>'left'],
-						'ITEM_QR' => ['align'=>'center'],
-						'ITEM_NM' => ['align'=>'right'],
-						'SATUAN' =>['align'=>'right'],
-						'ITEMGRP' => ['align'=>'right'],
-						'DEFAULT_STOCK' => ['align'=>'right'],
-						'DEFAULT_HARGA' => ['align'=>'right']
+						'OUTLET_CODE' =>['font-size'=>'8','valign'=>'center','align'=>'center'],
+						'ITEM_ID' =>['font-size'=>'8','valign'=>'center','align'=>'center'],
+						'ITEM_QR' => ['font-size'=>'8','valign'=>'center','align'=>'center'],
+						'ITEM_NM' => ['font-size'=>'8','valign'=>'center','align'=>'center'],
+						'SATUAN' =>['font-size'=>'8','valign'=>'center','align'=>'center'],
+						'ITEMGRP' => ['font-size'=>'8','valign'=>'center','align'=>'center'],
+						'DEFAULT_STOCK' =>['font-size'=>'8','valign'=>'center','align'=>'center'],
+						'DEFAULT_HARGA' => ['font-size'=>'8','valign'=>'center','align'=>'center'],
 					]
 				],
                'oddCssClass' => Postman4ExcelBehavior::getCssClass("odd"),
@@ -431,7 +454,9 @@ class ItemController extends Controller
 		];
 		$tglIn=date("Y-m-d");
 		$excel_file = "items";
-		Postman4ExcelBehavior::export4excel($excel_content, $excel_file,0); 
+		//Postman4ExcelBehavior::export4excel($excel_content, $excel_file,0); 
+		$this->export4excel($excel_content, $excel_file,0); 
+		//Postman4ExcelBehavior::columnAutoSize();
 		
 	}
 	
