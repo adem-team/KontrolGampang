@@ -15,20 +15,40 @@ use kartik\widgets\ActiveForm;
 use kartik\tabs\TabsX;
 use kartik\date\DatePicker;
 use yii\web\View;
+use yii\web\Request;
+
 $this->registerCss("
 	// :link {
 		// color: #fdfdfd;
 	// }
-	// /* mouse over link */
-	// a:hover {
-		// color: #5a96e7;
-	// }
-	// /* selected link */
-	// a:active {
-		// color: blue;
-	// }
+	/* mouse over link */
+	a:hover {
+		color: #5a96e7;
+	}
+	/* selected link */
+	a:active {
+		color: blue;
+	}
+	.kv-grid-wrapper {
+		position: relative;
+		overflow: auto;
+		height: 450px;
+	}
 ");
+$Jsrefresh = <<<EOF
+	$(document).ready(function() {
+		$('#tab-index-formula').click(function(){
+			setTimeout(function(){						
+				//alert(window.location.href);
+				var url = window.location.href.split('#')[1];	
+				alert(url);				
+			},100);
+		});
+	});
+EOF;
+
 $this->registerJs($this->render('modal_item.js'),View::POS_READY);
+//$this->registerJs($this->render('tabx.js'),View::POS_READY);
 echo $this->render('modal_item'); //echo difinition
 
 	$aryStt= [
@@ -38,9 +58,9 @@ echo $this->render('modal_item'); //echo difinition
 	$valStt = ArrayHelper::map($aryStt, 'STATUS', 'STT_NM');
 	
 	$bColor='rgba(87,114,111, 1)';
-	$pageNm='<span class="fa-stack fa-xs text-right">				  
+	$pageNm='<span class="fa-stack fa-xs text-right" style="color:red">				  
 				  <i class="fa fa-share fa-1x"></i>
-				</span>'.$outletNm.'
+				</span> <b>'.$outletNm.'</b>
 	';
 	
 	$gvAttributeItem=[
@@ -75,12 +95,25 @@ echo $this->render('modal_item'); //echo difinition
 		'filterModel' => $searchModel,
 		'columns'=>$gvAttributeItem,	
 		'rowOptions'   => function ($model, $key, $index, $grid) {
-			return ['id' => $model->ID,'onclick' => '$.pjax.reload({
-					url: "'.Url::to(['/master/formula']).'?outlet_code=0001&id="+this.id,
-					container: "#gv-formula-harga",
-					timeout: 1000,
-				});'
-			];
+			return ['id' => $model->ID,'onclick' => '
+				var url = window.location.href.split("#")[1];	
+				if(url=="a"){
+					$.pjax.reload({
+						url: "'.Url::to(['/master/formula']).'?outlet_code=0001&id="+this.id+"#a",
+						container:"#gv-harga-per-store"
+					});
+				}else if(url=="b"){
+					$.pjax.reload({
+						url: "'.Url::to(['/master/formula']).'?outlet_code=0001&id="+this.id+"#b",
+						container:"#gv-discount-per-store"
+					});
+				}else{
+					$.pjax.reload({
+						url: "'.Url::to(['/master/formula']).'?outlet_code=0001&id="+this.id+"#a",
+						container:"#gv-harga-per-store"
+					});
+				}			
+			'];
 		},		
 		'pjax'=>true,
 		'pjaxSettings'=>[
@@ -116,10 +149,11 @@ echo $this->render('modal_item'); //echo difinition
 
 	$gvIndex_FormulaHarga= $this->render('_indexFormulaHarga',[
 		'model'=>'1',
-		//'ITEM_ID'=>
+		'paramCariItem'=>$paramCariItem
 	]);
 	$gvIndex_FormulaDiscount= $this->render('_indexFormulaDiscount',[
 		'model'=>'1',
+		'paramCariItem'=>$paramCariItem
 	]);
 ?>
 
@@ -137,18 +171,20 @@ echo $this->render('modal_item'); //echo difinition
 						$items=[
 							[
 								'label'=>'<i class="fa fa-sign-in fa-lg"></i>  Formula Harga','content'=>$gvIndex_FormulaHarga,
-								// 'active'=>true,
-								'options' => ['id' => 'in-box'],
+								//'active'=>$tab0,
+								'options' => ['id' => 'a'],
 							],
 							[
 								'label'=>'<i class="fa fa-sign-out fa-lg"></i>  Formula Discount','content'=>$gvIndex_FormulaDiscount,
-								'options' => ['id' => 'out-tab'],
+								//'active'=>$tab1,
+								'options' => ['id' => 'b'],
 							],
 							// [
 								// 'label'=>'<i class="glyphicon glyphicon-briefcase"></i>  Product Forecast ','content'=>'',
 								// 'options' => ['id' => 'history-tab'],
 							// ]
 						];
+						
 						echo TabsX::widget([
 							'id'=>'tab-index-formula',
 							'items'=>$items,
@@ -157,6 +193,15 @@ echo $this->render('modal_item'); //echo difinition
 							'bordered'=>true,
 							'encodeLabels'=>false,
 							//'align'=>TabsX::ALIGN_LEFT,
+							// 'pluginOptions' => [
+								// 'enableCache'=>true,
+								// 'cacheTimeout'=>300000
+							// ],
+							'enableStickyTabs' => true, //get data 'options' => ['id' => 'b'],
+							// 'stickyTabsOptions' => [
+								//'selectorAttribute' => ['tab'=>'data-target'],
+								// 'backToTop' => true,
+							// ],
 						]);
 					?>
 				</div>
@@ -164,4 +209,3 @@ echo $this->render('modal_item'); //echo difinition
 		</div>
 	</div>
 </div>
-

@@ -6,9 +6,14 @@ use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\Url;
+use yii\web\JsExpression;
+use yii\helpers\view;
+
 use common\models\Store;
 use frontend\backend\master\models\Item;
 use frontend\backend\master\models\ItemSearch;
+
 /**
  * ItemController implements the CRUD actions for Item model.
  */
@@ -35,20 +40,24 @@ class FormulaController extends Controller
      */
     public function actionIndex()
     {
+		
+		
+		
 		$paramCari=Yii::$app->getRequest()->getQueryParam('outlet_code');
-		//Get 
+		$paramCariItem=Yii::$app->getRequest()->getQueryParam('id');
 		$modelOutlet=Store::find()->where(['OUTLET_CODE'=>$paramCari])->one();//->andWhere('FIND_IN_SET("'.$this->ACCESS_UNIX.'", ACCESS_UNIX)')->one();
 		if($modelOutlet){
 		    $searchModel = new ItemSearch(['OUTLET_CODE'=>$paramCari]);
 			$dataProvider = $searchModel->search(Yii::$app->request->queryParams);			
 		
-		///OUTLET ID.
+			///OUTLET ID.
 		
-        return $this->render('index', [
-			'outletNm'=>$modelOutlet!=''?$modelOutlet->OUTLET_NM:'none',
-            'searchModel' => $searchModel!=''?$searchModel:false,
-            'dataProvider' => $dataProvider,
-        ]);
+			return $this->render('index', [
+				'outletNm'=>$modelOutlet!=''?$modelOutlet->OUTLET_NM:'none',
+				'searchModel' => $searchModel!=''?$searchModel:false,
+				'dataProvider' => $dataProvider,
+				'paramCariItem'=>$paramCariItem
+			]);
 		}else{
 			$this->redirect(array('/site/alert'));
 		}
@@ -131,4 +140,6 @@ class FormulaController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+
 }
