@@ -20,18 +20,13 @@ $this->registerCss("
 	:link {
 		color: #fdfdfd;
 	}
-	// mouse over link
+	/* mouse over link */
 	a:hover {
 		color: #5a96e7;
 	}
-	//selected link 
+	/* selected link */
 	a:active {
 		color: blue;
-	}
-	.kv-grid-wrapper {
-		position: relative;
-		overflow: auto;
-		height: 450px;
 	}
 ");
             // ACCESS_UNIX_STORE, 
@@ -99,7 +94,7 @@ $this->registerCss("
 			
 		],		
 		//EMP_KTP
-		/* [
+		[
 			'attribute'=>'EMP_KTP',
 			//'label'=>'Cutomer',
 			'filterType'=>true,
@@ -202,7 +197,7 @@ $this->registerCss("
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
 			
-		]	 */	
+		]		
 	];
 	
 	$gvDatakaryawan=GridView::widget([
@@ -235,60 +230,16 @@ $this->registerCss("
 			'before'=>false,
 			'showFooter'=>false,
 		],
-		'floatOverflowContainer'=>true,
-		'floatHeader'=>true,
+		// 'floatOverflowContainer'=>true,
+		// 'floatHeader'=>true,
 	]); 	
 ?>
 
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;">
 		<div class="row">
-			<div class="col-xs-6 col-sm-3 col-lg-3" style="font-family: tahoma ;font-size: 9pt;">
-				<div class="row">
-					<?=$gvDatakaryawan?>
-				</div>
-			</div>
-			<div class="col-xs-6 col-sm-9 col-lg-9" style="font-family: tahoma ;font-size: 9pt;">
-				<div class="row">
-					<?php
-						$items=[
-							[
-								'label'=>'<i class="fa fa-sign-in fa-lg"></i> Data Karyawan','content'=>'sd123',//$gvIndex_FormulaHarga,
-								//'active'=>$tab0,
-								'options' => ['id' => 'a'],
-							],
-							[
-								'label'=>'<i class="fa fa-sign-out fa-lg"></i>  Formula Discount','content'=>'sd',//$gvIndex_FormulaDiscount,
-								//'active'=>$tab1,
-								'options' => ['id' => 'b'],
-							],
-							// [
-								// 'label'=>'<i class="glyphicon glyphicon-briefcase"></i>  Product Forecast ','content'=>'',
-								// 'options' => ['id' => 'history-tab'],
-							// ]
-						];
-						
-						echo TabsX::widget([
-							'id'=>'tab-index-employee',
-							'items'=>$items,
-							'position'=>TabsX::POS_ABOVE,
-							//'height'=>'tab-height-xs',
-							'bordered'=>true,
-							'encodeLabels'=>false,
-							//'align'=>TabsX::ALIGN_LEFT,
-							// 'pluginOptions' => [
-								// 'enableCache'=>true,
-								// 'cacheTimeout'=>300000
-							// ],
-							'enableStickyTabs' => true, //get data 'options' => ['id' => 'b'],
-							// 'stickyTabsOptions' => [
-								//'selectorAttribute' => ['tab'=>'data-target'],
-								// 'backToTop' => true,
-							// ],
-						]);
-					?>
-				</div>
-			</div>
+			<?=$gvDatakaryawan?>
 		</div>
 	</div>
 </div>
+
