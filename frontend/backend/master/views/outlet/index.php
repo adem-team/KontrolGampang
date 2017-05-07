@@ -61,7 +61,7 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 	
 	$dscLabel='[<b>STATUS</b>]: '.sttMsg(0).'=Trial. '.sttMsg(1).'=Active. '.sttMsg(2).'=Deactive. '.sttMsg(3).'=Delete.';
 	$dscAction='[<b>ACTION</b>]: 
-				<font color=red>Items</font>=CRUD ITEMS; 
+				<font color=red>Items</font>=CRUD Items/double click tabel row; 
 				<font color=red>View</font>=Detail Tampilan Outlet;  
 				<font color=red>Review</font>=Review & Update Outlet; 
 				<font color=red>Payment</font>=Pembayaran & Langanan Outlet;

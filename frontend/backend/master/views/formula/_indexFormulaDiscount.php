@@ -105,7 +105,7 @@ use frontend\backend\master\models\ItemFdiscountSearch;
 	];
 
 	$gvDiscountPerStore=GridView::widget([
-		'id'=>'gv-discount-per-store',
+		'id'=>'gv-discount-detail',
 		'dataProvider' => $dataProvider,
 		'filterModel' => $searchModel,
 		'columns'=>$gvAttDiscount,	
@@ -113,7 +113,7 @@ use frontend\backend\master\models\ItemFdiscountSearch;
 		'pjaxSettings'=>[
 			'options'=>[
 				'enablePushState'=>false,
-				'id'=>'gv-discount-per-store',
+				'id'=>'gv-discount-detail',
 		    ],						  
 		],
 		'hover'=>true, //cursor select
@@ -123,7 +123,6 @@ use frontend\backend\master\models\ItemFdiscountSearch;
 		'striped'=>true,
 		'autoXlFormat'=>true,
 		'export' => false,
-		'panel'=>false,
 		'toolbar' => false,
 		'panel' => [
 			//'heading'=>false,
@@ -137,10 +136,9 @@ use frontend\backend\master\models\ItemFdiscountSearch;
 		],
 		
 		'summary'=>false,
-		'floatOverflowContainer'=>true,
-		'floatHeader'=>true,
+		// 'floatOverflowContainer'=>true,
+		// 'floatHeader'=>true,
 	]); 
 	
 ?>
 <?=$gvDiscountPerStore?>
-
