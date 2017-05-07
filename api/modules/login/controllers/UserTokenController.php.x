@@ -28,8 +28,7 @@ use common\models\User;
   * CMD : curl -u trial1:semangat2016 http://api.kontrolgampang.int/logintest/user-tokens?username=trial1
  */
 class UserTokenController extends ActiveController
-{
-	public $enableCsrfValidation = false;	
+{	
 	/**
 	  * Source Database declaration.
 	  *
@@ -47,20 +46,7 @@ class UserTokenController extends ActiveController
 	 * Mengunakan Auth HttpBasicAuth.
 	 * Chacking kontrolgampang\login.
      */
-    
-public static function allowedDomains()
-{
-    return [
-         '*',                        // star allows all domains
-	'http://localhost:3000',
-	'localhost:3000',
-        //'http://test1.example.com',
-       // 'http://test2.example.com',
-    ];
-}
-
-
-public function behaviors()    {
+    public function behaviors()    {
         return ArrayHelper::merge(parent::behaviors(), [
             'authenticator' => 
             [
@@ -81,12 +67,11 @@ public function behaviors()    {
 					'application/json' => Response::FORMAT_JSON,
 				],
 			],
-			
 			'corsFilter' => [
 				'class' => \yii\filters\Cors::className(),
 				'cors' => [
 					// restrict access to
-					'Origin' => static::allowedDomains(),
+					'Origin' => ['*','http://localhost:810'],
 					'Access-Control-Request-Method' => ['POST', 'PUT','GET'],
 					// Allow only POST and PUT methods
 					'Access-Control-Request-Headers' => ['X-Wsse'],
@@ -98,7 +83,6 @@ public function behaviors()    {
 					'Access-Control-Expose-Headers' => ['X-Pagination-Current-Page'],
 				]		
 			],
-			
 			/* 'corsFilter' => [
 				'class' => \yii\filters\Cors::className(),
 				'cors' => [

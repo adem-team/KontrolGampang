@@ -28,6 +28,21 @@ use api\modules\login\models\User;
  */
 class UserController extends ActiveController
 {	
+
+public static function allowedDomains()
+{
+    return [
+         '*',                        // star allows all domains
+        'http://localhost:3000',
+        'localhost:3000',
+        //'http://test1.example.com',
+       // 'http://test2.example.com',
+    ];
+}
+
+
+
+
 	/**
 	  * Source Database declaration 
 	 */
@@ -74,7 +89,7 @@ class UserController extends ActiveController
 				'cors' => [
 					// restrict access to
 					//'Origin' => ['http://lukisongroup.com', 'http://lukisongroup.int','http://localhost','http://103.19.111.1','http://202.53.354.82'],
-					'Origin' => ['*'],
+					'Origin' => static::allowedDomains(),
 					'Access-Control-Request-Method' => ['POST', 'GET', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
 					//'Access-Control-Request-Headers' => ['*'],
 					'Access-Control-Request-Headers' => ['*'],
