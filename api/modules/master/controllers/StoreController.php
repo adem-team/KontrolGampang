@@ -27,6 +27,7 @@ use api\modules\master\models\StoreSearch;
  */
 class StoreController extends ActiveController
 {	
+	public $enableCsrfValidation = false;
 	/**
 	  * Source Database declaration 
 	 */
