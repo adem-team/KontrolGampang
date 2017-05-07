@@ -38,6 +38,15 @@ class CustomerController extends ActiveController
 		'collectionEnvelope' => 'customer',
 	];
 	
+	public static function allowedDomains(){
+		return [
+			 '*',                        // star allows all domains
+			'http://localhost:8100',
+			'http://localhost:3000',
+			'localhost:3000',
+			'localhost:8100',
+		];
+	}
 	/**
      * @inheritdoc
      */
@@ -62,7 +71,7 @@ class CustomerController extends ActiveController
 				'cors' => [
 					// restrict access to
 					//'Origin' => ['http://lukisongroup.com', 'http://lukisongroup.int','http://localhost','http://103.19.111.1','http://202.53.354.82'],
-					'Origin' => ['*'],
+					'Origin' => static::allowedDomains(),
 					'Access-Control-Request-Method' => ['POST', 'GET', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
 					//'Access-Control-Request-Headers' => ['*'],
 					'Access-Control-Request-Headers' => ['*'],
