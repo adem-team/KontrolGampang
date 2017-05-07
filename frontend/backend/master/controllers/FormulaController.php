@@ -39,10 +39,7 @@ class FormulaController extends Controller
      * @return mixed
      */
     public function actionIndex()
-    {
-		
-		
-		
+    {		
 		$paramCari=Yii::$app->getRequest()->getQueryParam('outlet_code');
 		$paramCariItem=Yii::$app->getRequest()->getQueryParam('id');
 		$modelOutlet=Store::find()->where(['OUTLET_CODE'=>$paramCari])->one();//->andWhere('FIND_IN_SET("'.$this->ACCESS_UNIX.'", ACCESS_UNIX)')->one();
@@ -56,6 +53,7 @@ class FormulaController extends Controller
 				'outletNm'=>$modelOutlet!=''?$modelOutlet->OUTLET_NM:'none',
 				'searchModel' => $searchModel!=''?$searchModel:false,
 				'dataProvider' => $dataProvider,
+				'paramCariOutlet'=>$paramCari,
 				'paramCariItem'=>$paramCariItem
 			]);
 		}else{

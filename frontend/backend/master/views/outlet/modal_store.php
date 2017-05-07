@@ -148,7 +148,7 @@ $this->registerCss("
 				$icon1 = '
 					<span class="fa-stack fa-xs">																	
 						<i class="fa fa-circle-thin fa-stack-2x " style="color:'.bgIconColor().'"></i>
-						<i class="fa fa-eye fa-stack-1x" style="color:black"></i>
+						<i class="fa fa-edit fa-stack-1x" style="color:black"></i>
 					</span>
 				';      
 				$label1 = $icon1 . '  ' . $title1;

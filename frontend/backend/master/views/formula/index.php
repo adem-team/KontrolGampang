@@ -18,14 +18,15 @@ use yii\web\View;
 use yii\web\Request;
 
 $this->registerCss("
-	// :link {
-		// color: #fdfdfd;
-	// }
-	/* mouse over link */
+	.kv-grid-table
+	:link {
+		color: #fdfdfd;
+	}
+	// mouse over link 
 	a:hover {
 		color: #5a96e7;
 	}
-	/* selected link */
+	//selected link 
 	a:active {
 		color: blue;
 	}
@@ -35,17 +36,6 @@ $this->registerCss("
 		height: 450px;
 	}
 ");
-$Jsrefresh = <<<EOF
-	$(document).ready(function() {
-		$('#tab-index-formula').click(function(){
-			setTimeout(function(){						
-				//alert(window.location.href);
-				var url = window.location.href.split('#')[1];	
-				alert(url);				
-			},100);
-		});
-	});
-EOF;
 
 $this->registerJs($this->render('modal_item.js'),View::POS_READY);
 //$this->registerJs($this->render('tabx.js'),View::POS_READY);
@@ -97,19 +87,20 @@ echo $this->render('modal_item'); //echo difinition
 		'rowOptions'   => function ($model, $key, $index, $grid) {
 			return ['id' => $model->ID,'onclick' => '
 				var url = window.location.href.split("#")[1];	
-				if(url=="a"){
+				if(url=="tab-a"){
 					$.pjax.reload({
 						url: "'.Url::to(['/master/formula']).'?outlet_code=0001&id="+this.id+"#a",
-						container:"#gv-harga-per-store"
+						container:"#gv-harga-per-store,#dv-fharga-view"
 					});
-				}else if(url=="b"){
+				}else if(url=="tab-b"){
 					$.pjax.reload({
 						url: "'.Url::to(['/master/formula']).'?outlet_code=0001&id="+this.id+"#b",
-						container:"#gv-discount-per-store"
+						container:"#gv-discount-detail"
 					});
-				}else{
+				}
+				else{
 					$.pjax.reload({
-						url: "'.Url::to(['/master/formula']).'?outlet_code=0001&id="+this.id+"#a",
+						url: "'.Url::to(['/master/formula']).'?outlet_code=0001&id="+this.id+"#tab-a",
 						container:"#gv-harga-per-store"
 					});
 				}			
@@ -148,11 +139,10 @@ echo $this->render('modal_item'); //echo difinition
 	]); 
 
 	$gvIndex_FormulaHarga= $this->render('_indexFormulaHarga',[
-		'model'=>'1',
+		'paramCariOutlet'=>$paramCariOutlet,
 		'paramCariItem'=>$paramCariItem
 	]);
 	$gvIndex_FormulaDiscount= $this->render('_indexFormulaDiscount',[
-		'model'=>'1',
 		'paramCariItem'=>$paramCariItem
 	]);
 ?>
@@ -172,12 +162,12 @@ echo $this->render('modal_item'); //echo difinition
 							[
 								'label'=>'<i class="fa fa-sign-in fa-lg"></i>  Formula Harga','content'=>$gvIndex_FormulaHarga,
 								//'active'=>$tab0,
-								'options' => ['id' => 'a'],
+								'options' => ['id' => 'tab-a'],
 							],
 							[
 								'label'=>'<i class="fa fa-sign-out fa-lg"></i>  Formula Discount','content'=>$gvIndex_FormulaDiscount,
 								//'active'=>$tab1,
-								'options' => ['id' => 'b'],
+								'options' => ['id' => 'tab-b'],
 							],
 							// [
 								// 'label'=>'<i class="glyphicon glyphicon-briefcase"></i>  Product Forecast ','content'=>'',

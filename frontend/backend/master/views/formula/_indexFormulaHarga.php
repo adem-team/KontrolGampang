@@ -16,14 +16,76 @@ use kartik\tabs\TabsX;
 use kartik\date\DatePicker;
 use yii\web\View;
 use yii\web\Request;
+use yii\db\ActiveRecord;
+use yii\data\ArrayDataProvider;
+use kartik\detail\DetailView;
 
 use frontend\backend\master\models\ItemJual;
 use frontend\backend\master\models\ItemJualSearch;
+use frontend\backend\master\models\Item;
+use frontend\backend\master\models\ItemSearch;
+	$searchModelHarga = new ItemJualSearch(['ITEM_ID'=>$paramCariItem]);
+    $dataProviderHarga = $searchModelHarga->search(Yii::$app->request->queryParams);
 
-	$searchModel = new ItemJualSearch(['ITEM_ID'=>$paramCariItem]);
-    $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-	$bColorHarga='rgba(87,114,111, 1)';
+	$searchModelItemInfo = new ItemSearch(['ID'=>$paramCariItem]);
+	$dataProviderItemInfo = $searchModelItemInfo->search(Yii::$app->request->queryParams);
+	$modelItemInfo= $dataProviderItemInfo->getModels()[0];
+	
+	// $dvInfoItems=$this->render('_indexFormulaHargaView',[
+		// 'paramCariOutlet'=>$paramCariOutlet,
+		// 'paramCariItem'=>$paramCariItem
+	// ]);
+	
+	$attViewFharga=[	
+		[
+			'columns' => [
+				[
+					'attribute'=>'ITEM_ID', 
+					'label'=>'ITEM_ID',
+					//'value'=> $dataProvider[0]['ITEM_ID'],
+					'displayOnly'=>true,
+					'valueColOptions'=>['style'=>'width:35%']
+				],
+				[
+					'attribute'=>'OUTLET_CODE', 
+					'format'=>'raw',
+					'label'=>'START TIME',
+					'valueColOptions'=>['style'=>'width:35%'], 
+					'displayOnly'=>true
+				],
+			],
+		],
+		[
+			'columns' => [
+				[
+					'attribute'=>'ITEM_NM', 
+					'label'=>'SALES ACCESS_UNIX',
+					'valueColOptions'=>['style'=>'width:35%'], 
+					'displayOnly'=>true
+				],
+				[
+					'attribute'=>'SATUAN',
+					'format'=>'raw',
+					'label'=>'END TIME',
+					'valueColOptions'=>['style'=>'width:35%'], 
+					'displayOnly'=>true
+				],
+			],
+		]			
+	];
 
+	$dvViewFharga=DetailView::widget([
+		'id'=>'dv-fharga-view',
+		'model' => $modelItemInfo,
+		'attributes'=>$attViewFharga,
+		'condensed'=>true,
+		'hover'=>true,
+		// 'panel'=>false,
+		// 'mode'=>DetailView::MODE_VIEW,
+		
+	]);
+	
+	$bColorHarga='rgba(239, 172, 26, 0.98)';
 	$gvAttHarga=[
 		[
 			'class'=>'kartik\grid\SerialColumn',
@@ -106,8 +168,8 @@ use frontend\backend\master\models\ItemJualSearch;
 
 	$gvHargaPerStore=GridView::widget([
 		'id'=>'gv-harga-per-store',
-		'dataProvider' => $dataProvider,
-		'filterModel' => $searchModel,
+		'dataProvider' => $dataProviderHarga,
+		'filterModel' => $searchModelHarga,
 		'columns'=>$gvAttHarga,	
 		'pjax'=>true,
 		'pjaxSettings'=>[
@@ -122,24 +184,17 @@ use frontend\backend\master\models\ItemJualSearch;
 		'bordered'=>true,
 		'striped'=>true,
 		'autoXlFormat'=>true,
-		'export' => false,
-		'panel'=>false,
+		'export' => false,		
 		'toolbar' => false,
-		'panel' => [
-			//'heading'=>false,
-			//'heading'=>tombolBack().'<div style="float:right"> '.tombolCreate().' '.tombolExportExcel().'</div>',  
-			//'heading'=>tombolBack().' '.$pageNm,  
-			'type'=>'info',
-			//'before'=> tombolBack().'<div style="float:right"> '.tombolCreate().' '.tombolExportExcel().'</div>',
-			//'before'=> tombolBack(),
-			'before'=>false,
-			'showFooter'=>false,
-		],
-		
+		'panel'=>false,
 		'summary'=>false,
 		'floatOverflowContainer'=>true,
 		'floatHeader'=>true,
 	]); 
 	
+	
 ?>
+
+<?=$dvViewFharga?>
 <?=$gvHargaPerStore?>
+

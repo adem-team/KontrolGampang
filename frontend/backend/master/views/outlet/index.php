@@ -59,6 +59,13 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 	];	
 	$valStt = ArrayHelper::map($aryStt, 'STATUS', 'STT_NM');
 	
+	$dscLabel='[<b>STATUS</b>]: '.sttMsg(0).'=Trial. '.sttMsg(1).'=Active. '.sttMsg(2).'=Deactive. '.sttMsg(3).'=Delete.';
+	$dscAction='[<b>ACTION</b>]: 
+				<font color=red>Items</font>=CRUD Items/double click tabel row; 
+				<font color=red>View</font>=Detail Tampilan Outlet;  
+				<font color=red>Review</font>=Review & Update Outlet; 
+				<font color=red>Payment</font>=Pembayaran & Langanan Outlet;
+	';
 	//Result Status value.
 	function sttMsg($stt){
 		if($stt==0){ //TRIAL
@@ -376,9 +383,11 @@ $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 				</span> List Outlet'.'   <div style="float:right">'. tombolReqStore().'</div>',  
 			'type'=>'default',
 			'before'=>false,
+			'after'=>false,
+			'footer'=>'<div>'.$dscLabel.'</div><div>'.$dscAction.'</div>',
 			//'before'=> tombolCreate().' '.tombolRefresh().' '.tombolExportExcel(),
 			//'before'=> tombolReqStore(),
-			'showFooter'=>false,
+			'showFooter'=>'aas',
 		],
 		// 'floatOverflowContainer'=>true,
 		// 'floatHeader'=>true,
