@@ -28,6 +28,7 @@ use api\modules\master\models\CustomerSearch;
  */
 class CustomerController extends ActiveController
 {	
+	public $enableCsrfValidation = false;
 	/**
 	  * Source Database declaration 
 	 */
