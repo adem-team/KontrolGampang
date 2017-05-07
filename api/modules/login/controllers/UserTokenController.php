@@ -52,10 +52,10 @@ public static function allowedDomains()
 {
     return [
          '*',                        // star allows all domains
-	'http://localhost:3000',
-	'localhost:3000',
-        //'http://test1.example.com',
-       // 'http://test2.example.com',
+		'http://localhost:8100',
+		'http://localhost:3000',
+		'localhost:3000',
+		'localhost:8100',
     ];
 }
 
