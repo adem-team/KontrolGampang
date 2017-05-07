@@ -41,10 +41,10 @@ class CustomerController extends ActiveController
 	public static function allowedDomains(){
 		return [
 			 '*',                        // star allows all domains
-			'http://localhost:8100',
-			'http://localhost:3000',
-			'localhost:3000',
-			'localhost:8100',
+			// 'http://localhost:8100',
+			// 'http://localhost:3000',
+			// 'localhost:3000',
+			// 'localhost:8100',
 		];
 	}
 	/**
