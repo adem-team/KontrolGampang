@@ -30,10 +30,21 @@ $this->registerCss("
 	a:active {
 		color: blue;
 	}
-	.kv-grid-wrapper {
+	#gv-item-per-store .kv-grid-wrapper {
 		position: relative;
 		overflow: auto;
-		height: 450px;
+		height: 500px;
+	}
+	#gv-harga-per-store .kv-grid-wrapper {
+		position: relative;
+		overflow: auto;
+		height: 380px;
+	}
+	
+	#gv-discount-detail .kv-grid-wrapper {
+		position: relative;
+		overflow: auto;
+		height: 380px;
 	}
 ");
 
@@ -130,7 +141,7 @@ echo $this->render('modal_item'); //echo difinition
 			//'before'=> tombolBack().'<div style="float:right"> '.tombolCreate().' '.tombolExportExcel().'</div>',
 			//'before'=> tombolBack(),
 			'before'=>false,
-			'showFooter'=>false,
+			'footer'=>false,
 		],
 		
 		'summary'=>false,
@@ -143,6 +154,7 @@ echo $this->render('modal_item'); //echo difinition
 		'paramCariItem'=>$paramCariItem
 	]);
 	$gvIndex_FormulaDiscount= $this->render('_indexFormulaDiscount',[
+		'paramCariOutlet'=>$paramCariOutlet,
 		'paramCariItem'=>$paramCariItem
 	]);
 ?>

@@ -8,55 +8,24 @@
 */
 
 /*
- * item-Create.
+ * item- FHarga Create.
 */
 $.fn.modal.Constructor.prototype.enforceFocus = function(){};	
-$(document).on('click','#item-button-create', function(ehead){ 			  
-	$('#item-modal-create').modal('show')
-	.find('#item-modal-content-create').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+$(document).on('click','#item-formula-harga-button-create', function(ehead){ 			  
+	$('#item-formula-harga-modal-create').modal('show')
+	.find('#item-formula-harga-modal-content-create').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
 	.load(ehead.target.value);
 });
 
 /*
- * item-View.
+ * item- FDiscount Create.
 */
 $.fn.modal.Constructor.prototype.enforceFocus = function(){};	
-$(document).on('click','#item-button-view', function(ehead){ 			  
-	$('#item-modal-view').modal('show')
-	.find('#item-modal-content-view').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+$(document).on('click','#item-formula-discount-button-create', function(ehead){ 			  
+	$('#item-formula-discount-modal-create').modal('show')
+	.find('#item-formula-discount-modal-content-create').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
 	.load(ehead.target.value);
 });
-
-/*
- * item-REview.
-*/
-$.fn.modal.Constructor.prototype.enforceFocus = function(){};	
-$(document).on('click','#item-button-review', function(ehead){ 			  
-	$('#item-modal-review').modal('show')
-	.find('#item-modal-content-review').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
-	.load(ehead.target.value);
-});
-
-/*
- * item-Remainder.
-*/
-$.fn.modal.Constructor.prototype.enforceFocus = function(){};	
-$(document).on('click','#item-button-remainder', function(ehead){ 			  
-	$('#item-modal-remainder').modal('show')
-	.find('#item-modal-content-remainder').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
-	.load(ehead.target.value);
-});
-
-/*
- * item-Export-Excel.
-*/
-$.fn.modal.Constructor.prototype.enforceFocus = function(){};	
-$(document).on('click','#item-button-export-excel', function(ehead){ 			  
-	$('#item-modal-export-excel').modal('show')
-	.find('#item-modal-content-export-excel').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
-	.load(ehead.target.value);
-});
-
 
 /**
  * ======================================== TIPS ========================================
