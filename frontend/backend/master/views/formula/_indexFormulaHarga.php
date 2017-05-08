@@ -92,7 +92,7 @@ use frontend\backend\master\models\ItemSearch;
 		
 	]);
 	
-	$bColorHarga='rgba(239, 172, 26, 0.98)';
+	$bColorHarga='rgba(80, 150, 241, 1)';
 	$gvAttHarga=[
 		[
 			'class'=>'kartik\grid\SerialColumn',
@@ -104,7 +104,7 @@ use frontend\backend\master\models\ItemSearch;
 		],
 		//ITEM NAME
 		[
-			'attribute'=>'ITEM_ID',
+			'attribute'=>'itemNm',
 			//'label'=>'Cutomer',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),

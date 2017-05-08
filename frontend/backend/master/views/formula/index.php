@@ -98,23 +98,26 @@ echo $this->render('modal_item'); //echo difinition
 		'rowOptions'   => function ($model, $key, $index, $grid) {
 			return ['id' => $model->ID,'onclick' => '
 				var url = window.location.href.split("#")[1];	
-				if(url=="tab-a"){
-					$.pjax.reload({
-						url: "'.Url::to(['/master/formula']).'?outlet_code=0001&id="+this.id+"#a",
-						container:"#gv-harga-per-store,#dv-fharga-view"
-					});
-				}else if(url=="tab-b"){
-					$.pjax.reload({
-						url: "'.Url::to(['/master/formula']).'?outlet_code=0001&id="+this.id+"#b",
-						container:"#gv-discount-detail"
-					});
-				}
-				else{
-					$.pjax.reload({
-						url: "'.Url::to(['/master/formula']).'?outlet_code=0001&id="+this.id+"#tab-a",
-						container:"#gv-harga-per-store"
-					});
-				}			
+				//setTimeout(function(){
+					//alert(url);
+					if(url=="tab-a"){
+						$.pjax.reload({
+							url: "'.Url::to(['/master/formula']).'?outlet_code=0001&id="+this.id+"#tab-a",
+							container:"#gv-harga-per-store,#dv-fharga-view"
+						});
+					}else if(url=="tab-b"){
+						$.pjax.reload({
+							url: "'.Url::to(['/master/formula']).'?outlet_code=0001&id="+this.id+"#tab-b",
+							container:"#gv-discount-detail"
+						});
+					}else if(url="undefined"){
+						$.pjax.reload({
+							url: "'.Url::to(['/master/formula']).'?outlet_code=0001&id="+this.id+"#tab-a",
+							container:"#gv-harga-per-store"
+						});
+					};
+				//}, 100);
+						
 			'];
 		},		
 		'pjax'=>true,

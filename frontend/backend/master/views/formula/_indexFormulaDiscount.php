@@ -188,7 +188,7 @@ use frontend\backend\master\models\ItemSearch;
 		'toolbar' => false,
 		'panel'=>[
 			'heading'=>$dvViewFDiscount.'<style="',
-			'type'=>'info',
+			'type'=>'success',
 			'before'=>false,
 			'footer'=>false,			
 		],		
