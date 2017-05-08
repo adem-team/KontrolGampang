@@ -13,6 +13,8 @@ use yii\helpers\view;
 use common\models\Store;
 use frontend\backend\master\models\Item;
 use frontend\backend\master\models\ItemSearch;
+use frontend\backend\master\models\ItemFdiscount;
+use frontend\backend\master\models\ItemFdiscountSearch;
 
 /**
  * ItemController implements the CRUD actions for Item model.
@@ -78,14 +80,27 @@ class FormulaController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreateHarga()
     {
         $model = new Item();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->ID]);
         } else {
-            return $this->render('create', [
+            return $this->renderAjax('_formHarga', [
+                'model' => $model,
+            ]);
+        }
+    }
+	
+	public function actionCreateDiscount()
+    {
+        $model = new ItemFdiscount();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->ID]);
+        } else {
+            return $this->renderAjax('_formDiscount', [
                 'model' => $model,
             ]);
         }

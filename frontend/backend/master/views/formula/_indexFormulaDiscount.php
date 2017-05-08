@@ -16,21 +16,83 @@ use kartik\tabs\TabsX;
 use kartik\date\DatePicker;
 use yii\web\View;
 use yii\web\Request;
+use yii\db\ActiveRecord;
+use yii\data\ArrayDataProvider;
+use kartik\detail\DetailView;
 
 use frontend\backend\master\models\ItemFdiscount;
 use frontend\backend\master\models\ItemFdiscountSearch;
+use frontend\backend\master\models\Item;
+use frontend\backend\master\models\ItemSearch;
 
 	$searchModel = new ItemFdiscountSearch(['ITEM_ID'=>$paramCariItem]);
     $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-	$bColor='rgba(87,114,111, 1)';
+	$searchModelItemInfo = new ItemSearch(['ID'=>$paramCariItem]);
+	$dataProviderItemInfo = $searchModelItemInfo->search(Yii::$app->request->queryParams);
+	$modelItemInfo= $dataProviderItemInfo->getModels()[0];
+	
+	$attViewFDiscount=[	
+		[
+			'columns' => [
+				[
+					'attribute'=>'ITEM_ID', 
+					'label'=>'ITEM_ID',
+					//'value'=> $dataProvider[0]['ITEM_ID'],
+					'displayOnly'=>true,
+					'valueColOptions'=>['style'=>'width:30%;font-family: tahoma ;font-size: 8pt;'], 
+					'labelColOptions'=>['style'=>'width:130px;font-family: tahoma ;font-size: 8pt;'], 
+				],
+				[
+					'attribute'=>'OUTLET_CODE', 
+					'format'=>'raw',
+					'label'=>'START TIME',
+					'valueColOptions'=>['style'=>'font-family: tahoma ;font-size: 8pt;'], 
+					'labelColOptions'=>['style'=>'width:130px; font-family: tahoma ;font-size: 8pt;'], 
+					'displayOnly'=>true
+				],
+			],
+		],
+		[
+			'columns' => [
+				[
+					'attribute'=>'ITEM_NM', 
+					'label'=>'SALES ACCESS_UNIX',
+					'valueColOptions'=>['style'=>'width:30%;font-family: tahoma ;font-size: 8pt;'], 
+					'labelColOptions'=>['style'=>'width:130px;font-family: tahoma ;font-size: 8pt;'], 
+					'displayOnly'=>true
+				],
+				[
+					'attribute'=>'SATUAN',
+					'format'=>'raw',
+					'label'=>'END TIME',
+					'valueColOptions'=>['style'=>'font-family: tahoma ;font-size: 8pt;'], 
+					'labelColOptions'=>['style'=>'width:130px;font-family: tahoma ;font-size: 8pt;'], 
+					'displayOnly'=>true
+				],
+			],
+		]			
+	];
+
+	$dvViewFDiscount=DetailView::widget([
+		'id'=>'dv-fdiscount-view',
+		'model' => $modelItemInfo,
+		'attributes'=>$attViewFDiscount,
+		'condensed'=>true,
+		'hover'=>true,
+		// 'panel'=>false,
+		// 'mode'=>DetailView::MODE_VIEW,
+		
+	]);
+	
+	$bColorDiscount='rgba(133, 240, 51, 1)';
 	$gvAttDiscount=[
 		[
 			'class'=>'kartik\grid\SerialColumn',
 			'contentOptions'=>['class'=>'kartik-sheet-style'],
 			'width'=>'10px',
-			'header'=>'No.',
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','30px',$bColor,'#ffffff'),
+			'header'=>tombolCreateDiscount(),
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','30px',$bColorDiscount,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('center','30px',''),
 		],
 		//ITEM NAME
@@ -44,7 +106,7 @@ use frontend\backend\master\models\ItemFdiscountSearch;
 			'mergeHeader'=>false,
 			'noWrap'=>false,
 			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColorDiscount),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
 			
 		]	
@@ -58,7 +120,7 @@ use frontend\backend\master\models\ItemFdiscountSearch;
 			'mergeHeader'=>false,
 			'noWrap'=>false,
 			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColorDiscount),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
 			
 		]	
@@ -72,7 +134,7 @@ use frontend\backend\master\models\ItemFdiscountSearch;
 			'mergeHeader'=>false,
 			'noWrap'=>false,
 			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColorDiscount),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),			
 		]	
 		,//PERIODE_TGL1
@@ -85,7 +147,7 @@ use frontend\backend\master\models\ItemFdiscountSearch;
 			'mergeHeader'=>false,
 			'noWrap'=>false,
 			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColorDiscount),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),			
 		]	
 		,//PERIODE_TGL2
@@ -98,7 +160,7 @@ use frontend\backend\master\models\ItemFdiscountSearch;
 			'mergeHeader'=>false,
 			'noWrap'=>false,
 			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColorDiscount),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),			
 		]	
 	
@@ -124,20 +186,15 @@ use frontend\backend\master\models\ItemFdiscountSearch;
 		'autoXlFormat'=>true,
 		'export' => false,
 		'toolbar' => false,
-		'panel' => [
-			//'heading'=>false,
-			//'heading'=>tombolBack().'<div style="float:right"> '.tombolCreate().' '.tombolExportExcel().'</div>',  
-			//'heading'=>tombolBack().' '.$pageNm,  
+		'panel'=>[
+			'heading'=>$dvViewFDiscount.'<style="',
 			'type'=>'info',
-			//'before'=> tombolBack().'<div style="float:right"> '.tombolCreate().' '.tombolExportExcel().'</div>',
-			//'before'=> tombolBack(),
 			'before'=>false,
-			'showFooter'=>false,
-		],
-		
+			'footer'=>false,			
+		],		
 		'summary'=>false,
-		// 'floatOverflowContainer'=>true,
-		// 'floatHeader'=>true,
+		'floatOverflowContainer'=>true,
+		'floatHeader'=>true,
 	]); 
 	
 ?>

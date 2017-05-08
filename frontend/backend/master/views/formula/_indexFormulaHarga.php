@@ -24,7 +24,8 @@ use frontend\backend\master\models\ItemJual;
 use frontend\backend\master\models\ItemJualSearch;
 use frontend\backend\master\models\Item;
 use frontend\backend\master\models\ItemSearch;
-	$searchModelHarga = new ItemJualSearch(['ITEM_ID'=>$paramCariItem]);
+
+	$searchModelHarga = new ItemJualSearch(['OUTLET_CODE'=>$paramCariOutlet,'ITEM_ID'=>$paramCariItem]);
     $dataProviderHarga = $searchModelHarga->search(Yii::$app->request->queryParams);
 
 	$searchModelItemInfo = new ItemSearch(['ID'=>$paramCariItem]);
@@ -36,6 +37,8 @@ use frontend\backend\master\models\ItemSearch;
 		// 'paramCariItem'=>$paramCariItem
 	// ]);
 	
+	
+
 	$attViewFharga=[	
 		[
 			'columns' => [
@@ -44,13 +47,15 @@ use frontend\backend\master\models\ItemSearch;
 					'label'=>'ITEM_ID',
 					//'value'=> $dataProvider[0]['ITEM_ID'],
 					'displayOnly'=>true,
-					'valueColOptions'=>['style'=>'width:35%']
+					'valueColOptions'=>['style'=>'width:30%;font-family: tahoma ;font-size: 8pt;'], 
+					'labelColOptions'=>['style'=>'width:130px;font-family: tahoma ;font-size: 8pt;'], 
 				],
 				[
 					'attribute'=>'OUTLET_CODE', 
 					'format'=>'raw',
 					'label'=>'START TIME',
-					'valueColOptions'=>['style'=>'width:35%'], 
+					'valueColOptions'=>['style'=>'font-family: tahoma ;font-size: 8pt;'], 
+					'labelColOptions'=>['style'=>'width:130px; font-family: tahoma ;font-size: 8pt;'], 
 					'displayOnly'=>true
 				],
 			],
@@ -60,14 +65,16 @@ use frontend\backend\master\models\ItemSearch;
 				[
 					'attribute'=>'ITEM_NM', 
 					'label'=>'SALES ACCESS_UNIX',
-					'valueColOptions'=>['style'=>'width:35%'], 
+					'valueColOptions'=>['style'=>'width:30%;font-family: tahoma ;font-size: 8pt;'], 
+					'labelColOptions'=>['style'=>'width:130px;font-family: tahoma ;font-size: 8pt;'], 
 					'displayOnly'=>true
 				],
 				[
 					'attribute'=>'SATUAN',
 					'format'=>'raw',
 					'label'=>'END TIME',
-					'valueColOptions'=>['style'=>'width:35%'], 
+					'valueColOptions'=>['style'=>'font-family: tahoma ;font-size: 8pt;'], 
+					'labelColOptions'=>['style'=>'width:130px;font-family: tahoma ;font-size: 8pt;'], 
 					'displayOnly'=>true
 				],
 			],
@@ -91,7 +98,7 @@ use frontend\backend\master\models\ItemSearch;
 			'class'=>'kartik\grid\SerialColumn',
 			'contentOptions'=>['class'=>'kartik-sheet-style'],
 			'width'=>'10px',
-			'header'=>'No.',
+			'header'=>tombolCreateHarga(),
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','30px',$bColorHarga,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('center','30px',''),
 		],
@@ -186,7 +193,13 @@ use frontend\backend\master\models\ItemSearch;
 		'autoXlFormat'=>true,
 		'export' => false,		
 		'toolbar' => false,
-		'panel'=>false,
+		'panel'=>[
+			'heading'=>$dvViewFharga.'<style="',
+			'type'=>'info',
+			'before'=>false,
+			'footer'=>false,
+			
+		],
 		'summary'=>false,
 		'floatOverflowContainer'=>true,
 		'floatHeader'=>true,
@@ -195,6 +208,6 @@ use frontend\backend\master\models\ItemSearch;
 	
 ?>
 
-<?=$dvViewFharga?>
+
 <?=$gvHargaPerStore?>
 
