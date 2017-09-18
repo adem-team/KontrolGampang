@@ -13,8 +13,7 @@ class Userlogin extends \yii\db\ActiveRecord
 	const SCENARIO_USER = 'createuser';
 	public static function getDb()
 	{
-		/* Author -ptr.nov- : HRD | Dashboard I */
-		return \Yii::$app->db;
+		return Yii::$app->get('production_api');
 	}
 	public $new_pass;
     
@@ -31,7 +30,7 @@ class Userlogin extends \yii\db\ActiveRecord
 			[['username','auth_key','password_hash','password_reset_token'], 'string'],
 			[['email'], 'string'],
 			[['id','status','create_at','update_at'],'safe'],
-			[['ACCESS_UNIX','ACCESS_GROUP','ACCESS_LEVEL','ACCESS_SITE','ONLINE','UUID'], 'safe'],
+			[['ACCESS_ID','ACCESS_GROUP','ACCESS_LEVEL','ACCESS_SITE','ONLINE','UUID'], 'safe'],
 		];
     }
 
@@ -46,7 +45,7 @@ class Userlogin extends \yii\db\ActiveRecord
 			'email' => Yii::t('app', 'Email'),
 			'create_at' => Yii::t('app', 'create_at'),
 			'update_at' => Yii::t('app', 'update_at'),
-			'ACCESS_UNIX' => Yii::t('app', 'ACCESS_UNIX'),
+			'ACCESS_ID' => Yii::t('app', 'ACCESS_UNIX'),
 			'ACCESS_GROUP' => Yii::t('app', 'ACCESS_GROUP'),
 			'ACCESS_LEVEL' => Yii::t('app', 'ACCESS_LEVEL'),
 			'ACCESS_SITE' => Yii::t('app', 'ACCESS_SITE'),
@@ -57,17 +56,17 @@ class Userlogin extends \yii\db\ActiveRecord
 	
 	public function getUserImageTbl()
 	{
-		return $this->hasOne(UserImage::className(), ['ACCESS_UNIX' => 'ACCESS_UNIX']);
+		return $this->hasOne(UserImage::className(), ['ACCESS_UNIX' => 'ACCESS_ID']);
 	}	
 		
 	public function getUserProfilTbl()
 	{
-		return $this->hasOne(UserProfil::className(), ['ACCESS_UNIX' => 'ACCESS_UNIX']);
+		return $this->hasOne(UserProfil::className(), ['ACCESS_UNIX' => 'ACCESS_ID']);
 	}
 	
 	public function getCorpTbl()
 	{
-		return Corp::find()->Where('FIND_IN_SET("'.$this->ACCESS_UNIX.'", ACCESS_UNIX)');
+		return Corp::find()->Where('FIND_IN_SET("'.$this->ACCESS_ID.'", ACCESS_UNIX)');
 	}
 	
 	
@@ -92,8 +91,8 @@ class Userlogin extends \yii\db\ActiveRecord
 			'email'=>function($model){
 				return $model->email;
 			},		
-			'ACCESS_UNIX'=>function($model){
-				return $model->ACCESS_UNIX;
+			'ACCESS_ID'=>function($model){
+				return $model->ACCESS_ID;
 			},	
 			'ACCESS_GROUP'=>function($model){
 				return $model->ACCESS_GROUP;

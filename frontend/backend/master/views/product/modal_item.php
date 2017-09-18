@@ -59,7 +59,7 @@ $this->registerCss("
 	**/
 	function tombolBack(){
 		$title = Yii::t('app', 'Back');
-		$url =  Url::toRoute(['/master/outlet']);
+		$url =  Url::toRoute(['/master/store']);
 		$options = ['id'=>'item-id-back',
 				  'data-pjax' => 0,
 				  'class'=>"btn btn-default btn-xs",

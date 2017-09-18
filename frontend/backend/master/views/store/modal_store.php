@@ -131,17 +131,17 @@ $this->registerCss("
 	}
 	
 	/*
-	 *  ROWS BUTTON : Store - VIEW.
+	 *  ACTION BUTTON : PRODUCT LIST.
 	*/
-	function tombolItems($url, $model){
+	function tombolProduct($url, $model){
 		// if(getPermission()){
 			//Jika BTN_CREATE Show maka BTN_CVIEW Show.
 			// if(getPermission()->BTN_VIEW==1 OR getPermission()->BTN_CREATE==1){
-				$title1 = Yii::t('app',' Items');
-				$url = url::to(['/master/item','outlet_code'=>$model->OUTLET_CODE]);
+				$title1 = Yii::t('app',' Product List');
+				$url = url::to(['/master/product','storeid'=>$model->STORE_ID]);
 				$options1 = [
 					//'value'=>url::to(['/master/item','outlet_code'=>$model->OUTLET_CODE]),
-					'id'=>'store-button-item',
+					'id'=>'store-button-product',
 					'class'=>"btn btn-default btn-xs",    
 					'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'28px','border'=> 'none'],
 				];
