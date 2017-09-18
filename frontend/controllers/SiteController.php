@@ -112,24 +112,21 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-		//Session Penting.
-		Yii::$app->session->set('userSessionTimeout', time() + Yii::$app->params['sessionTimeoutSeconds']);		
-		
-        if (!Yii::$app->user->isGuest) {
-			return $this->goHome();
-		   // return $this->render('index');
+		Yii::$app->session->set('userSessionTimeout', time() + Yii::$app->params['sessionTimeoutSeconds']);
+        if (!\Yii::$app->user->isGuest) {
+            return $this->goHome();
         }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
-			
         } else {
-			
-            // return $this->render('index', [
-                // 'model' => $model,
-            // ]);
-			 return $this->goHome();
+            //return $this->render('login', [
+            //    'model' => $model,
+           // ]);
+            $js='$("#modal_login").modal("show")';
+            $this->getView()->registerJs($js);
+            return $this->render('login',['model' => $model]);
         }
     }
 

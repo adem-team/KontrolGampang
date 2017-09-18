@@ -54,7 +54,7 @@ $this->registerJs($this->render('modal_item.js'),View::POS_END);
 			'contentOptions'=>Yii::$app->gv->gvContainBody('center','30px',''),
 		],
 		//ITEM IMAGE
-		[	
+		/* [	
 			'attribute'=>'itemsImage64',
 			'filterType'=>false,
 			'format'=>'raw', 
@@ -69,10 +69,10 @@ $this->registerJs($this->render('modal_item.js'),View::POS_END);
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','30px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('center','30px',''),
 			
-		],	
+		],	 */
 		//ITEM_ID
 		[
-			'attribute'=>'ITEM_ID',
+			'attribute'=>'PRODUCT_ID',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','80px'),
 			'hAlign'=>'right',
@@ -86,7 +86,7 @@ $this->registerJs($this->render('modal_item.js'),View::POS_END);
 		],		
 		//ITEM NAME
 		[
-			'attribute'=>'ITEM_NM',
+			'attribute'=>'PRODUCT_NM',
 			//'label'=>'Cutomer',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
@@ -100,7 +100,7 @@ $this->registerJs($this->render('modal_item.js'),View::POS_END);
 			
 		],		
 		//SATUAN
-		[
+		/* [
 			'attribute'=>'SATUAN',
 			//'label'=>'Cutomer',
 			'filterType'=>true,
@@ -113,9 +113,9 @@ $this->registerJs($this->render('modal_item.js'),View::POS_END);
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
 			
-		],
+		], */
 		//DEFAULT_STOCK
-		[
+		/* [
 			'attribute'=>'DEFAULT_STOCK',
 			//'label'=>'Cutomer',
 			'filterType'=>true,
@@ -128,9 +128,9 @@ $this->registerJs($this->render('modal_item.js'),View::POS_END);
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
 			
-		],
+		], */
 		//DEFAULT_HARGA
-		[
+		/* [
 			'attribute'=>'DEFAULT_HARGA',
 			//'label'=>'Cutomer',
 			'filterType'=>true,
@@ -143,7 +143,7 @@ $this->registerJs($this->render('modal_item.js'),View::POS_END);
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
 			
-		],
+		], */
 		//'STATUS',
 		[
 			'attribute'=>'STATUS',

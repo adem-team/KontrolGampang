@@ -6,50 +6,50 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-dmstr\web\AdminLteAsset::register($this);
+use kartik\label\LabelInPlace;
+use kartik\password\PasswordInput;
+
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
+$config = ['template'=>"{input}\n{error}\n{hint}"];	
 ?>
-<div class="login-box">
-	<div class="login-box-body">
-		<h1><?= Html::encode($this->title) ?></h1>
-		<p class="login-box-msg">Please fill out the following fields to login:</p>
+<?php $form = ActiveForm::begin([
+	'id' => 'login-form',
+	'action'=>'/site/login',
+	
+]); ?>
 
+				<!-- LOGIN Section -->				
+<div class="row" style="align:left;">	
+	<div class="col-xs-12 col-sm-12 col-lg-12" >	
+		<div style="padding-top:5px;margin-left:25px;">
+			<img src="http://kontrolgampang.com/logoKg.png" class="navbar-header page-scroll" style="width:100px; height:40px; margin-left:50px; margin-top:0px"/>
+		</div>
+		<div style="padding-top:50px;">
+			<?= $form->field($model, 'username', $config)->widget(LabelInPlace::classname());?>
+			<?php //= $form->field($model, 'username')->textInput() ?>
+			
+			<?php 
+				// $form->field($model, 'password')->widget(PasswordInput::classname(),[
+				// 'togglePlacement' => 'left',
+				// 'pluginOptions' => ['toggleMask' => true,'showMeter' => false]
+				// ])
+			?>	
+			<?=$form->field($model, 'password', $config)->widget(LabelInPlace::classname())?>	
+			<?php //= $form->field($model, 'password')->passwordInput() ?>
 
-		<div class="row">
-			<div class="col-lg-5">
-				<?php $form = ActiveForm::begin([
-					'id' => 'login-form',
-					'action'=>'/site/login'
-				]); ?>
-
-					<?= $form->field($model, 'username')->textInput() ?>
-
-					<?= $form->field($model, 'password')->passwordInput() ?>
-
-					<?= $form->field($model, 'rememberMe')->checkbox() ?>
-
-					<div style="color:#999;margin:1em 0">
-						If you forgot your password you can <?= Html::a('reset it', ['site/request-password-reset']) ?>.
-					</div>
-
-					<div class="form-group">
-						<?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-					</div>
-
-				<?php ActiveForm::end(); ?>
+			<div class="form-group" style="text-align:left">
+				<?= $form->field($model, 'rememberMe')->checkbox() ?>
+			</div>
+			<!--<div style="color:#999;margin:1em 0">
+				lupa password <?php //= Html::a('reset it', ['site/request-password-reset']) ?>.
+			</div>!-->
+			<div class="form-group" style="text-align:right">
+				<?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
 			</div>
 		</div>
-		<div class="social-auth-links text-center">
-			<p>- OR -</p>
-			<a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
-			Facebook</a>
-			<a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
-			Google+</a>
-		</div>
-			<!-- /.social-auth-links -->
-
-			<a href="#">I forgot my password</a><br>
-			<a href="register.html" class="text-center">Register a new membership</a>
-	</div>
+	</div>	
 </div>
+<?php ActiveForm::end(); ?>
+		
+

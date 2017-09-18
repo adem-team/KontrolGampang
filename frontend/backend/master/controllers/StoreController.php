@@ -14,9 +14,9 @@ use yii\web\Request;
 
 use common\models\Store;
 use common\models\StoreSearch;
-use common\models\LocateKota;
+// use common\models\LocateKota;
 
-class OutletController extends Controller
+class StoreController extends Controller
 {
 	 public function behaviors()
     {
@@ -64,13 +64,13 @@ class OutletController extends Controller
     {
 		
 		$searchModel = new StoreSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->searchUserStore(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-      
+       //return 'asd';
     }
 	
 	/**

@@ -9,14 +9,14 @@ use yii\filters\VerbFilter;
 use yii\helpers\Json;
 
 use common\models\Store;
-use frontend\backend\master\models\Item;
-use frontend\backend\master\models\ItemSearch;
+use frontend\backend\master\models\Product;
+use frontend\backend\master\models\ProductSearch;
 use frontend\backend\master\models\ItemSatuan;
 use frontend\backend\master\models\ItemImage;
 /**
  * ItemController implements the CRUD actions for Item model.
  */
-class ItemController extends Controller
+class ProductController extends Controller
 {
     /**
      * @inheritdoc
@@ -69,21 +69,20 @@ class ItemController extends Controller
      */
     public function actionIndex()
     {
-		$paramCari=Yii::$app->getRequest()->getQueryParam('outlet_code');
+		$paramCari=Yii::$app->getRequest()->getQueryParam('storeid');
 		//Get 
-		$modelOutlet=Store::find()->where(['OUTLET_CODE'=>$paramCari])->one();//->andWhere('FIND_IN_SET("'.$this->ACCESS_UNIX.'", ACCESS_UNIX)')->one();
+		$modelOutlet=Store::find()->where(['STORE_ID'=>$paramCari])->one();//->andWhere('FIND_IN_SET("'.$this->ACCESS_UNIX.'", ACCESS_UNIX)')->one();
 		if($modelOutlet){
-		    $searchModel = new ItemSearch(['OUTLET_CODE'=>$paramCari]);
+		    $searchModel = new ProductSearch(['STORE_ID'=>$paramCari]);
 			$dataProvider = $searchModel->search(Yii::$app->request->queryParams);			
 		
-		///OUTLET ID.
-		
-        return $this->render('index', [
-			'outletNm'=>$modelOutlet!=''?$modelOutlet->OUTLET_NM:'none',
-            'searchModel' => $searchModel!=''?$searchModel:false,
-            'dataProvider' => $dataProvider,
-			'paramUrl'=>$paramCari,
-        ]);
+			///OUTLET ID.		
+			return $this->render('index', [
+				'outletNm'=>$modelOutlet!=''?$modelOutlet->STORE_NM:'none',
+				'searchModel' => $searchModel!=''?$searchModel:false,
+				'dataProvider' => $dataProvider,
+				'paramUrl'=>$paramCari,
+			]);
 		}else{
 			$this->redirect(array('/site/alert'));
 		}
