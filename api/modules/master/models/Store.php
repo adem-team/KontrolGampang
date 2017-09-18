@@ -214,6 +214,10 @@ class Store extends \yii\db\ActiveRecord
 	
 	public function extraFields()
 	{
-		return ['items','metodebayar'];
+		//return ['items','metodebayar'];
+		$fields = parent::fields();
+        $fields[]='items';
+        $fields[]='metodebayar';
+        return $fields;
 	}
 }
