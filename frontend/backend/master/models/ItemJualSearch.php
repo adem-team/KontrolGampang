@@ -12,6 +12,11 @@ use frontend\backend\master\models\ItemJual;
  */
 class ItemJualSearch extends ItemJual
 {
+	public function attributes()
+	{
+		//Author -ptr.nov- add related fields to searchable attributes 
+		return array_merge(parent::attributes(), ['itemNm']);
+	}
     /**
      * @inheritdoc
      */
@@ -19,7 +24,10 @@ class ItemJualSearch extends ItemJual
     {
         return [
             [['ID', 'STATUS'], 'integer'],
-            [['ACCESS_UNIX','CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'ITEM_ID', 'OUTLET_CODE', 'PERIODE_TGL1', 'PERIODE_TGL2', 'START_TIME', 'DCRIPT'], 'safe'],
+            [['ACCESS_UNIX','CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 
+				'UPDATE_AT', 'ITEM_ID', 'OUTLET_CODE', 'PERIODE_TGL1',
+				'PERIODE_TGL2', 'START_TIME', 'DCRIPT','itemNm'],
+			'safe'],
             [['HARGA_JUAL'], 'number'],
         ];
     }
@@ -42,8 +50,9 @@ class ItemJualSearch extends ItemJual
      */
     public function search($params)
     {
-        $query = ItemJual::find();
-
+        //$query = ItemJual::find();
+		$query = ItemJual::find()->JoinWith('itemTbl',true,'LEFT JOIN');
+        
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -58,10 +67,15 @@ class ItemJualSearch extends ItemJual
             return $dataProvider;
         }
 
+		// $dataProvider->sort->attributes['item_jual.ITEM_ID'] = [
+			// 'asc' => ['item_jual.ITEM_ID' => SORT_ASC],
+			// 'desc' => ['item.ITEM_ID' => SORT_DESC],
+		// ];
+		
         // grid filtering conditions
         $query->andFilterWhere([
             'ID' => $this->ID,
-            'ACCESS_UNIX' => $this->ACCESS_UNIX,
+            //'item.ACCESS_UNIX' => $this->ACCESS_UNIX,
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
             'STATUS' => $this->STATUS,
@@ -73,10 +87,11 @@ class ItemJualSearch extends ItemJual
 
         $query->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
-            ->andFilterWhere(['like', 'ITEM_ID', $this->ITEM_ID])
-            ->andFilterWhere(['like', 'OUTLET_CODE', $this->OUTLET_CODE])
-            ->andFilterWhere(['like', 'DCRIPT', $this->DCRIPT]);
-
+            ->andFilterWhere(['like', 'item.ITEM_ID', $this->ITEM_ID])
+             ->andFilterWhere(['like', 'item.OUTLET_CODE', $this->OUTLET_CODE])
+            ->andFilterWhere(['like', 'ITEM_NM', $this->itemNm])
+            ->andFilterWhere(['like', 'DCRIPT', $this->DCRIPT]); 
+		//$query->Where('FIND_IN_SET("'.$this->ACCESS_UNIX.'", item.ACCESS_UNIX)');
         return $dataProvider;
     }
 }

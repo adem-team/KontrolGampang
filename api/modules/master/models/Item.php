@@ -64,9 +64,9 @@ class Item extends \yii\db\ActiveRecord
 	public function fields()
 	{
 		return [			
-			'OUTLET_CODE'=>function($model){
-				return $model->OUTLET_CODE;
-			},
+			// 'OUTLET_CODE'=>function($model){
+				// return $model->OUTLET_CODE;
+			// },
 			'ITEM_ID'=>function($model){
 				return $model->ITEM_ID;
 			},					

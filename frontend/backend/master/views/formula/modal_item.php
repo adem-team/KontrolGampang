@@ -33,8 +33,8 @@ use yii\helpers\Url;
 	 * Backgroun Icon Color.
 	*/
 	function bgIconColor(){
-		//return '#f08f2e';//kuning.
-		return '#1eaac2';//biru Laut.
+		return '#f08f2e';//kuning.
+		//return '#1eaac2';//biru Laut.
 	}
 	
 	//Link Button BACK
@@ -119,7 +119,7 @@ use yii\helpers\Url;
 	/*
 	 * Item FHarga - CREATE.
 	*/
-	$modalHeaderColor='#fbfbfb';//' rgba(74, 206, 231, 1)';
+	$modalHeaderColorHarga='rgba(80, 150, 241, 1)';//' rgba(74, 206, 231, 1)';
 	Modal::begin([
 		'id' => 'item-formula-harga-modal-create',
 		'header' => '
@@ -130,7 +130,7 @@ use yii\helpers\Url;
 		',		
 		'size' =>'modal-dm',
 		'headerOptions'=>[
-			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
+			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColorHarga,
 		],
 		'clientOptions' => [
 			'backdrop' => FALSE, //Static=disable, false=enable
@@ -143,7 +143,7 @@ use yii\helpers\Url;
 	/*
 	 * Item FDiscount - CREATE.
 	*/
-	$modalHeaderColor='#fbfbfb';//' rgba(74, 206, 231, 1)';
+	$modalHeaderColorDiscount='rgba(133, 240, 51, 1)';//' rgba(74, 206, 231, 1)';
 	Modal::begin([
 		'id' => 'item-formula-discount-modal-create',
 		'header' => '
@@ -154,7 +154,7 @@ use yii\helpers\Url;
 		',		
 		'size' =>'modal-dm',
 		'headerOptions'=>[
-			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
+			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColorDiscount,
 		],
 		'clientOptions' => [
 			'backdrop' => FALSE, //Static=disable, false=enable
