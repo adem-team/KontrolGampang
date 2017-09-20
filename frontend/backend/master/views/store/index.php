@@ -1,7 +1,5 @@
 <?php
 use kartik\helpers\Html;
-use kartik\widgets\Select2;
-use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\widgets\Breadcrumbs;
 use kartik\widgets\Spinner;
@@ -11,34 +9,61 @@ use kartik\widgets\FileInput;
 use yii\helpers\Json;
 use yii\web\Response;
 use yii\widgets\Pjax;
+use kartik\grid\GridView;
 use kartik\widgets\ActiveForm;
 use kartik\tabs\TabsX;
 use kartik\date\DatePicker;
 use yii\web\View;
-use common\models\LocateProvince;
-use common\models\LocateKota;
-
-//print_r($userProvinsi);
-$this->registerCss("
-	:link {
-		color: #fdfdfd;
-	}
-	/* mouse over link */
-	a:hover {
-		color: #5a96e7;
-	}
-	/* selected link */
-	a:active {
-		color: blue;
-	}
-	.modal-content { 
-		border-radius: 50;
-	}
-");
-
-$this->registerJs($this->render('modal_store.js'),View::POS_READY);
-echo $this->render('modal_store'); //echo difinition
+use yii\caching\XCache;
+use yii\data\ArrayDataProvider;
+$headerColor='rgba(128, 179, 178, 1)';
+	//print_r($dataModelImport);
+	//CSS
+	$this->registerCss("
+		.kv-grid-table :link {
+			color: #fdfdfd;
+		}
+		/* mouse over link */
+		a:hover {
+			color: #5a96e7;
+		}
+		/* selected link */
+		a:active {
+			color: blue;
+		}
+		.modal-content { 
+			border-radius: 50;
+		}
+		
+		.tmp-button-delete a:hover {
+			color:red;
+		}
+		
+	");
 	
+	//Modal Ajax
+	/* $this->registerJs($this->render('modal_import.js'),View::POS_READY);
+	echo $this->render('modal_import'); //echo difinition
+	 //Difinition Status.
+	$aryStt= [
+	  ['STATUS' => 0, 'STT_NM' => 'Proccess'],		  
+	  ['STATUS' => 1, 'STT_NM' => 'Lock']
+	];	
+	//Result Status value.
+	function sttMsg($stt){
+		if($stt==0){ //TRIAL
+			 return Html::a('<span class="fa-stack fa-xl">
+					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+					  <i class="fa fa-check fa-stack-1x" style="color:#05944d"></i>
+					</span>','',['title'=>'Active']);
+		}elseif($stt==1){
+			return Html::a('<span class="fa-stack fa-xl">
+					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+					  <i class="fa fa-close fa-stack-1x" style="color:#ee0b0b"></i>
+					</span>','',['title'=>'Delete']);
+		}
+	};	
+	$valStt = ArrayHelper::map($aryStt, 'STATUS', 'STT_NM'); */
 	//Difinition Status.
 	$aryStt= [
 	  ['STATUS' => 0, 'STT_NM' => 'Trial'],		  
@@ -48,13 +73,7 @@ echo $this->render('modal_store'); //echo difinition
 	];	
 	$valStt = ArrayHelper::map($aryStt, 'STATUS', 'STT_NM');
 	
-	$dscLabel='[<b>STATUS</b>]: '.sttMsg(0).'=Trial. '.sttMsg(1).'=Active. '.sttMsg(2).'=Deactive. '.sttMsg(3).'=Delete.';
-	$dscAction='[<b>ACTION</b>]: 
-				<font color=red>Items</font>=CRUD Items/double click tabel row; 
-				<font color=red>View</font>=Detail Tampilan Outlet;  
-				<font color=red>Review</font>=Review & Update Outlet; 
-				<font color=red>Payment</font>=Pembayaran & Langanan Outlet;
-	';
+	
 	//Result Status value.
 	function sttMsg($stt){
 		if($stt==0){ //TRIAL
@@ -78,380 +97,95 @@ echo $this->render('modal_store'); //echo difinition
 					  <i class="fa fa-close fa-stack-1x" style="color:#ee0b0b"></i>
 					</span>','',['title'=>'Delete']);
 		}
-	};	
+	};		
+	$dscLabel='<b>* STATUS</b> : '.sttMsg(0).'=Trial. '.sttMsg(1).'=Active. '.sttMsg(2).'=Deactive. '.sttMsg(3).'=Delete.';
+	$dscAction='[<b>ACTION</b>]: 
+				<font color=red>Items</font>=CRUD Items/double click tabel row; 
+				<font color=red>View</font>=Detail Tampilan Outlet;  
+				<font color=red>Review</font>=Review & Update Outlet; 
+				<font color=red>Payment</font>=Pembayaran & Langanan Outlet;
+	';
 	
-	// if ($model->STATUS == 0) {
-				  // return Html::a('
-					// <span class="fa-stack fa-xl">
-					  // <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
-					  // <i class="fa fa-close fa-stack-1x" style="color:#0f39ab"></i>
-					// </span>','',['title'=>'Running']);
-				// } else if ($model->STATUS == 1) {
-				  // return Html::a('<span class="fa-stack fa-xl">
-					  // <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
-					  // <i class="fa fa-check fa-stack-1x" style="color:#ee0b0b"></i>
-					// </span>','',['title'=>'Finish']);
-				// }
-	
-	
-	
-	
-	$bColor='rgba(87,114,111, 1)';
-	$gvAttributeItem=[
-		// [
-			// 'class'=>'kartik\grid\SerialColumn',
-			// 'contentOptions'=>['class'=>'kartik-sheet-style'],
-			// 'width'=>'10px',
-			// 'header'=>'No',
-			// 'headerOptions'=>Yii::$app->gv->gvContainHeader('center','30px',$bColor,'#ffffff'),
-			// 'contentOptions'=>Yii::$app->gv->gvContainBody('center','30px',''),
-		// ],	
-		//ACTION
-		[
-			'class' => 'kartik\grid\ActionColumn',
-			'template' => '{product}{view}{review}{payment}',
-			'header'=>'ACTION',
-			'dropdown' => true,
-			'dropdownOptions'=>[
-				'class'=>'pull-left dropdown',
-				'style'=>'text-align:center;background-color:#E6E6FA'				
-			],
-			'dropdownButton'=>[
-				'label'=>'ACTION',
-				'class'=>'btn btn-info btn-xs',
-				'style'=>'width:100%;'		
-			],
-			'buttons' => [
-				'product' =>function ($url, $model){
-				  return  tombolProduct($url, $model);
-				},
-				/* 'view' =>function ($url, $model){
-				  return  tombolView($url, $model);
-				},
-				'review' =>function($url, $model,$key){
-					//if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
-						return  tombolReview($url, $model);
-					//}					
-				},
-				'payment' =>function($url, $model,$key){
-					//if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
-						return  tombolPayment($model);
-					//}					
-				} */
-			], 
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('center','0',''),
-		],
-		//'STATUS',
-		 [
-			'attribute'=>'STATUS',
-			'filterType'=>GridView::FILTER_SELECT2,
-			'filterWidgetOptions'=>[
-				'pluginOptions' =>Yii::$app->gv->gvPliginSelect2(),
-			],
-			'filterInputOptions'=>['placeholder'=>'Select'],
-			'filter'=>$valStt,//Yii::$app->gv->gvStatusArray(),
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px',$bColor),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'format' => 'raw',	
-			'value'=>function($model){
-				return sttMsg($model->STATUS);				 
-			},
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('center','50','')			
-		], 
-		
-		//KD_BARCODE
-		/* [
-			'attribute'=>'STORE_ID',
-			'filterType'=>false,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'format'=>'raw',
-			'value'=>function($data) {				
-					return Html::tag('div', $data->STORE_ID, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
-			},
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
-			
-		], */
-		//OUTLET_NM
-		[
-			'attribute'=>'STORE_NM',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','250px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'format'=>'html',
-			'noWrap'=>false,
-			'format'=>'raw',
-			'value'=>function($data) {				
-					return Html::tag('div', $data->STORE_NM, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
-			},
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','250px',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','250px',''),
-			
-		],		
-		
-		//PROVINCE
-		[
-			'attribute'=>'PROVINCE_NM',
-			// 'filter' => $aryProvinsi,
-			// 'filterType'=>GridView::FILTER_SELECT2,
-			// 'filterWidgetOptions'=>[
-				// 'pluginOptions' =>Yii::$app->gv->gvPliginSelect2(),
-			// ],
-			// 'filterInputOptions'=>['placeholder'=>'Cari Provinsi'],
-			// 'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'format'=>'raw',
-			'value'=>function($data) {				
-					return Html::tag('div', $data->PROVINCE_NM, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
-			},
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
-			
-		],		
-		//CITY
-		[
-			'attribute'=>'CITY_NAME',
-			// 'filter' => $aryKota,
-			// 'filterType'=>GridView::FILTER_SELECT2,
-			// 'filterWidgetOptions'=>[
-				// 'pluginOptions' =>Yii::$app->gv->gvPliginSelect2(),
-			// ],
-			// 'filterInputOptions'=>['placeholder'=>'Cari Kota'],	
-			// 'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),						
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'format'=>'raw',
-			'value'=>function($data) {				
-					return Html::tag('div', $data->CITY_NAME, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
-			},
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
-			
-		],		
-		//INDUSTRY_GRP_NM
-		[
-			'attribute'=>'INDUSTRY_GRP_NM',
-			// 'filter' => $aryKota,
-			// 'filterType'=>GridView::FILTER_SELECT2,
-			// 'filterWidgetOptions'=>[
-				// 'pluginOptions' =>Yii::$app->gv->gvPliginSelect2(),
-			// ],
-			// 'filterInputOptions'=>['placeholder'=>'Cari Kota'],	
-			// 'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),						
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'format'=>'raw',
-			'value'=>function($data) {				
-					return Html::tag('div', $data->INDUSTRY_GRP_NM, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
-			},
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
-			
-		],
-		//INDUSTRY_NM
-		[
-			'attribute'=>'INDUSTRY_NM',
-			// 'filter' => $aryKota,
-			// 'filterType'=>GridView::FILTER_SELECT2,
-			// 'filterWidgetOptions'=>[
-				// 'pluginOptions' =>Yii::$app->gv->gvPliginSelect2(),
-			// ],
-			// 'filterInputOptions'=>['placeholder'=>'Cari Kota'],	
-			// 'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),						
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'format'=>'raw',
-			'value'=>function($data) {				
-					return Html::tag('div', $data->INDUSTRY_NM, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
-			},
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
-			
-		],			
-		//DATE_START.
-		 [
-			'attribute'=>'DATE_START',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'format'=>'raw',
-			'value'=>function($data) {				
-					return Html::tag('div', $data->DATE_START, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
-			},
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
-			
-		],	
-		//DATE_END.
-		[
-			'attribute'=>'DATE_END',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'format'=>'raw',
-			'value'=>function($data) {				
-					return Html::tag('div', $data->DATE_END, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
-			},
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
-			
-		],		
-		//STORE TLP.
-		/* [
-			'attribute'=>'TLP',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'format'=>'raw',
-			'value'=>function($data) {				
-					return Html::tag('div', $data->TLP, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
-			},
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
-			
-		],		
-		//STORE FAX.
-		[
-			'attribute'=>'FAX',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'format'=>'raw',
-			'value'=>function($data) {				
-					return Html::tag('div', $data->FAX, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
-			},
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
-			
-		],	 */ 
-		//ALAMAT.
-		/* [
-			'attribute'=>'ALAMAT',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','250px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'format'=>'raw',
-			'value'=>function($data) {				
-					return Html::tag('div', $data->ALAMAT, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
-			},
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','250px',$bColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','250px',''),
-			
-		],		 */
-		//EXPIRED.
-		// [
-			// 'attribute'=>'EXPIRED',
-			// 'label'=>'EXPIRED',
-			// 'filterType'=>true,
-			// 'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
-			// 'hAlign'=>'right',
-			// 'vAlign'=>'middle',
-			// 'mergeHeader'=>false,
-			// 'noWrap'=>false,
-			// 'format'=>'raw',
-			// 'value'=>function($data) {				
-					// return Html::tag('div', $data->EXPIRED . ' days', ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
-			// },
-			// 'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor,'#ffffff'),
-			// 'contentOptions'=>Yii::$app->gv->gvContainBody('right','50px',''),
-			
-		// ],	
-		
-		
-	];
-
-	$gvStore=GridView::widget([
-		'id'=>'gv-store',
+	/**
+	 * Import Data
+	*/
+	$_indexStore=$this->render('_indexStore',[
 		'dataProvider' => $dataProvider,
-		'filterModel' => $searchModel,
-		'columns'=>$gvAttributeItem,	
-		'rowOptions'   => function ($model, $key, $index, $grid) {
-			//$urlDestination=Url::to(['/efenbi-rasasayang/item-group/index', 'id' => $model->ID]);
-			$urlDestination=Url::to(['/master/product', 'storeid' => $model->STORE_ID]);
-			return ['ondblclick' =>'location.href="'.$urlDestination.'"'];
-			// return ['id'=>	[$model->ID],'ondblclick' =>function(){				
-				// return 'location.href="'.$urlDestination.'"';
-			// }];
-		},		 
-		'pjax'=>true,
-		'pjaxSettings'=>[
-			'options'=>[
-				'enablePushState'=>false,
-				'id'=>'gv-store',
-		    ],						  
-		],
-		'hover'=>true, //cursor select
-		'responsive'=>true,
-		'responsiveWrap'=>true,
-		'bordered'=>true,
-		'striped'=>true,
-		'autoXlFormat'=>true,
-		'export' => false,
-		'panel'=>[''],
-		'toolbar' => [
-			''
-		],
-		'summary'=>false,
-		'panel' => [
-			//'heading'=>false,
-			'heading'=>'
-				<span class="fa-stack fa-sm">
-				  <i class="fa fa-circle-thin fa-stack-2x" style="color:#25ca4f"></i>
-				  <i class="fa fa-television fa-stack-1x"></i>
-				</span> List Outlet'.'   <div style="float:right">	</div>',  
-			'type'=>'default',
-			'before'=>false,
-			'after'=>false,
-			'footer'=>'<div>'.$dscLabel.'</div><div>'.$dscAction.'</div>',
-			//'before'=> tombolCreate().' '.tombolRefresh().' '.tombolExportExcel(),
-			//'before'=> tombolReqStore(),
-			'showFooter'=>'aas',
-		], 
-		// 'floatOverflowContainer'=>true,
-		// 'floatHeader'=>true,
-	]); 
+		'searchModel' => $searchModel			
+	]);
 	
+	$aryData1=[
+		'0'=>['id'=>'1','TITTLE_NM'=>'<span class="fa-stack fa-lg text-left">
+						  <b class="fa fa-circle fa-stack-2x" style="color:#40B0B5"></b>
+						  <b class="fa fa-home fa-stack-1x" style="color:#FEFEFE"></b>
+						</span><b> RINCIAN TOKO </b>'],
+		'1'=>['id'=>'2','TITTLE_NM'=>'<span class="fa-stack fa-lg text-left">
+						  <b class="fa fa-circle fa-stack-2x" style="color:#40B0B5"></b>
+						  <b class="fa fa-product-hunt fa-stack-1x" style="color:#FEFEFE"></b>
+						</span><b> DAFTAR PRODUK </b>'],
+		'2'=>['id'=>'3','TITTLE_NM'=>'<span class="fa-stack fa-lg text-left">
+						  <b class="fa fa-circle fa-stack-2x" style="color:#40B0B5"></b>
+						  <b class="fa fa-users fa-stack-1x" style="color:#FEFEFE"></b>
+						</span><b> DAFTAR PELANGGAN </b>'],
+		'3'=>['id'=>'4','TITTLE_NM'=>'<span class="fa-stack fa-lg text-left">
+						  <b class="fa fa-circle fa-stack-2x" style="color:#40B0B5"></b>
+						  <b class="fa fa-user fa-stack-1x" style="color:#FEFEFE"></b>
+						</span><b> DAFTAR KARAWAN </b>'],
+		'4'=>['id'=>'5','TITTLE_NM'=>'<span class="fa-stack fa-lg text-left">
+						  <b class="fa fa-circle fa-stack-2x" style="color:#40B0B5"></b>
+						  <b class="fa fa-user-secret fa-stack-1x" style="color:#FEFEFE"></b>
+						</span><b> DAFTAR USER LOGIN </b>']
+	];	
+	//$key = 'STORE_ID';
+	$cookies = Yii::$app->request->cookies;
+	//$data = \Yii::$app->getRequest()->getCookies();//->getValue('STORE_ID');
+	$storeId = $cookies->getValue('STORE_ID');
+	$storeNm = $cookies->getValue('STORE_NM');
+	// print_r($storeNm);
+	// die();
+	//$data = Yii::$app->cache;
+	$aryData2=[
+		'0'=>['STORE_ID'=>$storeId],
+		'1'=>['STORE_ID'=>$storeId],
+		'2'=>['STORE_ID'=>$storeId],
+		'3'=>['STORE_ID'=>$storeId],
+		'4'=>['STORE_ID'=>$storeId],
+	];	
+	
+	foreach($aryData1 as $rows =>$val){
+		$aryMrg[]=ArrayHelper::merge($aryData1[$rows],$aryData2[$rows]);
+	};
+	// print_r($aryMrg);
+	// die();
+	$dataProviderMenu= new ArrayDataProvider([	
+			'allModels'=>$aryMrg,	
+			'pagination' => [
+				'pageSize' => count($aryMrg),
+			],
+		]);
+	
+	
+	
+	$_indexExpand=$this->render('_indexExpand',[
+		'dataProviderMenu' => $dataProviderMenu,
+		'storeNm'=>$storeNm
+	]);
+	
+
 ?>
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
-	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;">
-		<div class="row">
-			<?=$gvStore?>
+	<div class="col-xs-12 col-sm-6 col-lg-6" style="font-family: tahoma ;font-size: 9pt;">
+		<div class="row">		
+		<?=$_indexStore?>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-6 col-lg-6" style="font-family: tahoma ;font-size: 9pt;">
+		<div class="row">	
+			<?php echo '<div style="padding-top:20px">'.$dscLabel.'</div>'?>	
+			<div  style="padding-top:10px">				
+				<?=$_indexExpand?>
+			</div>		
 		</div>		
 	</div>
 </div>
+

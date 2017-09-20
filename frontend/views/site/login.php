@@ -26,16 +26,20 @@ $config = ['template'=>"{input}\n{error}\n{hint}"];
 			<img src="http://kontrolgampang.com/logoKg.png" class="navbar-header page-scroll" style="width:100px; height:40px; margin-left:50px; margin-top:0px"/>
 		</div>
 		<div style="padding-top:50px;">
-			<?= $form->field($model, 'username', $config)->widget(LabelInPlace::classname());?>
+			<?= $form->field($model, 'username', $config)->widget(LabelInPlace::classname(),[
+				 'label'=>'<i class="fa fa-user"></i> username',
+				 'encodeLabel'=> false
+			]);?>
 			<?php //= $form->field($model, 'username')->textInput() ?>
 			
-			<?php 
-				// $form->field($model, 'password')->widget(PasswordInput::classname(),[
-				// 'togglePlacement' => 'left',
-				// 'pluginOptions' => ['toggleMask' => true,'showMeter' => false]
-				// ])
+			<?php echo
+				$form->field($model, 'password')->widget(PasswordInput::classname(),[
+				'togglePlacement' => 'left',
+				'pluginOptions' => ['toggleMask' => true,'showMeter' => false],
+				'options'=>['style'=>'width:230px;align:left','placeholder'=>'Password...']
+				])->label('');
 			?>	
-			<?=$form->field($model, 'password', $config)->widget(LabelInPlace::classname())?>	
+			<?php //=$form->field($model, 'password', $config)->widget(LabelInPlace::classname())?>	
 			<?php //= $form->field($model, 'password')->passwordInput() ?>
 
 			<div class="form-group" style="text-align:left">

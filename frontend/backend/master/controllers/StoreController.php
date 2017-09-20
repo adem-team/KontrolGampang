@@ -11,7 +11,6 @@ use yii\helpers\Json;
 use yii\helpers\ArrayHelper;
 use yii\web\Cookie;
 use yii\web\Request;
-
 use common\models\Store;
 use common\models\StoreSearch;
 // use common\models\LocateKota;
@@ -134,6 +133,7 @@ class StoreController extends Controller
        }
        echo Json::encode(['output'=>'', 'selected'=>'']);
    }
+   
 	protected function findModel($id)
     {
         if (($model = Store::findOne($id)) !== null) {
@@ -142,5 +142,44 @@ class StoreController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-
+	
+	public function actionExpandDetail() {
+		$id=$_POST['expandRowKey'];		
+		if($id==0){ 
+			//== Detail Toko ==
+			//$modelToko=Store::find()->where(['STORE_ID'=>])->all();
+			return $this->renderPartial('_detailToko',[
+				'data'=>$_POST['expandRowKey'],
+				//'modelToko'=>$modelToko
+			]);
+		}elseif($id==1){
+			//== Detail Prodak==
+			return $this->renderPartial('_detailProduk',[
+				'data'=>$_POST['expandRowKey']
+			]);
+		}elseif($id==2){
+			//== Detail Pelanggan==
+			return $this->renderPartial('_detailPelanggan',[
+				'data'=>$_POST['expandRowKey']
+			]);
+		}elseif($id==3){
+			//== Detail Karyawan==
+			return $this->renderPartial('_detailkaryawan',[
+				'data'=>$_POST['expandRowKey']
+			]);
+		}elseif($id==4){
+			//== Detail User Operatioal==
+			return $this->renderPartial('_detailUserOps',[
+				'data'=>$_POST['expandRowKey']
+			]);
+		}
+		// if (isset($_POST['expandRowKey'])) {
+			// $model = \app\models\Book::findOne($_POST['expandRowKey']);
+			// return $this->renderPartial('_book-details', ['model'=>$model]);
+		// } else {
+			// return '<div class="alert alert-danger">No data found</div>';
+		// }
+		
+		
+	}
 }

@@ -1,0 +1,2 @@
+detail User Operational
+<?=$data?>
