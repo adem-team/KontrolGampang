@@ -60,7 +60,7 @@ use yii\data\ArrayDataProvider;
 				]);
 			}elseif($id==4){
 				//== Detail Karyawan==
-				return Yii::$app->controller->renderPartial('_detailkaryawan',[
+				return Yii::$app->controller->renderPartial('_detailKaryawan',[
 					'storeId'=>$storeId,
 					//'data'=>$_POST['expandRowKey']
 				]);
