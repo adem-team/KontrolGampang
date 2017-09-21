@@ -10,7 +10,11 @@ use kartik\date\DatePicker;
 use kartik\builder\Form;
 use yii\helpers\Url;
 use yii\data\ArrayDataProvider;
-
+use common\models\Store;
+use frontend\backend\master\models\ProductSearch;
+use frontend\backend\master\models\CustomerSearch;
+use frontend\backend\hris\models\KaryawanSearch;
+use common\models\Userlogin;
 	$headerColor='rgba(128, 179, 178, 1)';
 
 	/*
@@ -38,37 +42,52 @@ use yii\data\ArrayDataProvider;
 		'detail'=>function ($model, $key, $index, $column){
 			$id=$model['id'];
 			$storeId=$model['STORE_ID']	;
+			$modelToko=Store::find()->where(['STORE_ID'=>$storeId])->One();
 			if($id==1){ 
-			//== Detail Toko ==
-			//$modelToko=Store::find()->where(['STORE_ID'=>])->all();
-			return Yii::$app->controller->renderPartial('_detailToko',[
-				'storeId'=>$storeId,
-				'data'=>$model,
-				//'modelToko'=>$modelToko
-			]);
+				//== Detail Toko ==				
+				if($modelToko){
+					return Yii::$app->controller->renderPartial('_detailToko',[
+						// 'storeId'=>$storeId,
+						// 'data'=>$model,
+						'modelToko'=>$modelToko
+					]);
+				}				
 			}elseif($id==2){
 				//== Detail Prodak==
+				$searchModel = new ProductSearch(['STORE_ID'=>$storeId]);
+				$dataProviderProdak = $searchModel->search(Yii::$app->request->queryParams);
 				return Yii::$app->controller->renderPartial('_detailProduk',[
 					'storeId'=>$storeId,
-					// 'data'=>$_POST['expandRowKey']
+					'dataProviderProdak'=>$dataProviderProdak
 				]);
 			}elseif($id==3){
 				//== Detail Pelanggan==
+				$searchModelPlg = new CustomerSearch(['STORE_ID'=>$storeId]);
+				$dataProviderPlg = $searchModelPlg->search(Yii::$app->request->queryParams);
 				return Yii::$app->controller->renderPartial('_detailPelanggan',[
-					'storeId'=>$storeId,
-					//'data'=>$_POST['expandRowKey']
+					//'storeId'=>$storeId,
+					'dataProviderPlg'=>$dataProviderPlg
 				]);
 			}elseif($id==4){
 				//== Detail Karyawan==
+				$searchModelKar = new KaryawanSearch(['STORE_ID'=>$storeId]);
+				$dataProviderKar = $searchModelKar->search(Yii::$app->request->queryParams);				
 				return Yii::$app->controller->renderPartial('_detailKaryawan',[
 					'storeId'=>$storeId,
-					//'data'=>$_POST['expandRowKey']
+					'dataProviderKar'=>$dataProviderKar
 				]);
 			}elseif($id==5){
 				//== Detail User Operatioal==
+				$modalUser=Userlogin::find()->Where('FIND_IN_SET(ACCESS_ID,"'.$modelToko->ACCESS_ID.'")')->all();
+				$dataProviderUserOps= new ArrayDataProvider([
+					'allModels'=>$modalUser,	
+					'pagination' => [
+						'pageSize' => 200,
+					],
+				]);
 				return Yii::$app->controller->renderPartial('_detailUserOps',[
 					'storeId'=>$storeId,
-					//'data'=>$_POST['expandRowKey']
+					'dataProviderUserOps'=>$dataProviderUserOps
 				]);
 			}
 			
@@ -116,7 +135,7 @@ use yii\data\ArrayDataProvider;
 		'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','250px'),
 		'hAlign'=>'right',
 		'vAlign'=>'middle',
-		'header'=>$storeNm,
+		'header'=>'RINCIAN DATA TOKO  '.$storeNm,
 		'mergeHeader'=>true,
 		'format'=>'html',
 		'noWrap'=>false,
@@ -124,7 +143,7 @@ use yii\data\ArrayDataProvider;
 		// 'value'=>function($data) {				
 				// return Html::tag('div', $data->STORE_NM, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
 		// },
-		'headerOptions'=>Yii::$app->gv->gvContainHeader('center','250px',$headerColor),
+		'headerOptions'=>Yii::$app->gv->gvContainHeader('center','250px',$headerColor,'#ffffff'),
 		'contentOptions'=>Yii::$app->gv->gvContainBody('left','250px',''),			
 	];
 	

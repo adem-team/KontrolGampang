@@ -174,18 +174,20 @@ $headerColor='rgba(128, 179, 178, 1)';
 
 ?>
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
-	<div class="col-xs-12 col-sm-6 col-lg-6" style="font-family: tahoma ;font-size: 9pt;">
-		<div class="row">		
-		<?=$_indexStore?>
+	<div class="row">
+		<div class="col-xs-12 col-sm-6 col-lg-6" style="font-family: tahoma ;font-size: 8pt;">
+			<div class="row">		
+			<?=$_indexStore?>
+			</div>
 		</div>
-	</div>
-	<div class="col-xs-12 col-sm-6 col-lg-6" style="font-family: tahoma ;font-size: 9pt;">
-		<div class="row">	
-			<?php echo '<div style="padding-top:20px">'.$dscLabel.'</div>'?>	
-			<div  style="padding-top:10px">				
-				<?=$_indexExpand?>
+		<div class="col-xs-12 col-sm-6 col-lg-6" style="font-family: tahoma ;font-size: 8pt;">
+			<div class="row">	
+				<?php echo '<div style="padding-top:20px">'.$dscLabel.'</div>'?>	
+				<div  style="padding-top:10px">				
+					<?=$_indexExpand?>
+				</div>		
 			</div>		
-		</div>		
+		</div>
 	</div>
 </div>
 

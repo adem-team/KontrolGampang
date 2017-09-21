@@ -1,16 +1,28 @@
 <?php
 
 namespace frontend\backend\master\models;
-
 use Yii;
 
-
+/**
+ * This is the model class for table "customer".
+ *
+ * @property string $ID
+ * @property string $ACCESS_GROUP
+ * @property string $STORE_ID
+ * @property string $NAME
+ * @property string $EMAIL
+ * @property string $PHONE
+ * @property string $CREATE_BY
+ * @property string $CREATE_AT
+ * @property string $UPDATE_BY
+ * @property string $UPDATE_AT
+ * @property integer $STATUS
+ * @property string $DCRP_DETIL
+ * @property integer $YEAR_AT
+ * @property integer $MONTH_AT
+ */
 class Customer extends \yii\db\ActiveRecord
 {
-	public static function getDb()
-    {
-        return Yii::$app->get('api_dbkg');
-    }
     /**
      * @inheritdoc
      */
@@ -20,15 +32,28 @@ class Customer extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return \yii\db\Connection the database connection used by this AR class.
+     */
+    public static function getDb()
+    {
+        return Yii::$app->get('production_api');
+    }
+
+    /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-			[['SATUAN_NM'], 'required','on'=>'create'],
-            [['ACCESS_UNIX','CREATE_AT', 'UPDATE_AT', 'NAME','EMAIL','PHONE'], 'safe'],
-            [['STATUS'], 'integer'],
-            [['CREATE_BY', 'UPDATE_BY','OUTLET_CODE'], 'string', 'max' => 50],
+            [['CREATE_AT', 'UPDATE_AT'], 'safe'],
+            [['STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
+            [['DCRP_DETIL'], 'string'],
+            [['YEAR_AT', 'MONTH_AT'], 'required'],
+            [['ACCESS_GROUP'], 'string', 'max' => 15],
+            [['STORE_ID'], 'string', 'max' => 25],
+            [['NAME', 'EMAIL'], 'string', 'max' => 150],
+            [['PHONE'], 'string', 'max' => 100],
+            [['CREATE_BY', 'UPDATE_BY'], 'string', 'max' => 50],
         ];
     }
 
@@ -38,44 +63,20 @@ class Customer extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'ID' => Yii::t('app', 'ID'),
-            'CREATE_BY' => Yii::t('app', 'Create  By'),
-            'CREATE_AT' => Yii::t('app', 'Create  At'),
-            'UPDATE_BY' => Yii::t('app', 'Update  By'),
-            'UPDATE_AT' => Yii::t('app', 'Update  At'),
-            'STATUS' => Yii::t('app', 'Status'),
-            'ACCESS_UNIX' => Yii::t('app', 'ACCESS_UNIX'),
-            'OUTLET_CODE' => Yii::t('app', 'OUTLET_CODE'),
-            'NAME' => Yii::t('app', 'NAME'),
-            'EMAIL' => Yii::t('app', 'EMAIL'),
-            'PHONE' => Yii::t('app', 'PHONE'),
+            'ID' => 'ID',
+            'ACCESS_GROUP' => 'Access  Group',
+            'STORE_ID' => 'Store  ID',
+            'NAME' => 'Name',
+            'EMAIL' => 'Email',
+            'PHONE' => 'Phone',
+            'CREATE_BY' => 'Create  By',
+            'CREATE_AT' => 'Create  At',
+            'UPDATE_BY' => 'Update  By',
+            'UPDATE_AT' => 'Update  At',
+            'STATUS' => 'Status',
+            'DCRP_DETIL' => 'Dcrp  Detil',
+            'YEAR_AT' => 'Year  At',
+            'MONTH_AT' => 'Month  At',
         ];
     }
-	public function fields()
-	{
-		return [			
-			'CREATE_AT'=>function($model){
-				return $model->CREATE_AT;
-			},
-			'UPDATE_AT'=>function($model){
-				return $model->UPDATE_AT;
-			},					
-			'ACCESS_UNIX'=>function($model){
-				return $model->ACCESS_UNIX;
-			},
-			'OUTLET_CODE'=>function($model){
-				return $model->OUTLET_CODE;
-			},
-			'NAME'=>function($model){
-				return $model->NAME;
-			},
-			'EMAIL'=>function($model){
-				return $model->EMAIL;
-			},
-			'PHONE'=>function($model){
-				return $model->PHONE;
-			}	
-		];
-	}
 }
-

@@ -14,9 +14,16 @@ class CustomerSearch extends Customer
      */
     public function rules()
     {
-        return [
-            [['ID', 'STATUS'], 'integer'],
-            [['ACCESS_UNIX','CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT','OUTLET_CODE', 'NAME','EMAIL','PHONE'], 'safe'],
+       return [
+            [['CREATE_AT', 'UPDATE_AT'], 'safe'],
+            [['STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
+            [['DCRP_DETIL'], 'string'],
+            [['YEAR_AT', 'MONTH_AT'], 'required'],
+            [['ACCESS_GROUP'], 'string', 'max' => 15],
+            [['STORE_ID'], 'string', 'max' => 25],
+            [['NAME', 'EMAIL'], 'string', 'max' => 150],
+            [['PHONE'], 'string', 'max' => 100],
+            [['CREATE_BY', 'UPDATE_BY'], 'string', 'max' => 50],
         ];
     }
 
@@ -44,8 +51,8 @@ class CustomerSearch extends Customer
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
             'STATUS' => $this->STATUS,
-			'ACCESS_UNIX' => $this->ACCESS_UNIX,
-            'OUTLET_CODE' => $this->OUTLET_CODE
+			'ACCESS_GROUP' => $this->ACCESS_GROUP,
+            'STORE_ID' => $this->STORE_ID
         ]);
 
         $query->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])

@@ -38,11 +38,10 @@ $this->registerCss("
 		//min-height: 340px;
 		height: 300px;
 	}
-	.kv-grid-container{
-		min-height:450px
+	#gv-store .kv-grid-container{
+		height:450px
 	}
 ");
-
 $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 echo $this->render('modal_store'); //echo difinition
 	
@@ -312,7 +311,6 @@ echo $this->render('modal_store'); //echo difinition
 		
 		
 	];
-
 	$gvAttributeItem[]=[
 		'attribute'=>'STATUS',
 		'filterType'=>GridView::FILTER_SELECT2,
@@ -340,12 +338,12 @@ echo $this->render('modal_store'); //echo difinition
 		'header'=>'ACTION',
 		'dropdown' => true,
 		'dropdownOptions'=>[
-			'class'=>'pull-left dropdown',
+			'class'=>'pull-right dropdown',
 			'style'=>'text-align:center;background-color:#E6E6FA'				
 		],
 		'dropdownButton'=>[
 			'label'=>'ACTION',
-			'class'=>'btn btn-info btn-xs',
+			'class'=>'btn btn-default btn-xs',
 			'style'=>'width:100%;'		
 		],
 		'buttons' => [
@@ -384,7 +382,7 @@ echo $this->render('modal_store'); //echo difinition
 				document.cookie="STORE_ID" + "=" +'.$model->STORE_ID.';
 				document.cookie="STORE_NM" + "=" +"'.$model->STORE_NM.'";
 				$.pjax.reload({
-					url: "'.Url::to(['/master/store/']).'?Store[STORE_ID]="+'.$model->STORE_ID.',
+					url: "'.Url::to(["/master/store/"]).'?Store[STORE_ID]="+'.$model->STORE_ID.',
 					container: "#expand-menu",
 					timeout: 1000,
 				});
@@ -430,8 +428,8 @@ echo $this->render('modal_store'); //echo difinition
 			//'before'=> tombolReqStore(),
 			'showFooter'=>'aas',
 		], 
-		 'floatOverflowContainer'=>true,
-		'floatHeader'=>true,
+		// 'floatOverflowContainer'=>true,
+		//'floatHeader'=>true,
 	]); 
 	
 ?>
