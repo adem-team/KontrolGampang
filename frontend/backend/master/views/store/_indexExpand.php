@@ -15,6 +15,28 @@ use frontend\backend\master\models\ProductSearch;
 use frontend\backend\master\models\CustomerSearch;
 use frontend\backend\hris\models\KaryawanSearch;
 use common\models\Userlogin;
+	
+	$this->registerCss("
+		#expand-menu :link {
+			color:black;
+		}
+		//mouse over link
+		#expand-menu a:hover {
+			color: black;
+		}
+		//selected link
+		a:active {
+			color: black;
+		}
+		.kv-panel {
+			//min-height: 340px;
+			height: 300px;
+		}
+		// #expand-menu .kv-grid-container{
+			// height:250px
+		// }
+	");
+
 	$headerColor='rgba(128, 179, 178, 1)';
 
 	/*
@@ -117,7 +139,7 @@ use common\models\Userlogin;
 		'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','250px'),
 		'hAlign'=>'right',
 		'vAlign'=>'middle',
-		'header'=>'TOKO '.$storeNm,
+		'header'=>'Informasi '.$storeNm,
 		'mergeHeader'=>true,
 		'format'=>'html',
 		'noWrap'=>false,
@@ -125,8 +147,8 @@ use common\models\Userlogin;
 		// 'value'=>function($data) {				
 				// return Html::tag('div', $data->STORE_NM, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
 		// },
-		'headerOptions'=>Yii::$app->gv->gvContainHeader('center','250px',$headerColor,'#ffffff'),
-		'contentOptions'=>Yii::$app->gv->gvContainBody('left','250px',''),			
+		'headerOptions'=>Yii::$app->gv->gvContainHeader('center','300px',$headerColor,'#ffffff'),
+		'contentOptions'=>Yii::$app->gv->gvContainBody('left','300px',''),			
 	];
 	
 	/* $attDinamikMenu[] =[
@@ -155,22 +177,35 @@ use common\models\Userlogin;
 		'headerOptions'=>[
 			'style'=>[
 				'text-align'=>'center',
-				'width'=>'10px',
+				'width'=>'5px',
 				'font-family'=>'verdana, arial, sans-serif',
 				'font-size'=>'10pt',
 				'background-color'=>$headerColor,
-				'color'=>'white',
+				'color'=>'black',
 			]
 		],
 		'contentOptions'=>[
 			'style'=>[
 				'text-align'=>'center',
-				'width'=>'10px',
+				'width'=>'5px',
 				'font-family'=>'tahoma, arial, sans-serif',
 				'font-size'=>'10pt',
 				'color'=>'black',
 			]
-		],			
+		],	
+		'buttons' => [
+			'view' =>function ($url,$model){
+				$id=$model['id'];
+				$storeId=$model['STORE_ID']	;
+				if ($id==1){
+					$urlPilih='/master/product?storeid=170726220936.0001';
+				}elseif($id==2){
+					$urlPilih='/master/product?storeid='.$storeId;
+				}				
+				return  tombolExpadDetail($urlPilih);
+			},
+			
+		], 		
 	];
 	
 	

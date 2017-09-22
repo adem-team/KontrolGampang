@@ -13,26 +13,26 @@ use yii\web\View;
 use modulprj\payroll\models\AbsenPayrollSearch;	
 use modulprj\absensi\models\AbsenImportPeriode;
 
-$this->registerCss("
-	#list-karyawan :link {
-		color:black;
-	}
-	/* mouse over link */
-	#list-karyawan a:hover {
-		color: black;
-	}
-	/* selected link */
-	list-karyawan a:active {
-		color: black;
-	}
-	.kv-panel {
-		//min-height: 340px;
-		height: 300px;
-	}
-	#list-karyawan .kv-grid-container{
-		height:250px
-	}
-");
+	$this->registerCss("
+		#list-karyawan :link {
+			color:black;
+		}
+		/* mouse over link */
+		#list-karyawan a:hover {
+			color: black;
+		}
+		/* selected link */
+		list-karyawan a:active {
+			color: black;
+		}
+		.kv-panel {
+			//min-height: 340px;
+			height: 300px;
+		}
+		#list-karyawan .kv-grid-container{
+			height:250px
+		}
+	");
 
 	$aryFieldKar= [
 		['ID' =>0, 'ATTR' =>['FIELD'=>'NAMA_DPN','SIZE' => '180px','label'=>'Karyawan','align'=>'left','format'=>'raw','mergeHeader'=>false]],

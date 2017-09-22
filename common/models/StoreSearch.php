@@ -115,10 +115,14 @@ class StoreSearch extends Store
             return $dataProvider;
         } 
 		
-		$query->Where('FIND_IN_SET("170726220936", ACCESS_ID)');
+		$query->Where('FIND_IN_SET("'.Yii::$app->user->identity->ACCESS_ID.'", ACCESS_ID)');
+		//$query->Where('FIND_IN_SET("170726220936", ACCESS_ID)');
 		//$query->Where('FIND_IN_SET("'.$this->ACCESS_ID.'", ACCESS_ID)');
 		//$query->asArray();
-		
+		$query->andFilterWhere([
+            'ID' => $this->ID,
+            'STATUS' => $this->STATUS
+        ]);
         return $dataProvider;
 	}
 }

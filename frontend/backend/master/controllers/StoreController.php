@@ -149,29 +149,21 @@ class StoreController extends Controller
 			//== Detail Toko ==
 			//$modelToko=Store::find()->where(['STORE_ID'=>])->all();
 			return $this->renderPartial('_detailToko',[
-				'data'=>$_POST['expandRowKey'],
+				//'data'=>$_POST['expandRowKey'],
 				//'modelToko'=>$modelToko
 			]);
 		}elseif($id==1){
 			//== Detail Prodak==
-			return $this->renderPartial('_detailProduk',[
-				'data'=>$_POST['expandRowKey']
-			]);
+			return $this->renderPartial('_detailProduk',['data'=>$_POST['expandRowKey']]);
 		}elseif($id==2){
 			//== Detail Pelanggan==
-			return $this->renderPartial('_detailPelanggan',[
-				'data'=>$_POST['expandRowKey']
-			]);
+			return $this->renderPartial('_detailPelanggan',['data'=>$_POST['expandRowKey']]);
 		}elseif($id==3){
 			//== Detail Karyawan==
-			return $this->renderPartial('_detailkaryawan',[
-				'data'=>$_POST['expandRowKey']
-			]);
+			return $this->renderPartial('_detailkaryawan',['data'=>$_POST['expandRowKey']]);
 		}elseif($id==4){
 			//== Detail User Operatioal==
-			return $this->renderPartial('_detailUserOps',[
-				'data'=>$_POST['expandRowKey']
-			]);
+			return $this->renderPartial('_detailUserOps',['data'=>$_POST['expandRowKey']]);
 		}
 		// if (isset($_POST['expandRowKey'])) {
 			// $model = \app\models\Book::findOne($_POST['expandRowKey']);

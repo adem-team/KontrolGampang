@@ -47,18 +47,40 @@ echo $this->render('modal_store'); //echo difinition
 	
 	
 	
-	// if ($model->STATUS == 0) {
-				  // return Html::a('
-					// <span class="fa-stack fa-xl">
-					  // <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
-					  // <i class="fa fa-close fa-stack-1x" style="color:#0f39ab"></i>
-					// </span>','',['title'=>'Running']);
-				// } else if ($model->STATUS == 1) {
-				  // return Html::a('<span class="fa-stack fa-xl">
-					  // <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
-					  // <i class="fa fa-check fa-stack-1x" style="color:#ee0b0b"></i>
-					// </span>','',['title'=>'Finish']);
-				// }
+	//Difinition Status.
+	$aryStt= [
+	  ['STATUS' => 0, 'STT_NM' => 'Trial'],		  
+	  ['STATUS' => 1, 'STT_NM' => 'Active'],
+	  ['STATUS' => 2, 'STT_NM' => 'Deactive'],
+	  ['STATUS' => 3, 'STT_NM' => 'Deleted'],
+	];	
+	$valStt = ArrayHelper::map($aryStt, 'STATUS', 'STT_NM');
+	
+	
+	//Result Status value.
+	function sttMsg($stt){
+		if($stt==0){ //TRIAL
+			 return Html::a('<span class="fa-stack fa-xl">
+					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+					  <i class="fa fa-check fa-stack-1x" style="color:#ee0b0b"></i>
+					</span>','',['title'=>'Trial']);
+		}elseif($stt==1){
+			 return Html::a('<span class="fa-stack fa-xl">
+					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+					  <i class="fa fa-check fa-stack-1x" style="color:#05944d"></i>
+					</span>','',['title'=>'Active']);
+		}elseif($stt==2){
+			return Html::a('<span class="fa-stack fa-xl">
+					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+					  <i class="fa fa-remove fa-stack-1x" style="color:#01190d"></i>
+					</span>','',['title'=>'Deactive']);
+		}elseif($stt==3){
+			return Html::a('<span class="fa-stack fa-xl">
+					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+					  <i class="fa fa-close fa-stack-1x" style="color:#ee0b0b"></i>
+					</span>','',['title'=>'Delete']);
+		}
+	};	
 	
 	
 	
@@ -332,6 +354,8 @@ echo $this->render('modal_store'); //echo difinition
 		'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50',$headerColor),
 		'contentOptions'=>Yii::$app->gv->gvContainBody('center','50','')			
 	];
+	
+	/* 
 	$gvAttributeItem[]=[
 		'class' => 'kartik\grid\ActionColumn',
 		'template' => '{product}{view}{review}{payment}',
@@ -350,23 +374,23 @@ echo $this->render('modal_store'); //echo difinition
 			'product' =>function ($url, $model){
 			  return  tombolProduct($url, $model);
 			},
-			/* 'view' =>function ($url, $model){
-			  return  tombolView($url, $model);
-			},
-			'review' =>function($url, $model,$key){
+			// 'view' =>function ($url, $model){
+			  // return  tombolView($url, $model);
+			// },
+			// 'review' =>function($url, $model,$key){
 				//if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
-					return  tombolReview($url, $model);
+					// return  tombolReview($url, $model);
 				//}					
-			},
-			'payment' =>function($url, $model,$key){
+			// },
+			// 'payment' =>function($url, $model,$key){
 				//if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
-					return  tombolPayment($model);
+					// return  tombolPayment($model);
 				//}					
-			} */
+			// }
 		], 
 		'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$headerColor,'#ffffff'),
 		'contentOptions'=>Yii::$app->gv->gvContainBody('center','0',''),
-	];	
+	]; */	
 	
 	$gvStore=GridView::widget([
 		'id'=>'gv-store',

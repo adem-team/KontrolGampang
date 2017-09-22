@@ -44,38 +44,9 @@ $headerColor='rgba(128, 179, 178, 1)';
 	//Modal Ajax
 	/* $this->registerJs($this->render('modal_import.js'),View::POS_READY);
 	echo $this->render('modal_import'); //echo difinition
-	 //Difinition Status.
-	$aryStt= [
-	  ['STATUS' => 0, 'STT_NM' => 'Proccess'],		  
-	  ['STATUS' => 1, 'STT_NM' => 'Lock']
-	];	
+	*/
 	//Result Status value.
-	function sttMsg($stt){
-		if($stt==0){ //TRIAL
-			 return Html::a('<span class="fa-stack fa-xl">
-					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
-					  <i class="fa fa-check fa-stack-1x" style="color:#05944d"></i>
-					</span>','',['title'=>'Active']);
-		}elseif($stt==1){
-			return Html::a('<span class="fa-stack fa-xl">
-					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
-					  <i class="fa fa-close fa-stack-1x" style="color:#ee0b0b"></i>
-					</span>','',['title'=>'Delete']);
-		}
-	};	
-	$valStt = ArrayHelper::map($aryStt, 'STATUS', 'STT_NM'); */
-	//Difinition Status.
-	$aryStt= [
-	  ['STATUS' => 0, 'STT_NM' => 'Trial'],		  
-	  ['STATUS' => 1, 'STT_NM' => 'Active'],
-	  ['STATUS' => 2, 'STT_NM' => 'Deactive'],
-	  ['STATUS' => 3, 'STT_NM' => 'Deleted'],
-	];	
-	$valStt = ArrayHelper::map($aryStt, 'STATUS', 'STT_NM');
-	
-	
-	//Result Status value.
-	function sttMsg($stt){
+	function sttMsgDscp($stt){
 		if($stt==0){ //TRIAL
 			 return Html::a('<span class="fa-stack fa-xl">
 					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
@@ -97,8 +68,9 @@ $headerColor='rgba(128, 179, 178, 1)';
 					  <i class="fa fa-close fa-stack-1x" style="color:#ee0b0b"></i>
 					</span>','',['title'=>'Delete']);
 		}
-	};		
-	$dscLabel='<b>* STATUS</b> : '.sttMsg(0).'=Trial. '.sttMsg(1).'=Active. '.sttMsg(2).'=Deactive. '.sttMsg(3).'=Delete.';
+	};	
+		
+	$dscLabel='<b>* STATUS</b> : '.sttMsgDscp(0).'=Trial. '.sttMsgDscp(1).'=Active. '.sttMsgDscp(2).'=Deactive. '.sttMsgDscp(3).'=Delete.';
 	$dscAction='[<b>ACTION</b>]: 
 				<font color=red>Items</font>=CRUD Items/double click tabel row; 
 				<font color=red>View</font>=Detail Tampilan Outlet;  

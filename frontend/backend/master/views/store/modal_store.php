@@ -82,6 +82,22 @@ $this->registerCss("
 		return $content = Html::a($label,$url,$options);
 	}
 	
+	/**
+	 * HEADER BUTTON : EXPAND DETAIL
+	*/
+	function tombolExpadDetail($url){
+		$title = Yii::t('app', 'Detail');
+		$url =  Url::toRoute([$url]);
+		$options = ['id'=>'store-id-expand',
+				  'data-pjax' => 0,
+				  'class'=>"btn btn-default btn-xs",
+				];
+		$icon = '<span class="fa fa-eye fa-lg"></span>';
+		$label = $icon . ' ' . $title;
+
+		return $content = Html::a($label,$url,$options);
+	}
+	
 	/*
 	 * HEADER BUTTON : Button - EXPORT EXCEL.
 	*/
