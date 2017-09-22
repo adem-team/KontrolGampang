@@ -12,23 +12,26 @@ use frontend\backend\master\models\Product;
  */
 class ProductSearch extends Product
 {
+	public function attributes()
+	{
+		/*Author -ptr.nov- add related fields to searchable attributes */
+		return array_merge(parent::attributes(), ['productHargaTbl','productStockTbl']);
+	}
+	
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            // [['ID', 'STATUS'], 'integer'],
-            // [['ACCESS_UNIX','DEFAULT_HARGA','DEFAULT_STOCK','CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'ITEM_ID', 'OUTLET_CODE', 'ITEM_NM','SATUAN','ITEMGRP','ITEM_QR'], 'safe'],
-			
-			[['UNIT_ID', 'INDUSTRY_ID','INDUSTRY_GRP_ID', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
+            [['GROUP_ID', 'UNIT_ID', 'INDUSTRY_ID', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
             [['PRODUCT_SIZE', 'STOCK_LEVEL'], 'number'],
-            [['CREATE_AT', 'UPDATE_AT','CURRENT_PRICE'], 'safe'],
+            [['CREATE_AT', 'UPDATE_AT'], 'safe'],
             [['DCRP_DETIL'], 'string'],
             [['ACCESS_GROUP'], 'string', 'max' => 15],
             [['STORE_ID'], 'string', 'max' => 20],
             [['PRODUCT_ID'], 'string', 'max' => 35],
-            [['PRODUCT_QR', 'PRODUCT_NM', 'PRODUCT_HEADLINE','GROUP_ID'], 'string', 'max' => 100],
+            [['PRODUCT_QR', 'PRODUCT_NM', 'PRODUCT_HEADLINE'], 'string', 'max' => 100],
             [['PRODUCT_WARNA', 'PRODUCT_SIZE_UNIT', 'CREATE_BY', 'UPDATE_BY'], 'string', 'max' => 50],
             [['INDUSTRY_NM', 'INDUSTRY_GRP_NM'], 'string', 'max' => 255],
         ];

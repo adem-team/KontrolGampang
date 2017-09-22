@@ -13,8 +13,29 @@ use yii\web\View;
 use modulprj\payroll\models\AbsenPayrollSearch;	
 use modulprj\absensi\models\AbsenImportPeriode;
 
+$this->registerCss("
+	#list-user-ops :link {
+		color:black;
+	}
+	/* mouse over link */
+	#list-user-ops a:hover {
+		color: black;
+	}
+	/* selected link */
+	list-user-ops a:active {
+		color: black;
+	}
+	.kv-panel {
+		//min-height: 340px;
+		height: 300px;
+	}
+	#list-user-ops .kv-grid-container{
+		height:230px
+	}
+");
 	$aryFieldUsrOps= [
 		['ID' =>0, 'ATTR' =>['FIELD'=>'username','SIZE' => '180px','label'=>'Karyawan','align'=>'left','format'=>'raw','mergeHeader'=>false]],
+		['ID' =>1, 'ATTR' =>['FIELD'=>'UUID','SIZE' => '180px','label'=>'UUID Perangkat','align'=>'left','format'=>'raw','mergeHeader'=>false]],
 	];
 	
 	$valFieldsUserOps = ArrayHelper::map($aryFieldUsrOps, 'ID', 'ATTR'); 

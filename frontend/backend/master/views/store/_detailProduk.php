@@ -13,8 +13,34 @@ use yii\web\View;
 use modulprj\payroll\models\AbsenPayrollSearch;	
 use modulprj\absensi\models\AbsenImportPeriode;
 
+$this->registerCss("
+	#list-prodak :link {
+		color:black;
+	}
+	/* mouse over link */
+	#list-prodak a:hover {
+		color: black;
+	}
+	/* selected link */
+	list-prodak a:active {
+		color: black;
+	}
+	.kv-panel {
+		//min-height: 340px;
+		height: 300px;
+	}
+	#list-prodak .kv-grid-container{
+		height:350px
+	}
+");
+
+
 	$aryFieldPrd= [
 		['ID' =>0, 'ATTR' =>['FIELD'=>'PRODUCT_NM','SIZE' => '180px','label'=>'Prodak','align'=>'left','format'=>'raw','mergeHeader'=>false]],
+		['ID' =>1, 'ATTR' =>['FIELD'=>'PRODUCT_SIZE','SIZE' => '50px','label'=>'Nilai','align'=>'right','format'=>['decimal', 2],'mergeHeader'=>false]],
+		['ID' =>2, 'ATTR' =>['FIELD'=>'PRODUCT_SIZE_UNIT','SIZE' => '60px','label'=>'Satuan','align'=>'left','format'=>'raw','mergeHeader'=>false]],
+		['ID' =>3, 'ATTR' =>['FIELD'=>'productHargaTbl','SIZE' => '80px','label'=>'Harga','align'=>'right','format'=>['decimal', 2],'mergeHeader'=>false]],
+		['ID' =>4, 'ATTR' =>['FIELD'=>'productStockTbl','SIZE' => '50px','label'=>'Qty','align'=>'right','format'=>'raw','mergeHeader'=>false]],
 	];	
 	$valFieldsProdak = ArrayHelper::map($aryFieldPrd, 'ID', 'ATTR'); 
 	$bColor='rgba(87,114,111, 1)';

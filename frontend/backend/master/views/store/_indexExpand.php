@@ -90,25 +90,6 @@ use common\models\Userlogin;
 					'dataProviderUserOps'=>$dataProviderUserOps
 				]);
 			}
-			
-			
-			/* //$searchModelDetail = new AbsenPayrollSearch(['IN_TGL'=>$model['IN_TGL'],'KAR_ID'=>$model['KAR_ID']]);
-			$modelPrd=AbsenImportPeriode::find()->where(['TIPE'=>'1','AKTIF'=>'1'])->one();
-			$closingParam=['tglStart'=>$modelPrd->TGL_START,'tglEnd'=>$modelPrd->TGL_END];
-			//$closingParam=['tglStart'=>'2017-09-08','tglEnd'=>'2017-09-14'];
-			$searchModelDetail = new AbsenPayrollSearch($closingParam);
-			$dataProviderDetail = $searchModelDetail->searchHeader(['AbsenPayrollSearch'=>['KAR_ID'=>$model['KAR_ID']]]);
-			//$dataProviderDetail=$searchModelDetail->searchdetails(Yii::$app->request->queryParams);
-			// return Yii::$app->controller->renderPartial('_dailyAbsensiDetail',[
-				// 'searchModelDetail'=>$searchModelDetail,
-				// 'dataProviderDetail'=>$dataProviderDetail
-			// ]);
-			return Yii::$app->controller->renderPartial('_dailyAbsensiIndexExpand',[
-				'searchModelDetail'=>$searchModelDetail,
-				'dataProviderDetail'=>$dataProviderDetail,
-				'model'=>$model
-			]); */
-			//return 'asd';
 		},
 		'headerOptions'=>[
 			'style'=>[
@@ -129,13 +110,14 @@ use common\models\Userlogin;
 			]
 		],			
 	];
+	
 	$attDinamikMenu[] =[
 		'attribute'=>'TITTLE_NM',
 		'filterType'=>true,
 		'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','250px'),
 		'hAlign'=>'right',
 		'vAlign'=>'middle',
-		'header'=>'RINCIAN DATA TOKO  '.$storeNm,
+		'header'=>'TOKO '.$storeNm,
 		'mergeHeader'=>true,
 		'format'=>'html',
 		'noWrap'=>false,
@@ -165,23 +147,41 @@ use common\models\Userlogin;
 		'contentOptions'=>Yii::$app->gv->gvContainBody('left','250px',''),			
 	]; */
 	
+	//ACTION
+	$attDinamikMenu[]=[
+		'class' => 'kartik\grid\ActionColumn',
+		'template' => '{view}',
+		'header'=>'ACTION',		
+		'headerOptions'=>[
+			'style'=>[
+				'text-align'=>'center',
+				'width'=>'10px',
+				'font-family'=>'verdana, arial, sans-serif',
+				'font-size'=>'10pt',
+				'background-color'=>$headerColor,
+				'color'=>'white',
+			]
+		],
+		'contentOptions'=>[
+			'style'=>[
+				'text-align'=>'center',
+				'width'=>'10px',
+				'font-family'=>'tahoma, arial, sans-serif',
+				'font-size'=>'10pt',
+				'color'=>'black',
+			]
+		],			
+	];
+	
 	
 	$expandMenu= GridView::widget([
 		'id'=>'expand-menu',
 		'dataProvider' => $dataProviderMenu,
-		//'filterModel' => $searchModelFinger,
-		//'filterRowOptions'=>['style'=>'background-color:rgba(97, 211, 96, 0.3); align:center'],				
 		'columns' =>$attDinamikMenu,
 		'toolbar' => [
 			'{export}',
 		],
 		'panel'=>false,		
-		// 'panel'=>[
-			// 'heading'=>'<h3 class="panel-title">INFO DATA TOKO</h3>',
-			// 'type'=>'default',
-			// 'before'=>false,
-			// 'footer'=>false,
-		// ],
 		'pjax'=>true,
 		'pjaxSettings'=>[
 			'options'=>[
@@ -194,18 +194,13 @@ use common\models\Userlogin;
 		'responsive'=>true,
 		'bordered'=>true,
 		'striped'=>true,
-		//'autoXlFormat'=>true,
 		'export'=>[//export like view grid --ptr.nov-
 			'fontAwesome'=>true,
 			'showConfirmAlert'=>false,
 			'target'=>GridView::TARGET_BLANK
 		],
 		'summary'=>false,
-		// 'floatHeader'=>true,
-		//'floatHeaderOptions'=>['scrollingTop'=>'200'] 
 	]);
 
 ?>
-
-	<?=$expandMenu?>
-    <?php //echo '<div>'.$dscLabel.'</div><div>'.$dscAction.'</div>'?>
+<?=$expandMenu?>

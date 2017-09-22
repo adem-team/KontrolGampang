@@ -13,8 +13,30 @@ use yii\web\View;
 use modulprj\payroll\models\AbsenPayrollSearch;	
 use modulprj\absensi\models\AbsenImportPeriode;
 
+$this->registerCss("
+	#list-pelanggan :link {
+		color:black;
+	}
+	/* mouse over link */
+	#list-pelanggan a:hover {
+		color: black;
+	}
+	/* selected link */
+	a:active {
+		color: black;
+	}
+	.kv-panel {
+		//min-height: 340px;
+		height: 300px;
+	}
+	#list-pelanggan .kv-grid-container{
+		height:250px
+	}
+");
 	$aryFieldPlg= [
 		['ID' =>0, 'ATTR' =>['FIELD'=>'NAME','SIZE' => '180px','label'=>'Nama','align'=>'left','format'=>'raw','mergeHeader'=>false]],
+		['ID' =>1, 'ATTR' =>['FIELD'=>'PHONE','SIZE' => '180px','label'=>'Phone','align'=>'left','format'=>'raw','mergeHeader'=>false]],
+		['ID' =>2, 'ATTR' =>['FIELD'=>'EMAIL','SIZE' => '180px','label'=>'E-mail','align'=>'left','format'=>'raw','mergeHeader'=>false]],
 	];	
 	$valFieldsPlg = ArrayHelper::map($aryFieldPlg, 'ID', 'ATTR'); 
 	$bColor='rgba(87,114,111, 1)';
@@ -102,16 +124,9 @@ use modulprj\absensi\models\AbsenImportPeriode;
 		];	
 	};	
 	
-	$attDinamikListPelanggan[]=[
+	/* $attDinamikListPelanggan[]=[
 		'attribute'=>'STATUS',
 		'label'=>'STATUS',
-		/* 'filterType'=>GridView::FILTER_SELECT2,
-		'filterWidgetOptions'=>[
-			'pluginOptions' =>Yii::$app->gv->gvPliginSelect2(),
-		],
-		'filterInputOptions'=>['placeholder'=>'Select'],
-		'filter'=>$valSttAbsensi,//Yii::$app->gv->gvStatusArray(),
-		'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px',$bColor), */
 		'filter'=>false,
 		'hAlign'=>'right',
 		'vAlign'=>'middle',
@@ -129,7 +144,7 @@ use modulprj\absensi\models\AbsenImportPeriode;
 		//gvContainHeader($align,$width,$bColor)
 		'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50',$bColor,'white'),
 		'contentOptions'=>Yii::$app->gv->gvContainBody('center','50','')			
-	];
+	]; */
 
 	
 	$gvListPelanggan= GridView::widget([
